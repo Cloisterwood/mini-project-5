@@ -1,0 +1,621 @@
+🎯 Project Goal
+Build a dating compatibility system that fine-tunes a sentence transformer model to distinguish compatible from incompatible matches, and evaluates the improvement through rigorous statistical analysis. Using a provided dataset of synthetic dating profile pairs, the system must demonstrate measurable gains in embedding quality after fine-tuning.
+Core Challenge: Teach a general-purpose embedding model to understand relationship compatibility, not just textual similarity. Two people who both "love hiking" are textually similar, but a person who "loves family traditions" and one who "hates running" might still be highly compatible. Your model must learn to separate these concepts, proving improvement through concrete metrics like margin, effect size, and false positive rate.
+﻿
+🧠 The Problem Context
+General-purpose sentence embeddings (like all-MiniLM-L6-v2) are trained on semantic similarity. They place similar texts close together in vector space. But dating compatibility isn't about textual similarity. Two people saying opposite things about hiking might be perfectly compatible if they share core values about family and honesty.
+The problem: pre-trained embeddings confuse stylistic similarity with value alignment. Someone who says "I love smoking and parties" and someone who says "I would never date a smoker" use similar vocabulary, but they're fundamentally incompatible. Meanwhile, "I love quiet weekends" and "I value family traditions" are textually different but could signal deep compatibility.
+Your job is to build a system that:
+Explores the provided dating compatibility dataset to understand its structure, distribution, and quality
+Evaluates baseline embedding performance to establish how poorly the pre-trained model distinguishes compatibility
+Fine-tunes the model using contrastive learning so compatible pairs cluster together
+Measures improvement across multiple statistical metrics
+Analyzes where the model still struggles (false positives, subtle mismatches)
+Validates data quality to ensure training data is realistic and unbiased
+This mirrors a real-world ML pipeline: understand your data → establish baseline → fine-tune → evaluate improvement → iterate.
+﻿
+🏗 System Architecture Overview
+Your pipeline should follow this flow:
+EXPLORATION PHASE:
+Load JSONL → Examine pair types, categories, label distribution → Validate data quality (score ≥ 60/100)
+﻿
+BASELINE PHASE:
+Load pre-trained model → Compute cosine similarities → Calculate metrics (margin, effect size, FPR, cluster purity) → Save baseline
+﻿
+TRAINING PHASE:
+Prepare training pairs → CosineSimilarityLoss → Fine-tune sentence transformer → Monitor training loss
+﻿
+EVALUATION PHASE:
+Run fine-tuned model on eval set → Compare metrics vs baseline → Category-wise breakdown → Generate reports
+Core Components
+Data Loading & Exploration 
+JSONL Loader: Parse training and evaluation pair files
+Distribution Analyzer: Examine label balance, category coverage, pair type counts
+Data Quality Evaluator: Score dataset across 5 dimensions, enforce quality gate
+Baseline Analysis 
+Embedding Generator: Encode all texts with pre-trained all-MiniLM-L6-v2
+Similarity Calculator: Compute cosine similarity for all pairs
+Metric Calculator: Margin, Cohen's d, FPR, cluster purity
+UMAP Projector: Reduce embeddings to 2D for visualization
+Fine-Tuning 
+Training Pipeline: Sentence-transformers with CosineSimilarityLoss
+Hyperparameter Configuration: Epochs, batch size, learning rate, warmup
+Post-Training Evaluation 
+Same metric calculator as baseline, applied to fine-tuned model
+Side-by-side comparison with deltas
+Category-wise performance breakdown
+Visualization & Reporting 
+Distribution plots, UMAP projections, ROC curves (Matplotlib/Seaborn/Plotly)
+JSON metrics reports for automated comparison
+﻿
+📂 Dataset: Dating Compatibility Pairs
+This project uses a pre-built synthetic dataset of dating profile pairs with compatibility labels, designed specifically for contrastive learning with sentence transformers.
+Source: License: Apache-2.0
+Dataset Structure
+data/
+├── dating_pairs.jsonl          # 6,000 training pairs
+├── eval_pairs.jsonl            # 1,469 evaluation pairs
+├── dating_pairs_metadata.json  # Training set metadata (pair type distribution, label counts)
+└── eval_pairs_metadata.json    # Evaluation set metadata
+Key Numbers
+Component
+Count
+Training pairs
+6,000 (2,997 compatible + 3,003 incompatible)
+Evaluation pairs
+1,469 (709 compatible + 760 incompatible)
+Pair types
+9 (compatible, incompatible, dealbreaker, complex_compatible, complex_incompatible, llm_judged_compatible, llm_judged_incompatible, curated_realistic, subtle_mismatch)
+Categories
+5 base (lifestyle, interests, values, dealbreakers, realistic_example) + 7 compound (e.g., interests_and_values, lifestyle_and_interests)
+Subcategories
+23+ (fitness, travel, music, family_values, honesty, pet_lover, etc.)
+Data Format (JSONL)
+Each line is a JSON object representing one dating pair:
+{
+  "text_1": "boy: I love running and I love family tradition and being a family person",
+  "text_2": "girl: I hate running but I am a family person",
+  "label": 1,
+  "category": "realistic_example",
+  "subcategory": "family_values_outweigh_exercise_preferences",
+  "pair_type": "curated_realistic"
+}
+text_1 / text_2: Dating profile statements, each prefixed with gender (boy: or girl:)
+label: Compatibility label. 1 = compatible, 0 = incompatible
+category: Preference domain. Base categories (lifestyle, interests, values, dealbreakers, realistic_example) or compound categories for cross-domain pairs (e.g., interests_and_values, lifestyle_and_interests)
+subcategory: Specific preference area (e.g., fitness, family_values, honesty)
+pair_type: Type of compatibility scenario (compatible, incompatible, dealbreaker, complex_compatible, complex_incompatible, llm_judged_compatible, llm_judged_incompatible, curated_realistic, subtle_mismatch)
+Dataset Quality
+The dataset has been carefully constructed with:
+Balanced labels: ~50/50 compatible vs incompatible split in training data
+Gender balance: ~50/50 boy-first vs girl-first across pairs
+Low duplicate rate: <1% duplicate pairs
+Zero train/eval overlap: No pairs appear in both training and evaluation sets
+Diverse vocabulary: 300+ unique preference items across all categories
+Multiple difficulty levels: From simple same-interest matches to complex multi-preference pairs with conflicting signals
+How to Use It
+Start with exploration: load the dataset, examine the distribution of pair types, categories, and labels. Understand what you're working with before building pipelines.
+Run baseline evaluation: compute cosine similarities using the pre-trained model on the evaluation set. Save baseline metrics.
+Train on the training set: fine-tune using dating_pairs.jsonl only. Never train on eval_pairs.jsonl.
+Evaluate improvement: run the same evaluation on the fine-tuned model and compare against baseline.
+﻿
+📊 Success Metrics
+Your fine-tuned model will be compared against the pre-trained baseline on these metrics:
+Metric
+Baseline (Pre-trained)
+Target (Fine-tuned)
+What It Measures
+Compatibility Margin
+~0.099
+≥ 0.10
+Mean cosine similarity difference between compatible and incompatible pairs
+Effect Size (Cohen's d)
+~0.015
+≥ 0.50
+Statistical separation strength: how well distributions are separated
+False Positive Rate
+~0.24
+≤ 0.10
+Fraction of incompatible pairs incorrectly scored as compatible
+Cluster Purity
+~0.35
+≥ 0.70
+How cleanly compatible/incompatible pairs separate in embedding space
+The effect size is the most important metric. A Cohen's d of 0.015 means the pre-trained model essentially cannot tell compatible from incompatible. The distributions almost completely overlap. Your fine-tuned model must achieve d ≥ 0.5 (a "medium" effect), meaning the distributions are meaningfully separated.
+Data Quality Standards
+The provided dataset meets these quality standards. Your evaluator should verify them:
+Label balance: 40-60% compatible / 40-60% incompatible (no severe class imbalance)
+Category coverage: Data spans lifestyle, interests, values, dealbreakers, and compound cross-domain categories
+Duplicate rate: < 5% exact duplicate pairs
+Diversity: Multiple pair types (simple compatible/incompatible, dealbreakers, subtle mismatches, complex multi-preference)
+Data Quality Evaluation Score
+Build a comprehensive data quality evaluator that scores the provided dataset across 5 dimensions:
+Dimension
+What It Measures
+Target
+Data Quality
+Completeness, consistency, duplicates, format validation
+≥ 80/100
+Diversity
+Vocabulary richness, category distribution, label balance, text complexity
+≥ 60/100
+Bias Detection
+Gender bias, category bias, length bias, vocabulary bias
+≥ 50/100
+Linguistic Quality
+Readability, coherence, naturalness, repetition
+≥ 50/100
+Overall Score
+Average across all dimensions
+≥ 60/100
+The Overall Score ≥ 60/100 is a required quality gate. The data must pass this threshold before training.
+Classification Metrics (Post-Training)
+In addition to the four core embedding metrics, measure classification performance using a cosine similarity threshold of 0.5:
+Metric
+Baseline
+Target
+Accuracy
+~0.47
+≥ 0.90
+Precision
+~0.45
+≥ 0.90
+Recall
+~0.41
+≥ 0.90
+F1-Score
+~0.43
+≥ 0.90
+AUC-ROC
+~0.47
+≥ 0.90
+Dataset Size & Distribution
+The provided dataset contains 7,469 pairs total, split into 6,000 training + 1,469 evaluation pairs:
+Pair Type
+Percentage
+Purpose
+Simple compatible
+~20%
+Baseline positive cases
+Simple incompatible
+~15%
+Baseline negative cases
+Dealbreaker scenarios
+~15%
+Hard incompatibility (smoking, dishonesty, controlling behavior)
+Basic complex
+~10%
+Multi-preference pairs without LLM
+LLM-judged complex
+~20%
+Intelligent preference weighting with reasoning
+Curated realistic
+<1%
+Real-world edge cases
+Subtle mismatches
+~19%
+Cross-subcategory pairs testing nuanced compatibility judgment
+Training and evaluation data are provided as separate files (dating_pairs.jsonl + eval_pairs.jsonl). Never train on the evaluation set.
+﻿
+🛠 Technical Requirements
+Required Technology Stack
+Component
+Technology
+Purpose
+Embedding Model
+sentence-transformers
+Load, fine-tune, and evaluate transformer models
+Base Model
+all-MiniLM-L6-v2 or similar
+Starting point for fine-tuning
+Loss Function
+CosineSimilarityLoss
+Contrastive learning objective for binary similarity
+Data Validation
+Pydantic
+Schema validation for dating pair records
+Analysis
+NumPy, Pandas, SciPy
+Statistical analysis and data manipulation
+Visualization
+Matplotlib, Seaborn, Plotly
+Distribution plots, UMAP, comparison charts
+Dimensionality Reduction
+UMAP
+Visualize embedding space in 2D
+Clustering
+HDBSCAN
+Discover natural clusters in embedding space
+Python
+3.10+
+Core language
+Optional Enhancements
+Instructional Fine-Tuning Layer: Prepend instruction text to training pairs (e.g., "Family should outweigh exercise preferences") so the model learns to follow explicit compatibility intent. This improves generalization for scenarios where the weighting logic is stated directly
+Cross-Domain Robustness: Test whether your fine-tuned embeddings generalize beyond dating. Feed out-of-domain examples (e.g., customer support, medical Q&A) and measure zero-shot contrastive alignment to see if the model learned general compatibility reasoning or just dating-specific keywords
+TF-IDF Analysis: Evaluate vocabulary diversity and semantic coverage of the dataset
+Interactive Dashboards: Plotly HTML reports for exploring results
+ROC/AUC Analysis: Full classification performance comparison between models
+﻿
+📋 Data Models & Interfaces
+Pair Types
+The dataset contains multiple pair types that test different aspects of compatibility understanding:
+Pair Type
+Description
+Example
+compatible
+Clear positive match on shared values/interests
+Both enjoy outdoor activities and value honesty
+incompatible
+Clear mismatch on preferences
+One is a night owl, the other needs early bedtimes
+dealbreaker
+Hard incompatibility that overrides other factors
+One smokes, the other has "no smokers" as dealbreaker
+subtle_mismatch
+Pairs from different subcategories that may be compatible or incompatible
+Both mention "adventure" but in different contexts
+complex_compatible / complex_incompatible
+Multi-preference pairs with mixed signals
+Compatible on 3 dimensions, incompatible on 2
+llm_judged_compatible / llm_judged_incompatible
+Ambiguous cases requiring reasoning about value hierarchies
+One values career, other values family: who compromises?
+curated_realistic
+Hand-crafted real-world edge cases
+Running vs family values: family wins
+Note: The pair_type field describes the type of compatibility scenario, not the label. For example, a subtle_mismatch pair may have label=1 (compatible) if the preferences don't actually conflict. Always use label as ground truth, not pair_type.
+Preference Weighting Hierarchy
+The dataset's labeling follows hierarchical preference weighting. Not all preferences are equal in real relationships:
+Preference Type
+Weight
+Examples
+Dealbreakers
+10
+Smoking, dishonesty, controlling behavior
+Core Values
+8-10
+Family, honesty, spirituality, life goals
+Lifestyle
+5-7
+Social vs quiet, active vs relaxed, urban vs rural
+Interests
+3-5
+Music, food, travel preferences
+Activities
+1-3
+Running, coffee, specific hobbies
+This means: a couple who shares core values but disagrees on coffee preferences is labeled compatible. A couple who shares every hobby but has a dealbreaker conflict (e.g., smoking) is labeled incompatible. Understanding this hierarchy helps you interpret the dataset's labels and analyze where your model succeeds or struggles after fine-tuning.
+Dataset Metadata
+The provided metadata files track dataset statistics for quality monitoring:
+{
+  "total_pairs": 6000,
+  "compatible_pairs": 2997,
+  "incompatible_pairs": 3003,
+  "dealbreaker_pairs": 900,
+  "complex_pairs": 600,
+  "llm_judged_pairs": 1200,
+  "realistic_pairs": 20,
+  "subtle_mismatch_pairs": 1180,
+  "categories_used": [
+    "lifestyle", "interests", "values", "dealbreakers", "realistic_example",
+    "interests_and_values", "interests_and_lifestyle", "lifestyle_and_values",
+    "lifestyle_and_interests", "values_and_interests", "values_and_lifestyle",
+    "dealbreakers_and_interests"
+  ]
+}
+Evaluation Metrics Output
+Your evaluation system should produce structured metrics for comparison:
+{
+  "margin": 0.0988,
+  "effect_size": 0.0147,
+  "false_positive_rate": 0.2425,
+  "cluster_purity": 0.3458,
+  "compatible_mean_similarity": 0.5320,
+  "incompatible_mean_similarity": 0.4332,
+  "auc_roc": 0.52
+}
+﻿
+🔧 Key Implementation Challenges
+1. Understanding Synthetic Compatibility Data
+Synthetic dating profiles must reflect real human complexity. People have multiple preferences that interact in non-obvious ways. A person who "loves adventure travel" and "values stability" isn't contradicting themselves; they're being human.
+Why it matters: Before training, you need to understand what's in the dataset. Explore the pair types, category distribution, and labeling patterns. If you don't understand why a pair is labeled compatible or incompatible, you can't diagnose model failures after fine-tuning.
+2. The Textual Similarity Trap
+Pre-trained embeddings place "I love smoking" and "I hate smokers" close together because they share vocabulary. Your fine-tuning must break this association, teaching the model that semantic similarity ≠ compatibility.
+Why it matters: This is the fundamental problem. If your model still conflates text similarity with compatibility after fine-tuning, your false positive rate will remain high. The dealbreaker pair type specifically tests this failure mode.
+3. Contrastive Learning with Noisy Labels
+Not every "compatible" pair in your training data will be perfectly labeled. Real compatibility is subjective, and some pairs will be ambiguous. Your training process must be robust to label noise.
+Why it matters: Overfitting to noisy labels produces a model that memorizes training pairs rather than learning generalizable compatibility patterns. Monitor training loss and validation metrics to detect overfitting early.
+4. Evaluation Beyond Accuracy
+A model that predicts "compatible" for everything achieves ~50% accuracy on a balanced dataset. Your evaluation must go deeper, measuring margin, effect size, false positive rate, and cluster structure.
+Why it matters: Simple accuracy is misleading for similarity models. The effect size (Cohen's d) tells you whether the compatible and incompatible distributions are actually separated, not just whether the majority class is predicted correctly.
+5. Data Quality Validation
+Even well-constructed synthetic data can have hidden biases: repetitive vocabulary, unrealistic preference combinations, or category imbalance. You need automated quality checks before using data for training.
+Why it matters: Training on low-quality data amplifies biases. If 80% of "incompatible" pairs mention smoking, the model learns "smoking = incompatible" rather than learning general incompatibility patterns. Your quality evaluator should catch these issues.
+﻿
+📦 Deliverables
+Data Quality Evaluator: Comprehensive evaluator that scores the provided dataset across 5 dimensions (Data Quality, Diversity, Bias Detection, Linguistic Quality, Real-life Matching) and produces an Overall Score (target: ≥ 60/100). This validates the data before training.
+Baseline Evaluation: Script that measures pre-trained model performance on the dataset (margin, effect size, FPR, cluster purity, classification metrics)
+Fine-tuning Pipeline: Training script using sentence-transformers with CosineSimilarityLoss
+Post-training Evaluation: Script that compares fine-tuned vs baseline model using the same metrics, including category-wise performance breakdown
+Visualization Suite: Distribution plots, UMAP projections, and before/after comparison charts (all using Matplotlib, Seaborn, or Plotly)
+Metrics Reports: JSON files with baseline and post-training metrics for automated comparison
+Iteration Log: Documented record of every training configuration change, the reason for the change, and the before/after metric delta
+README: Brief instructions on how to run the pipeline and interpret the results
+﻿
+📊 Visualization Requirements
+All visualizations must use Matplotlib, Seaborn, or Plotly. Save every chart as a PNG file with clear titles, labeled axes, and legible fonts.
+Required Visualizations
+Cosine Similarity Distributions (Before/After): Side-by-side histograms showing the distribution of cosine similarities for compatible vs. incompatible pairs, for both the baseline and fine-tuned models. Must clearly show the overlap reduction after fine-tuning.
+UMAP Embedding Projections (Before/After): 2D scatter plots of UMAP-reduced embeddings, colored by compatibility label. Show both pre-trained and fine-tuned embeddings to demonstrate improved cluster separation.
+Category-Wise Metric Comparison: Grouped bar chart showing effect size (Cohen's d) per preference category (dealbreakers, values, lifestyle, interests) for both baseline and fine-tuned models.
+ROC Curves: Overlay ROC curves for baseline and fine-tuned models on the same plot with AUC values in the legend.
+Training Loss Curve: Plot training loss per epoch to verify convergence and check for overfitting.
+Improvement Delta Chart: Bar chart showing the delta (fine-tuned minus baseline) for each core metric, with a zero line to highlight positive vs. negative changes.
+Quality Standards
+Titles must describe what the chart shows, not just the metric name (e.g., "Cosine Similarity Distribution: Compatible vs Incompatible Pairs" not just "Histogram")
+Use colorblind-friendly palettes (e.g., Set2, tab10)
+Include grid lines for readability
+Font size ≥ 10pt for all labels
+﻿
+🔄 Iteration Logs
+Every training configuration change must be documented. Use this format:
+## Iteration Log Entry
+﻿
+| Field | Value |
+| --- | --- |
+| Change | [What you changed, e.g., "Increased epochs from 4 to 6"] |
+| Reason | [Why, e.g., "Effect size was 0.38, below target of 0.50"] |
+| Metric Before | [e.g., "Cohen's d = 0.38, FPR = 0.33"] |
+| Metric After | [e.g., "Cohen's d = 0.55, FPR = 0.29"] |
+| Delta | [e.g., "d: +0.17, FPR: -0.04"] |
+| Keep? | [Yes/No + reason] |
+Example Iteration Entries
+#
+Change
+Reason
+d Before
+d After
+Delta
+Keep?
+1
+Baseline (no training)
+Starting point
+0.015
+-
+-
+-
+2
+4 epochs, lr=2e-5, batch=16
+Default config
+0.015
+0.38
++0.365
+Yes
+3
+Increased to 6 epochs
+d below 0.50 target
+0.38
+0.55
++0.17
+Yes
+4
+Switched to MultipleNegativesRankingLoss
+Test alternative loss
+0.55
+0.41
+-0.14
+No, reverted
+Every final configuration decision must be traceable to a specific iteration entry. If you cannot point to a log entry justifying a choice, the choice is not considered validated.
+﻿
+🧪 Evaluation Approach
+Follow these steps in order. Each step must produce concrete numbers before proceeding.
+Step 1: Validate Dataset Quality
+Run the data quality evaluator on the provided dataset. Confirm it passes the quality gate.
+Dimension
+Target
+Your Score
+Data Quality (balance, duplication, consistency)
+≥ 12/20
+___
+Diversity (category coverage, vocabulary richness)
+≥ 12/20
+___
+Bias Detection (label skew, length correlation)
+≥ 12/20
+___
+Linguistic Quality (fluency, naturalness)
+≥ 12/20
+___
+Real-life Matching (preference realism)
+≥ 12/20
+___
+Overall Score
+≥ 60/100
+___
+If Overall Score < 60 → investigate which dimension scored lowest. Check for label imbalance, duplicate texts, or unrealistic preference phrasing. Document findings before proceeding.
+Step 2: Establish Baseline Metrics
+Load the pre-trained all-MiniLM-L6-v2 model. Compute cosine similarity for every pair in eval_pairs.jsonl. Calculate core metrics.
+Example baseline output:
+Metric
+Baseline Value
+Margin (compatible mean - incompatible mean)
+~0.002
+Effect Size (Cohen's d)
+~0.015
+False Positive Rate (@ threshold 0.5)
+~0.48
+Cluster Purity (DBSCAN on UMAP)
+~0.52
+Save this to baseline_metrics.json. You will compare against these exact numbers after fine-tuning.
+If baseline effect size is already > 0.3 → the dataset may be too easy for this model. Verify that the pairs truly require compatibility reasoning rather than surface text matching.
+Step 3: Fine-Tune the Model
+Train using dating_pairs.jsonl only (never eval_pairs.jsonl). Use CosineSimilarityLoss with sentence-transformers.
+Starting hyperparameters: 4 epochs, batch size 16, learning rate 2e-5.
+If training loss does not decrease after epoch 1 → reduce learning rate to 1e-5 or increase batch size to 32. If training loss decreases but eval metrics worsen → you are overfitting. Reduce epochs to 2-3 or add warmup steps.
+Step 4: Compute Post-Training Metrics
+Run the identical evaluation from Step 2 on the fine-tuned model. Compare side-by-side.
+Example comparison output:
+Metric
+Baseline
+Fine-Tuned
+Delta
+Target Met?
+Margin
+0.002
+0.085
++0.083
+✅ (≥ 0.05)
+Effect Size (Cohen's d)
+0.015
+0.62
++0.605
+✅ (≥ 0.50)
+False Positive Rate
+0.48
+0.28
+-0.20
+✅ (≤ 0.35)
+Cluster Purity
+0.52
+0.71
++0.19
+✅ (≥ 0.65)
+If Effect Size < 0.50 → try increasing epochs to 6, adjusting learning rate, or using MultipleNegativesRankingLoss instead of CosineSimilarityLoss. Log each attempt. If FPR > 0.35 → examine which pair types generate false positives. Dealbreaker pairs are often the hardest.
+Step 5: Category-Wise Breakdown
+Break down metrics by preference category. Some categories are inherently harder:
+Category
+Why It's Challenging
+Baseline d
+Fine-Tuned d
+FPR
+Dealbreakers
+Shared vocabulary ("smoking") can signal incompatibility
+___
+___
+___
+Values
+Abstract concepts ("honesty", "family") are harder to embed
+___
+___
+___
+Lifestyle
+Subtle differences ("social butterfly" vs "homebody")
+___
+___
+___
+Interests
+Easiest since shared hobbies are textually similar
+___
+___
+___
+If any category has FPR > 0.40 after fine-tuning → analyze the specific pairs that fail. Consider whether additional training pairs for that category would help, and document your reasoning.
+Step 6: Self-Evaluation Questions
+Answer each question with data, not intuition:
+Does the pre-trained model actually struggle? If your baseline effect size is already high (>0.3), the pairs might be distinguishable by text similarity alone, which would make fine-tuning trivial.
+Is the improvement real or overfitting? Does the model improve on the held-out evaluation set, or only on the training set?
+Where does the model still fail? After fine-tuning, which pair types have the highest false positive rate?
+Did you validate the data first? What did your quality evaluator reveal about the dataset's strengths and weaknesses?
+Would a human agree with the labels? Pick 20 random pairs and check: are the compatibility labels reasonable?
+Does the UMAP visualization show meaningful structure? After fine-tuning, do compatible and incompatible pairs form visually distinct regions?
+﻿
+💡 First Principles
+Why Contrastive Learning?
+Standard classification models output discrete labels. But compatibility exists on a spectrum. Two people might be 80% compatible, not just "yes" or "no." Embedding models trained with contrastive loss learn to place items in a continuous space where distance encodes compatibility. This is more expressive and more useful than binary classification.
+Why Fine-tune Instead of Training from Scratch?
+Pre-trained sentence transformers already understand language structure, grammar, and general semantics. You don't need to teach the model English. You need to teach it what "compatibility" means in the dating context. Fine-tuning preserves the linguistic knowledge while adapting the similarity metric to your domain.
+Why Synthetic Data?
+Real dating compatibility data is private, expensive, and ethically sensitive. Synthetic data lets you control the distribution: how many dealbreaker pairs, how many subtle mismatches, how much category diversity. This control is essential for systematic evaluation because you can test exactly the scenarios you care about. The provided dataset was carefully designed with this principle in mind.
+Why Multiple Evaluation Metrics?
+No single number tells the full story. Margin tells you the average separation. Effect size tells you statistical significance. False positive rate tells you practical safety (how often you'd wrongly match incompatible people). Cluster purity tells you structural quality. Together, they give a comprehensive picture that prevents you from optimizing one metric at the expense of others.
+﻿
+🚀 Getting Started Hints
+Recommended Development Order
+Start with data exploration: Load the provided JSONL files. Examine the distribution of pair types, categories, labels, and text patterns. Understand what you're working with.
+Build the data quality evaluator: Before training, validate label balance, check for duplicates, measure vocabulary diversity, and ensure category coverage. Confirm the data passes the quality gate (Overall Score ≥ 60/100).
+Run baseline evaluation: Load the pre-trained model, compute cosine similarities for all pairs, and calculate the four core metrics. Save these as your baseline.
+Implement fine-tuning: Set up the training loop with CosineSimilarityLoss. Start with default hyperparameters (4 epochs, batch size 16, lr 2e-5).
+Run post-training evaluation: Use the same evaluation script on the fine-tuned model. Compare metrics side-by-side.
+Add visualizations: Create distribution plots and UMAP projections to visually confirm improvement.
+Analyze failures: If metrics don't improve enough, diagnose whether the problem is training configuration, hyperparameters, or specific pair types that remain challenging.
+Common Pitfalls to Avoid
+Don't skip the baseline: Without baseline metrics, you can't prove improvement. Always measure before training.
+Don't train on your test set: Use dating_pairs.jsonl for training and eval_pairs.jsonl for evaluation. Training and evaluation on the same data proves nothing.
+Don't skip data exploration: Understand the dataset's structure, label distribution, and pair types before building your pipeline. Blind training leads to blind debugging.
+Don't over-train: More epochs isn't always better. Watch for training loss decreasing while validation metrics plateau or worsen (overfitting).
+Don't ignore pair type performance: Different pair types test different skills. Analyze per-type metrics to understand where your model succeeds and struggles.
+Don't forget to save baseline metrics: You need the exact baseline numbers to compute improvement. Save them to a JSON file before training.
+Storage Strategy
+Use JSONL for dating pair data (one pair per line, easy to append and stream)
+Use JSON for metrics reports and metadata (structured, easy to compare)
+Use PNG/HTML for visualizations (distribution plots, UMAP projections)
+Save baseline and post-training metrics as separate files for clear before/after comparison
+﻿
+📚 Key Concepts to Understand
+Before building, make sure you understand these concepts:
+Concept
+Why It Matters Here
+Sentence Transformers
+Framework for encoding text into fixed-size vectors that capture semantic meaning. This is the foundation of your embedding system
+Cosine Similarity
+Measures angle between vectors (not magnitude). Two embeddings with cosine similarity 0.95 are nearly identical in direction; 0.0 means orthogonal
+CosineSimilarityLoss
+Contrastive loss that pushes compatible pair embeddings together and incompatible pair embeddings apart based on binary labels
+Fine-tuning vs Training
+Fine-tuning adapts a pre-trained model to a new domain. You update existing weights rather than learning from scratch
+Cohen's d (Effect Size)
+Standardized difference between two distributions: d = (μ₁ - μ₂) / pooled_σ. Values: 0.2 = small, 0.5 = medium, 0.8 = large
+False Positive Rate
+Fraction of incompatible pairs that score above the compatibility threshold. Lower = safer matching
+UMAP
+Dimensionality reduction that preserves local structure. Lets you visualize high-dimensional embeddings in 2D to see clusters
+HDBSCAN
+Density-based clustering that discovers natural groups without requiring you to specify the number of clusters
+Contrastive Learning
+Training paradigm where the model learns by comparing pairs: pulling similar items together and pushing dissimilar items apart
+Label Noise
+Incorrect or ambiguous labels in training data. Some pairs will have debatable compatibility, and your system must be robust to this
+﻿
+✅ Final Success Criteria
+Before submitting, verify that your implementation meets all of the following:
+Data and Quality Gate
+[ ] Provided dataset loaded successfully (dating_pairs.jsonl for training, eval_pairs.jsonl for evaluation)
+[ ] Dataset explored: pair type distribution, category coverage, and label balance understood
+[ ] Data quality evaluator scores the dataset across all 5 dimensions (Data Quality, Diversity, Bias Detection, Linguistic Quality, Real-life Matching)
+[ ] Data quality Overall Score ≥ 60/100 confirmed (quality gate before training)
+[ ] Training and evaluation data kept strictly separate (never trained on eval_pairs.jsonl)
+Baseline
+[ ] Baseline evaluation computes all four core metrics (margin, effect size, FPR, cluster purity) on the pre-trained model
+[ ] Baseline metrics saved to baseline_metrics.json for comparison
+[ ] Baseline UMAP visualization generated and saved
+Fine-Tuning
+[ ] Fine-tuning pipeline trains the model using CosineSimilarityLoss with the training data
+[ ] Training loss curve plotted and saved, showing convergence without overfitting
+[ ] Hyperparameters documented (epochs, batch size, learning rate, warmup steps)
+Post-Training Metrics
+[ ] Post-training evaluation computes the same four metrics on the fine-tuned model
+[ ] Effect size (Cohen's d) improves from ~0.015 to ≥ 0.50 (the primary success metric)
+[ ] False positive rate drops to ≤ 0.35
+[ ] Cluster purity improves to ≥ 0.65
+[ ] Compatibility margin is ≥ 0.05
+[ ] Classification metrics reported: Accuracy, Precision, Recall, F1-Score, AUC-ROC
+[ ] Category-wise performance breakdown shows per-category metrics (dealbreakers, values, lifestyle, interests)
+[ ] Side-by-side comparison table (baseline vs fine-tuned) with deltas for every metric
+Visualizations
+[ ] Cosine similarity distribution plots (before/after) generated with Matplotlib, Seaborn, or Plotly
+[ ] UMAP embedding projections (before/after) showing cluster separation improvement
+[ ] Category-wise metric comparison bar chart
+[ ] ROC curves for baseline and fine-tuned models overlaid on same plot
+[ ] Training loss curve
+[ ] Improvement delta chart
+[ ] All visualizations saved as PNG with clear titles, labeled axes, and legible fonts
+Iteration Logs and Traceability
+[ ] Every training configuration change documented with reason, before/after metrics, and delta
+[ ] At least 3 iteration log entries showing experimentation (not just the first attempt)
+[ ] Final configuration decisions traceable to specific iteration log entries
+[ ] Improvement iterations logged in structured format (change, reason, metric before, metric after, delta)
+Documentation
+[ ] README explains how to run the full pipeline (data loading, baseline, training, evaluation)
+[ ] Metrics reports saved as JSON for automated comparison
+[ ] Before/after comparison clearly documented with metric tables
+[ ] You can explain why the fine-tuned model outperforms the baseline based on the data
+Remember: This isn't about following a step-by-step tutorial. It's about understanding why pre-trained embeddings fail at compatibility matching, using well-designed training data to teach the model what compatibility actually means, and proving your approach works through rigorous statistical evaluation. The goal isn't a trained model. It's a provably better model. Good luck!
