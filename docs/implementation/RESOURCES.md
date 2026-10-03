@@ -35,6 +35,6 @@ All four required files are present at the repository root. In Stage 2 download 
 | S8 | [CLO-50](https://linear.app/cloisterwood/issue/CLO-50/mp5-s8-all-figures-and-interpretation) | Todo |
 | S9 | [CLO-51](https://linear.app/cloisterwood/issue/CLO-51/mp5-s9-reproducibility-github-delivery-and-closeout) | Todo |
 
-Each issue contains the stage scope and acceptance checks; each successive stage is blocked by its predecessor. S0 remains In Progress until the VS Code model choice and integration access are confirmed. Actual stage status lives in Linear and the handoff.
+Each issue contains the stage scope and acceptance checks; each successive stage is blocked by its predecessor. The user confirmed Sol 6.1 is available and selected as the default development model. S0 remains In Progress until VS Code Linear access is confirmed. Actual stage status lives in Linear and the handoff.
 
 The existing Personal Agent Engine projects were found. A dedicated coursework project in the Cloisterwood team was chosen to match Mini Project 4 and keep the ten-stage plan together.

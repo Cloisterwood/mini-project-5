@@ -21,11 +21,11 @@ Use OpenAI assistants throughout development. The specified MiniLM model is a se
 | Work | Preferred assistant tier |
 |---|---|
 | Experiment protocol, metric correctness, leakage checks, difficult debugging | Sol with appropriate reasoning; stronger available OpenAI model if unresolved |
-| Normal implementation and reviews | User's available Sol choice |
+| Normal implementation and reviews | Sol 6.1 (user-confirmed available in VS Code) |
 | Well-specified scripts, plotting, execution of verified commands | Terra if available; otherwise Sol |
 | Small documentation, status updates, formatting | Luna if available; otherwise current assistant |
 
-“Sol,” “Terra,” and “Luna” are routing preferences, not guaranteed public model IDs or a universal intelligence ranking. Verify actual VS Code options and usage at S0; record exact selected model. Do not invent CLI flags or assert that this app's model menu matches VS Code. Human changes the picker if the agent cannot switch. No parallel agents are needed; work sequentially.
+“Sol,” “Terra,” and “Luna” are routing preferences, not guaranteed public model IDs or a universal intelligence ranking. The user confirmed Sol 6.1 is available in VS Code; this is the default wherever the stage plan says Sol. Record the selected model; check Terra/Luna availability only when considering those alternatives. Do not invent CLI flags or assert that this app's model menu matches VS Code. Human changes the picker if the agent cannot switch. No parallel agents are needed; work sequentially.
 
 Failure procedure:
 

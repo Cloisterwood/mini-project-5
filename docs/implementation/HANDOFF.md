@@ -4,7 +4,7 @@ Updated: 2026-10-03. Status: STAGE 0 IN PROGRESS — RESOURCES CONNECTED.
 
 ## Next action
 
-In VS Code, read START_HERE.md and RESOURCES.md, confirm the available Sol model choice and Linear connection, then finish S0 / CLO-42 and stop. Do not repeat repository/project/issue creation. S1 has not started.
+In VS Code, read START_HERE.md and RESOURCES.md, select the user-confirmed Sol 6.1 model and confirm the Linear connection, then finish S0 / CLO-42 and stop. Do not repeat repository/project/issue creation. S1 has not started.
 
 ## Verified workspace state
 
@@ -15,7 +15,7 @@ In VS Code, read START_HERE.md and RESOURCES.md, confirm the available Sol model
 - Dataset URL and all four filenames verified; revision recorded in RESOURCES.md. Data contents have not been downloaded or validated.
 - Original assignment and historical July plan preserved. New staged plan governs execution.
 - No environment installation, model download, training, paid GPU, or subscription changes performed.
-- Exact VS Code model and context utilization are unavailable in this chat.
+- User confirmed Sol 6.1 is available in VS Code and is the default development assistant. Context utilization remains unavailable in this chat.
 - Publishing receipt will be recorded on CLO-42 after push verification. Use the remote branch HEAD to identify the latest documentation checkpoint.
 
 ## Decisions already made for the plan
