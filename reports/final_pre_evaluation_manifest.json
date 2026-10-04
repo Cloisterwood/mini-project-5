@@ -1,0 +1,20 @@
+{
+  "baseline_config_sha256": "f15fb4da6d4898f863d8df34c36b112dbb40df07932ef9b207d334c1bb4b64c1",
+  "final_config_sha256": "f11160049905cd8c08b40b83e6339492cdbaec8d28d20eed86a62a4f50b706eb",
+  "selected_files": {
+    "1_Pooling/config.json": "4fef0a7e8c8ee36e74c0fad89bab60ade72324442d43f559ea219bb7c2580710",
+    "README.md": "5b3896f8eb17b2bea7c7eee2e9c69a9fae3c215d6e3a8955f24627c5e72e4e20",
+    "config.json": "4599e8a5d74ed192b70919aa02124c2d68580070b22e89db956c0353618bccd9",
+    "config_sentence_transformers.json": "da9b5e777885dd8c7394fe61ec05e21ac13713970e633300c4f5556025d5722e",
+    "model.safetensors": "0ae138bcb517de2d538b027a8f3f103efa8b83f975dd37182e58c33d0a0ddb88",
+    "modules.json": "fa7d796a215e1b2416773062891923b191fc5a4849bc44e322997433c90f459c",
+    "sentence_bert_config.json": "3084164002c0bca01b0259c5327123803fce32e660a57feb93184ffead186fc8",
+    "special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+    "tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+    "tokenizer_config.json": "c128cee663cc23ce44cf253471d2a538d1623c7c3ead5e465b13519a017ca1f0",
+    "training_args.bin": "04076dca4a2a60c8adc19a54420a59c9393dc40de79ad0a7e941cc9074e5b7d6",
+    "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+  },
+  "selected_weights_sha256": "8c79ccf853ccd4e24e64e55b637b68f2d7847c6208ca2911cc7e69ea9e2a59f4",
+  "selection_file_sha256": "706d284542c5cde95428a8282097a2f69ee0ce5b30cca130fd85859e27e8017a"
+}

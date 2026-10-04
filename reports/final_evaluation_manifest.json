@@ -1,0 +1,56 @@
+{
+  "artifacts": {
+    "reports/comparison.json": "fcbe95b22e44321fa43fbbd28ef63f7c08210b02724399176f53131ca04e0852",
+    "reports/final/finetuned_eval_predictions.csv": "656e00a0e64f59788bf42bd2e815dfd3e093994634d83c57237a033b5bd70661",
+    "reports/final_error_analysis.json": "f7e0d3c1b9e618b1144c53c52df455a47a9a44d24151abd9e2da07f43e125719",
+    "reports/finetuned_metrics.json": "d515ce30f3edcf3f3f929845b299b88adf9a9cc78d60b75bea2ac4cbd25463c8"
+  },
+  "binding": {
+    "baseline_config_sha256": "f15fb4da6d4898f863d8df34c36b112dbb40df07932ef9b207d334c1bb4b64c1",
+    "baseline_seal_sha256": "402dee34a2006b1fc89203a6e18031787880fcd51aae672a91ab13d2965a8236",
+    "evaluation_source_sha256": "0ef015ff913bdc21c2ac9897a0e67ebfee788d64b63fca98b195ce262401a8d2",
+    "final_config_sha256": "f11160049905cd8c08b40b83e6339492cdbaec8d28d20eed86a62a4f50b706eb",
+    "selected_files": {
+      "1_Pooling/config.json": "4fef0a7e8c8ee36e74c0fad89bab60ade72324442d43f559ea219bb7c2580710",
+      "README.md": "5b3896f8eb17b2bea7c7eee2e9c69a9fae3c215d6e3a8955f24627c5e72e4e20",
+      "config.json": "4599e8a5d74ed192b70919aa02124c2d68580070b22e89db956c0353618bccd9",
+      "config_sentence_transformers.json": "da9b5e777885dd8c7394fe61ec05e21ac13713970e633300c4f5556025d5722e",
+      "model.safetensors": "0ae138bcb517de2d538b027a8f3f103efa8b83f975dd37182e58c33d0a0ddb88",
+      "modules.json": "fa7d796a215e1b2416773062891923b191fc5a4849bc44e322997433c90f459c",
+      "sentence_bert_config.json": "3084164002c0bca01b0259c5327123803fce32e660a57feb93184ffead186fc8",
+      "special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+      "tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+      "tokenizer_config.json": "c128cee663cc23ce44cf253471d2a538d1623c7c3ead5e465b13519a017ca1f0",
+      "training_args.bin": "04076dca4a2a60c8adc19a54420a59c9393dc40de79ad0a7e941cc9074e5b7d6",
+      "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    },
+    "selected_weights_sha256": "8c79ccf853ccd4e24e64e55b637b68f2d7847c6208ca2911cc7e69ea9e2a59f4",
+    "selection_file_sha256": "706d284542c5cde95428a8282097a2f69ee0ce5b30cca130fd85859e27e8017a"
+  },
+  "code_commit": "6f7b7d2486870b100e202f1a5182b4f831730682",
+  "code_sha256": {
+    "cluster.py": "d7cebbf2ac44ef04f2d9d63f268f09e0ca7c585c456f17f70c85574f2a23cff9",
+    "final_evaluation.py": "bc7a4b8e99e851c7ff57c222e3894caf866b0ac6cb3b06839412d47e3536993f",
+    "metrics.py": "e5c1e6781d5823ffa49c79d0098f8c0f91f8d61021450d13f0987d7354d919cb",
+    "uncertainty.py": "117f7a5d84f7ff24639fd0185f09d24bb1f6ec4c06cd23f776ff9126f72032f3"
+  },
+  "elapsed_seconds": 27.63406858302187,
+  "manifest_sha256": "c2c60da633f56767f12f6c6eaca622f1ebd7335e8eced497e9fef832e9fbe0ab",
+  "provenance": {
+    "evaluation_source_sha256": "0ef015ff913bdc21c2ac9897a0e67ebfee788d64b63fca98b195ce262401a8d2",
+    "ordered_record_ids_sha256": "d865d5e8b5570747a9da30afd18c603847698ac33d24d0a656476b871aa05fbb",
+    "selected_run": "run-002",
+    "selected_weights_sha256": "8c79ccf853ccd4e24e64e55b637b68f2d7847c6208ca2911cc7e69ea9e2a59f4",
+    "selection_manifest_sha256": "e428c305c13473d5c6863c9d1c987ac766c8633373d455dab2e4e9d7d05e60be"
+  },
+  "software": {
+    "hdbscan": "0.8.44",
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "scikit-learn": "1.9.1",
+    "sentence-transformers": "5.7.0",
+    "torch": "2.14.1",
+    "transformers": "4.57.6",
+    "umap-learn": "0.5.12"
+  }
+}

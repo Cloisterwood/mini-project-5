@@ -1,5 +1,67 @@
 # Current handoff
 
+Updated: 2026-10-04. Status: S7 COMPLETE — final run-002 evaluation and paired uncertainty sealed.
+
+## Next single action: Stage 8 only
+
+Wait for “Continue with Stage 8.” Implement visualize.py and six named PNGs from
+the saved final/baseline predictions/reports, plus docs/SELF_EVALUATION.md answering
+all six assignment questions. Read S8/contract/operating rules. No retraining or
+re-evaluation needed; final reports and selected run stay frozen. Inspect every
+PNG and verify split/counts/units/undefined subgroup metrics. Stop S8, not S9.
+
+## Stage 7 actual completion
+
+- Selection run-002 verified before evaluation, including all three validation
+  seals/current selected model files. Pre-evaluation receipt saved BEFORE source
+  evaluation reads. Selected model/state unchanged from S6; no whole-data refit.
+- Final protocol/tests committed6f7b7d2486870b100e202f1a5182b4f831730682 before
+  inference: configs/final-evaluation.json, final_evaluation.py, uncertainty.py,
+  CLI final-evaluation and four tests. Fresh governance preflight passed.
+- Actual one CPU final model inference on original1469 eval rows,709 positives,
+  760 negatives; exact IDs/order/labels/source hash match baseline. Fixed threshold.5,
+  raw preprocessing, label-free symmetric pair UMAP/HDBSCAN unchanged.
+- Final margin .5720076805, d2.1584266416, FPR .2276315789, AUC .9117771509,
+  accuracy .8332198775, precision .7864197531, recall .8984485190, F1 .8387096774.
+  TN587/FP173/FN72/TP637. Primary four targets pass. Strict FPR<=.1 and
+  accuracy/precision/recall/F1>=.9 unmet; both tiers reported without reinterpretation.
+- Coverage-adjusted purity .8339006127, clustered-only .8413461538,20 clusters,
+  13 noise/1469 (noise zero credit in primary denominator).
+- Baseline -> final d -.3640484156 ->2.1584266416, delta2.5224750572;
+  FPR .4802631579 -> .2276315789, delta-.2526315789;
+  AUC .4007571821 -> .9117771509, delta .5110199688;
+  margin -.0787518547 -> .5720076805, delta .6507595353.
+- 2000 seed42 paired component bootstrap draws;1396 normalized profile components,
+  largest3/1469. Meets predeclared>=30/maxfraction<=.25 grouping rule; no fallback.
+  Delta d95% [2.3031661485,2.7389716532]; FPR delta95%
+  [-.3061856713,-.1935432242]. All2000 draws defined for all four metrics/deltas.
+  Both model intervals and delta intervals saved; no purity bootstrap.
+  Shared templates/cross-split profiles and seed/selection variance remain limitations.
+- Error audit: subtle mismatches115FP/121 negatives and4FN/159 positives;
+  dealbreakers0FP/215 negatives (single-class metrics explicitly undefined).
+  llm_judged incompatible48FP/148; compatible56FN/151. Pair-type compatible
+  includes8 negatives, allFP; metadata type is distinct from ground-truth label.
+  Error excerpts/source IDs/threshold explanations saved, plus descriptive discussion
+  docs/FINAL_COMPARISON.md. No causal explanation or real-romance generalization claim.
+- reports/finetuned_metrics.json, comparison.json, final_error_analysis.json and
+  final/finetuned_eval_predictions.csv sealed by final_evaluation_manifest.json.
+  Actual evaluation/report runtime27.6340686s. Repeat final-evaluation verifies
+  all four artifacts without inference/clustering/bootstrap. Source/model hashes
+  and selection stay fixed; code/software/execution provenance recorded.
+- Focused4 tests passed; full121 passed in13.52s. Independent CSV audit reproduces
+  metrics/all breakdowns/purity and exact IDs/labels/source hashes for both reports.
+- No errors, training processes or paid resources; dependency/lock/train code unchanged.
+  Model weights retained ignored locally, no remote backup. GitHub stores receipts.
+- Sequential GPT-6 family, exact picker unexposed; user preference Sol6.1.
+  Context telemetry unavailable; checkpoint at S7 completion.
+- Reviewed named files committed/pushed to private main; final SHA/live remote
+  verification on CLO-49. Worktree clean, S7 Done; S8 Todo. Commit cannot contain
+  its own SHA. No figures/self-evaluation Stage8 work has started.
+
+STOP: S7 complete. Next prompt: “Continue with Stage 8.”
+
+## Historical S6 checkpoint (superseded next action)
+
 Updated: 2026-10-04. Status: S6 COMPLETE — 3/3 experiments; final run-002 selection frozen.
 
 ## Next single action: Stage 7 only

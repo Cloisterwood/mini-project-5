@@ -1,6 +1,6 @@
 # Mini-project 5: staged implementation
 
-Planning date: October 3, 2026. Status: Stages 0–6 complete; run-002 selected; Stage 7 pending.
+Planning date: October 3, 2026. Status: Stages 0–7 complete; run-002 final results sealed; Stage 8 pending.
 
 Build a reproducible dating compatibility experiment using `sentence-transformers/all-MiniLM-L6-v2` and `CosineSimilarityLoss`. OpenAI models assist with development; the assignment explicitly specifies the embedding model being trained.
 
@@ -26,6 +26,6 @@ The existing `docs/superpowers/plans/2026-07-04-dating-compatibility-finetuning.
 
 See [RESOURCES.md](docs/implementation/RESOURCES.md) for the private Cloisterwood GitHub repository, Linear project and ten issues, and the verified Hugging Face dataset revision and file names. No additional source links are needed.
 
-Stages 0–6 are complete. The quality gate passes at94.60/100 and the baseline is sealed. Three real CPU experiments completed; validation-only selection is frozen in reports/selected_run_manifest.json. Run-002 wins (six epochs, LR2e-5): validation d=2.2064, FPR=0.2104, margin=0.5767 and coverage-adjusted purity=0.8340. All three runs meet the four primary targets, while stricter targets remain partly unmet. Differences are small and do not establish significance. Say “Continue with Stage 7” for the frozen final evaluation and paired uncertainty. No evaluation inference of a trained model has occurred; no retraining on all data is planned. The approved quarantine remains5,991 eligible rows (4,792 fit/1,199 validation), with original/evaluation sources preserved. Sol6.1 remains the user's preferred development assistant. Training/validation workers deny evaluation file reads.
+Stages 0–7 are complete. Quality passes at94.60/100. Three CPU experiments completed and run-002 selection was frozen before final evaluation. Final1469-row results are sealed: d=2.1584, FPR=22.76%, margin=.5720, AUC=.9118, coverage-adjusted purity=83.39%. All four primary targets pass; stricter classification/FPR targets remain unmet. The2000-draw paired profile-component bootstrap gives delta d95% [2.3032,2.7390], subject to documented synthetic-data/dependence assumptions. See docs/FINAL_COMPARISON.md. Say “Continue with Stage 8” for six figures and assignment self-evaluation. No retraining or tuning follows final outcomes. The approved quarantine remains5,991 eligible rows (4,792 fit/1,199 validation), and original sources are preserved. Sol6.1 remains the user's preferred development assistant; training/validation read guards stay intact.
 
 Original data, isolated training inputs, model weights, embedding caches and smoke checkpoints stay ignored locally; checksums are in reports. Environment, diagnostics, acquisition, exploration, quality, guided review, baseline, training preflight, smoke and run interfaces work; see README.md. Smoke weights are not a submitted/scored model. The historical July plan remains preserved.

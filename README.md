@@ -17,7 +17,9 @@ test. Stage 6 is complete: three training experiments, with **run-002 selected**
 the frozen validation rule. Its validation metrics are d=2.2064, FPR=21.04%,
 AUC=0.9165, and coverage-adjusted purity=83.40%.
 All three runs meet all four primary validation targets.
-Final held-out comparison awaits Stage 7; selection is already frozen.
+Stage 7 final evaluation is complete: d=2.1584, FPR=22.76%, AUC=0.9118,
+coverage-adjusted purity=83.39%. All four primary final targets pass; stricter FPR
+and accuracy/precision/recall/F1 targets remain unmet. See [the final comparison](docs/FINAL_COMPARISON.md).
 
 ## Setup
 
@@ -264,8 +266,12 @@ gains in d/FPR/AUC/purity and slight declines in accuracy/recall/F1. Final selec
 is frozen in `reports/selected_run_manifest.json`: run-002, then run-001, then
 run-003. Run-003 lowered LR to1e-5 for six epochs and had lower d/higher FPR.
 `select-run` verifies all three saved validation seals and freezes the decision;
-repeat verifies the same evidence without inference. Stage 7 remains pending
-user continuation. No further training or retraining on all data is scheduled.
+repeat verifies the same evidence without inference. `final-evaluation` uses this
+frozen model and the original evaluation rows, then seals final metrics, paired
+2000-draw profile-component bootstrap intervals, predictions and error analysis.
+Repeated calls verify saved final artifacts without inference or resampling.
+Stage 8 figures/self-evaluation await continuation. No further training or
+retraining on all data is scheduled.
 
 The implementation uses [Sentence Transformer training arguments](https://sbert.net/docs/package_reference/sentence_transformer/training_args.html)
 and [Trainer checkpoint resume](https://sbert.net/docs/package_reference/sentence_transformer/trainer.html),
