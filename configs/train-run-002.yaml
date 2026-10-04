@@ -1,0 +1,23 @@
+version: s5-train-v1
+loss: CosineSimilarityLoss
+model_id: sentence-transformers/all-MiniLM-L6-v2
+revision: 1110a243fdf4706b3f48f1d95db1a4f5529b4d41
+epochs: 6
+batch_size: 16
+learning_rate: 0.00002
+warmup_ratio: 0.1
+seed: 42
+precision: float32
+max_seq_length: 256
+device: cpu
+torch_threads: 4
+optimizer: adamw_torch
+weight_decay: 0.0
+max_grad_norm: 1.0
+logging_steps: 10
+checkpoint_selection: validation_loss
+smoke:
+  fit_pairs: 256
+  validation_pairs: 64
+  total_steps: 16
+  pause_step: 8

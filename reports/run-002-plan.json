@@ -1,0 +1,12 @@
+{
+  "run_id": "run-002",
+  "status": "planned_before_training",
+  "change": "epochs: 4 -> 6; all other config values unchanged",
+  "reason": "run-001 validation loss improved each epoch (0.132871, 0.118419, 0.116256, 0.115483), with diminishing gains. Test whether further training improves validation; no claim that underfitting is established.",
+  "config_path": "configs/train-run-002.yaml",
+  "start_from": "same pinned base revision, not run-001 weights",
+  "comparison": "frozen validation only; baseline and run-001",
+  "schedule_note": "Increasing total epochs also extends the ratio-based warmup and linear decay schedule (180 instead of 120 warmup steps). This is a six-epoch schedule comparison, not an identical four-epoch prefix plus two epochs.",
+  "selection": "lowest validation loss checkpoint within run; final run selection deferred until all three experiments",
+  "stop": "S6B after run-002 validation and checkpoint"
+}
