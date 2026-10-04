@@ -1,0 +1,23 @@
+{
+  "version": "s4-baseline-v1",
+  "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+  "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "device": "cpu",
+  "torch_threads": 4,
+  "batch_size": 32,
+  "seed": 42,
+  "preprocessing": {
+    "text": "raw text_1/text_2 only; gender prefixes preserved; no instruction prefix",
+    "max_seq_length": 256,
+    "normalize_embeddings": true,
+    "precision": "float32",
+    "threshold": 0.5
+  },
+  "umap": {"n_components": 2, "n_neighbors": 15, "min_dist": 0.1, "metric": "euclidean", "random_state": 42, "n_jobs": 1},
+  "hdbscan": {"min_cluster_size": 15, "min_samples": 5, "metric": "euclidean", "core_dist_n_jobs": 1},
+  "direct_feature_sensitivity": false,
+  "target_tiers": {
+    "final_checklist": {"margin": [">=", 0.05], "cohens_d": [">=", 0.5], "fpr": ["<=", 0.35], "cluster_purity": [">=", 0.65]},
+    "earlier_strict": {"margin": [">=", 0.1], "cohens_d": [">=", 0.5], "fpr": ["<=", 0.1], "cluster_purity": [">=", 0.7], "accuracy": [">=", 0.9], "precision": [">=", 0.9], "recall": [">=", 0.9], "f1": [">=", 0.9], "auc": [">=", 0.9]}
+  }
+}

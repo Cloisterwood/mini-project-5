@@ -1,0 +1,94 @@
+{
+  "config": {
+    "batch_size": 32,
+    "device": "cpu",
+    "direct_feature_sensitivity": false,
+    "hdbscan": {
+      "core_dist_n_jobs": 1,
+      "metric": "euclidean",
+      "min_cluster_size": 15,
+      "min_samples": 5
+    },
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "preprocessing": {
+      "max_seq_length": 256,
+      "normalize_embeddings": true,
+      "precision": "float32",
+      "text": "raw text_1/text_2 only; gender prefixes preserved; no instruction prefix",
+      "threshold": 0.5
+    },
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "seed": 42,
+    "target_tiers": {
+      "earlier_strict": {
+        "accuracy": [
+          ">=",
+          0.9
+        ],
+        "auc": [
+          ">=",
+          0.9
+        ],
+        "cluster_purity": [
+          ">=",
+          0.7
+        ],
+        "cohens_d": [
+          ">=",
+          0.5
+        ],
+        "f1": [
+          ">=",
+          0.9
+        ],
+        "fpr": [
+          "<=",
+          0.1
+        ],
+        "margin": [
+          ">=",
+          0.1
+        ],
+        "precision": [
+          ">=",
+          0.9
+        ],
+        "recall": [
+          ">=",
+          0.9
+        ]
+      },
+      "final_checklist": {
+        "cluster_purity": [
+          ">=",
+          0.65
+        ],
+        "cohens_d": [
+          ">=",
+          0.5
+        ],
+        "fpr": [
+          "<=",
+          0.35
+        ],
+        "margin": [
+          ">=",
+          0.05
+        ]
+      }
+    },
+    "torch_threads": 4,
+    "umap": {
+      "metric": "euclidean",
+      "min_dist": 0.1,
+      "n_components": 2,
+      "n_jobs": 1,
+      "n_neighbors": 15,
+      "random_state": 42
+    },
+    "version": "s4-baseline-v1"
+  },
+  "config_sha256": "f15fb4da6d4898f863d8df34c36b112dbb40df07932ef9b207d334c1bb4b64c1",
+  "frozen_before_model_outcomes": true,
+  "version": "s4-config-freeze-v1"
+}

@@ -1,0 +1,63 @@
+{
+  "artifacts": {
+    "reports/base_model_manifest.json": "7eba2f5aa611bda902405181576a6fda82a2c0d0009c5d95892e599e58e45097",
+    "reports/baseline/baseline_eval_predictions.csv": "9a5badf3557052af16492603acdae892948ba088193ec507f08b968a8af608d0",
+    "reports/baseline/baseline_eval_roc.png": "e897fc59fe585cf0053686c2a0de90db4455a6689ca144e6e60c596cb5f09b44",
+    "reports/baseline/baseline_eval_similarity.png": "16f8abdef72c54c7551765c36806abab1267d8230cd8b8e771c548f771e8d624",
+    "reports/baseline/baseline_eval_umap.png": "fc69e9f2f148df16706dac66f215caa8b7d79d2272f86bd32196a308c1065710",
+    "reports/baseline/baseline_fit_predictions.csv": "3d33f5ecaa1b9b8dc0f2ffcbadde755a803021b120b2cb7374f0dacf2261d071",
+    "reports/baseline/baseline_fit_roc.png": "25d48d21f7d74d0e5c0fa2ec2bbecd2d00234205780c70ec9395ecb329a3c529",
+    "reports/baseline/baseline_fit_similarity.png": "473b267e590625f90ce7452f8736f1429e2aff134b4fb2bf2d4f41dba66e91ea",
+    "reports/baseline/baseline_fit_umap.png": "562363e1e66a580f75226f55d19bc1027f8e6d4d376903acce82e963239856d8",
+    "reports/baseline/baseline_validation_predictions.csv": "e36d09a33502574f6d50994162353f6d62b29a19d5586d38c7a0229ac0789785",
+    "reports/baseline/baseline_validation_roc.png": "e363c115a98cac9d69c8a84ebdc3f45fb8fa6a1f6a971796b0199a8e8fc00ecd",
+    "reports/baseline/baseline_validation_similarity.png": "8e9a6e60aeb922c490c3ab6ecb798d38ceb3eec1147ce665e94afae274d638d9",
+    "reports/baseline/baseline_validation_umap.png": "cd65094dee8f7d6b4bc77078b4848a821738e43fdffb322e12c2f5e4891c796a",
+    "reports/baseline_config_manifest.json": "12e9f737d1c711313d0f0ff38a49d7b1adae5a217785b7eec76677e77f801bd6",
+    "reports/baseline_metrics.json": "deac4e61b8d4ab14a7d3e25fb0d73acf9716cddd511f607f27dc7bcac2690bb1",
+    "reports/fit_baseline_metrics.json": "452cfcaf12ef3e7d5b25ea4567185a611f742a13bc71a0acbb8b1999813f079d",
+    "reports/validation_baseline_metrics.json": "ff6c3489391069c8627c9ff2cf292952e4e144f5d9c3c8127d0156198f6a7931"
+  },
+  "evaluation_policy": "Frozen assignment-required baseline; no selection/tuning from evaluation results",
+  "execution": {
+    "code_commit_at_execution": "c645e05585d605c087b62dec5790a6999b5b345f",
+    "device": "cpu",
+    "implementation_sha256": {
+      "cluster.py": "d7cebbf2ac44ef04f2d9d63f268f09e0ca7c585c456f17f70c85574f2a23cff9",
+      "evaluate.py": "8d80bf9c79b5142310d3f82fe0df61725d7d3015b8a5f0fe27e8d0699e73f99e",
+      "metrics.py": "e5c1e6781d5823ffa49c79d0098f8c0f91f8d61021450d13f0987d7354d919cb"
+    },
+    "max_seq_length": 256,
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "python": "3.12.13",
+    "software": {
+      "hdbscan": "0.8.44",
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.3",
+      "scikit-learn": "1.9.1",
+      "sentence-transformers": "5.7.0",
+      "torch": "2.14.1",
+      "transformers": "4.57.6",
+      "umap-learn": "0.5.12"
+    }
+  },
+  "inputs": {
+    "cohort_manifest_sha256": "abaf68d44503359ce5d0ae963e0d8ac79a8bbc214aba8623e19e11806290c320",
+    "config_sha256": "f15fb4da6d4898f863d8df34c36b112dbb40df07932ef9b207d334c1bb4b64c1",
+    "quality_report_sha256": "e7dd38eddf15efc07937deae655e7c7e770fe1e38c55f2f1ed4327fa2df0fe44",
+    "source_hashes": {
+      "dating_pairs.jsonl": "ccdffa2e004f0b36ff7102b23023f3a65bba2c7c02afb1d7029d03490e319302",
+      "dating_pairs_metadata.json": "5e0486fc6068de27dd133dc4363dbdbc5501a635760f7a873783893a2c145d24",
+      "eval_pairs.jsonl": "0ef015ff913bdc21c2ac9897a0e67ebfee788d64b63fca98b195ce262401a8d2",
+      "eval_pairs_metadata.json": "66f963049c974ed8cc685c33ea5b7e191598fdc71501d758c990c4a756767013"
+    },
+    "split_manifest_sha256": "e95745c57e129c95d5af8234bb29e6714e5f178a20946ef094729a4ca3c5b16f"
+  },
+  "manifest_sha256": "2f7c78b5ab5797a77fc8b7e8c42e3438641b15edce3d3df9be55668ef3b9e5ff",
+  "split_elapsed_seconds": {
+    "eval": 6.72697379195597,
+    "fit": 31.80204966699239,
+    "validation": 6.709251124993898
+  },
+  "version": "s4-seal-v1"
+}

@@ -9,7 +9,7 @@ Verified October 3, 2026.
 - Dataset: https://huggingface.co/datasets/dipenbhuva/dating-compatibility-pairs
 - Dataset revision verified from Hugging Face API: `69b750dd024d5732ca19596d86bffc253abee92e`.
 - Dataset card at the pinned revision declares Apache-2.0; public and ungated. S2 acquired and validated all 6,000/1,469 records and matching metadata. The approved nine-row training quarantine leaves 5,991 eligible rows and zero cross-file pair overlap. Original files are unchanged; active reports are under reports/quarantine-v1/. S3 human review is complete and the verified quality gate passes at 94.60/100.
-- Model: https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2 (pin its revision when implementing baseline).
+- Model: https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2, pinned S4 revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`; file hashes in reports/base_model_manifest.json. Baseline complete and sealed; weights excluded from Git.
 
 ## Dataset acquisition
 
@@ -28,7 +28,7 @@ All four required files are present at the repository root. In Stage 2 download 
 | S1 | [CLO-43](https://linear.app/cloisterwood/issue/CLO-43/mp5-s1-reproducible-environment-and-package-skeleton) | Done |
 | S2 | [CLO-44](https://linear.app/cloisterwood/issue/CLO-44/mp5-s2-dataset-validation-exploration-and-split) | Done |
 | S3 | [CLO-45](https://linear.app/cloisterwood/issue/CLO-45/mp5-s3-quality-gate-and-human-review) | Done |
-| S4 | [CLO-46](https://linear.app/cloisterwood/issue/CLO-46/mp5-s4-metrics-and-baseline) | Todo |
+| S4 | [CLO-46](https://linear.app/cloisterwood/issue/CLO-46/mp5-s4-metrics-and-baseline) | Done |
 | S5 | [CLO-47](https://linear.app/cloisterwood/issue/CLO-47/mp5-s5-training-smoke-test-and-compute-decision) | Todo |
 | S6 | [CLO-48](https://linear.app/cloisterwood/issue/CLO-48/mp5-s6-three-bounded-training-experiments) | Todo |
 | S7 | [CLO-49](https://linear.app/cloisterwood/issue/CLO-49/mp5-s7-frozen-final-comparison-and-uncertainty) | Todo |

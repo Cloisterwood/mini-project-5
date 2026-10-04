@@ -27,7 +27,19 @@ def main(argv: list[str] | None = None) -> int:
     review.add_argument("--data-dir", type=Path, default=Path("data"))
     review.add_argument("--responses", type=Path, default=Path("docs/human_review_responses.csv"))
     review.add_argument("--pair", type=int, help="Revisit a specific sample number (1–20)")
+    baseline_parser = commands.add_parser("baseline", help="Run or verify the frozen, gated base-model baseline")
+    baseline_parser.add_argument("--data-dir", type=Path, default=Path("data"))
     args = parser.parse_args(argv)
+    if args.command == "baseline":
+        from dating_compat.data import DataError
+        from dating_compat.evaluate import baseline
+        try:
+            baseline(args.data_dir)
+        except (DataError, OSError) as exc:
+            print(f"BASELINE ERROR: {exc}")
+            return 1
+        print("BASELINE PASS")
+        return 0
     if args.command == "review":
         from dating_compat.data import DataError
         from dating_compat.review_guide import guided_review

@@ -10,8 +10,9 @@ rows that overlap evaluation, leaving **5,991 eligible rows**. Original files an
 all 1,469 evaluation rows are preserved. See [the data audit](docs/DATA_AUDIT.md).
 The structural data gate and the S3 human quality gate pass.
 
-Stage 3 is complete. All 20 human reviews are recorded and the verified quality
-gate passes at **94.60/100**. Stage 4 metrics and baseline are next; no training has started.
+Stages 3 and 4 are complete. All 20 human reviews are recorded and the verified
+quality gate passes at **94.60/100**. The pinned MiniLM baseline is measured and
+sealed. Stage 5 training smoke test and compute decision are next; no training has started.
 
 ## Setup
 
@@ -144,6 +145,61 @@ instructor/data-owner guidance. Future training must call `require_quality_gate(
 from dating_compat.quality; it revalidates structural provenance, verifies the
 sample, recomputes scores from actual responses, and rejects stale or modified
 quality reports. Changing a JSON passed flag cannot bypass the gate.
+
+## Baseline metrics and sealed evidence
+
+Run from the project folder:
+
+```bash
+.venv/bin/python -m dating_compat baseline
+```
+
+The completed run returns `BASELINE SEALED ARTIFACTS VERIFIED` and `BASELINE PASS`
+without repeating inference. Changed source, quality, configuration, or sealed
+artifacts cause a failing exit. Removing an artifact does not authorize replacing it.
+`configs/baseline.json` is frozen by `reports/baseline_config_manifest.json` before
+outcomes. Model revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` was verified
+with the Hugging Face API. Eleven downloaded files have checksums in
+`reports/base_model_manifest.json`; weights stay ignored under `models/base-minilm/`.
+
+Inference uses CPU, four Torch threads, float32, batch 32, max sequence length 256,
+raw profile texts with gender prefixes preserved, no instruction prefix, and unit
+embeddings. No profile was truncated (maximum observed token lengths 36/33/35 for
+fit/validation/evaluation). Embeddings are cached under `.cache/embeddings/`, bound
+to ordered record IDs, raw text hash, model files, preprocessing, device, and versions.
+
+| Split | Pairs | Margin | Signed Cohen's d | FPR at .5 | AUC | Coverage-adjusted purity |
+|---|---:|---:|---:|---:|---:|---:|
+| Fit | 4,792 | -0.08437 | -0.39050 | 0.49562 | 0.39924 | 0.45785 |
+| Validation | 1,199 | -0.08771 | -0.40483 | 0.50751 | 0.40162 | 0.49625 |
+| Evaluation | 1,469 | -0.07875 | -0.36405 | 0.48026 | 0.40076 | 0.51804 |
+
+The base semantic-similarity model separates these compatibility labels poorly.
+The frozen scoring direction/threshold remains unchanged. None of the baseline
+final-checklist performance targets are met; baseline measurement is complete.
+This does not predict whether fine-tuning will attain the targets.
+
+All classification metrics, confusion counts, denominators, explicit undefined
+reasons, exact category/pair-type breakdowns, and both target tiers are in
+`reports/{fit,validation}_baseline_metrics.json` and
+[`reports/baseline_metrics.json`](reports/baseline_metrics.json) (evaluation).
+Row-aligned prediction CSVs and nine inspected similarity/UMAP/ROC PNGs are under
+[`reports/baseline/`](reports/baseline/). The hash seal for all 17 baseline artifacts
+is `reports/baseline_manifest.json`.
+
+Clustering uses symmetric `[abs(u-v), u*v]` features with separately fitted,
+label-free UMAP/HDBSCAN per split. Purity gives noise zero credit and uses all
+pairs as denominator. Clustered-only purity, noise coverage, cluster sizes, and
+observed-label majority baselines are also reported. Direct-feature sensitivity
+was excluded before outcomes as an optional analysis. Separate UMAP axes are not
+aligned. The evaluation baseline is sealed and must never guide model selection,
+thresholds, early stopping, or targeted augmentation; development uses validation.
+Bootstrap uncertainty and paired fine-tuned comparisons belong to Stage 7.
+
+Implementation follows the installed APIs and official
+[Sentence Transformers](https://sbert.net/docs/package_reference/sentence_transformer/model.html),
+[UMAP reproducibility](https://umap-learn.readthedocs.io/en/latest/reproducibility.html),
+and [HDBSCAN](https://hdbscan.readthedocs.io/en/latest/api.html) documentation.
 
 ## Implementation choices
 

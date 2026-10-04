@@ -1,95 +1,130 @@
 # Current handoff
 
-Updated: 2026-10-04. Status: S3 COMPLETE — VERIFIED QUALITY GATE PASS.
+Updated: 2026-10-04. Status: S4 COMPLETE — BASELINE MEASURED AND SEALED.
 
 ## Next single action
 
-Wait for the user's “Continue with Stage 4.” Then read START_HERE.md, the S4
-section of 01-STAGES.md, 02-EXPERIMENT-CONTRACT.md, and 03-OPERATING-RULES.md.
-Implement only S4 metrics and baseline. Verify hand-calculated metric examples
-before model loading, pin the base-model revision, and save split-specific
-baseline evidence. Seal evaluation baseline evidence; development uses validation
-only. No model download, baseline computation, or training started here.
+Wait for “Continue with Stage 5.” Read S5 in 01-STAGES.md, the experiment contract,
+and operating rules. Implement only train.py, frozen default training config,
+checkpoint/resume, fit-only smoke test, and measured compute benchmark. Preserve
+CosineSimilarityLoss, base revision, 256-token raw-text preprocessing, gender
+prefixes, normalized cosine scoring and threshold .5. Smoke training uses only fit
+IDs; monitoring/checkpoint choice uses validation; training must not read eval.
+No paid provisioning without user choice. Stop after S5 or context checkpoint.
 
-Resume prompt: “Continue with Stage 4. Read the handoff and current stage contract,
-reverify data and quality gates, implement metrics and baseline, save Linear and
-GitHub evidence, then stop at S4 completion or the context checkpoint.”
+Resume prompt: “Continue with Stage 5. Read the handoff, reverify data/quality and
+sealed baseline, implement training smoke test and checkpoint round-trip, measure
+local throughput, save Linear/GitHub evidence, then stop.”
 
-## Stage 3 completion evidence
+## Stage 4 completed work
 
-- S3 / CLO-45 complete. All 20 actual human reviews present in
-  docs/human_review_responses.csv with six ratings, reviewer aliases,
-  human_reviewed=yes, and notes for every nonacceptable judgment.
-- Human label agreement: 15 acceptable, 3 ambiguous (samples 1, 7, 11),
-  2 unacceptable (samples 3, 10). Other five human fields: 20 acceptable each.
-  Judgments and notes preserved exactly, including spelling. No AI substitutes.
-- Fresh quality command: exit 0, QUALITY GATE PASS.
-- Independent require_quality_gate(): exit 0, VERIFIED QUALITY GATE PASS.
-  Revalidates current data/cohort/split/rubric/sample/CSV and recomputes scores.
-- Overall: 94.59591920379897/100. Every dimension exceeds 12/20; overall exceeds
-  60/100. Frozen thresholds unchanged. Earlier numeric targets (80/60/50/50)
-  also met; unspecified earlier real-life target remains null.
+- CLO-46 / S4 Done. Implemented metrics.py, cluster.py, evaluate.py and baseline CLI.
+- S3 quality gate freshly reverified: passed, 94.59591920379897/100, 20 real reviews.
+- configs/baseline.json frozen BEFORE model outcomes with config manifest.
+  SHA-256 f15fb4da6d4898f863d8df34c36b112dbb40df07932ef9b207d334c1bb4b64c1.
+- HF model API verified revision 1110a243fdf4706b3f48f1d95db1a4f5529b4d41 for
+  sentence-transformers/all-MiniLM-L6-v2. Downloaded eleven files (about 87MiB)
+  into ignored models/base-minilm/<revision>/. All actual file hashes verified.
+- CPU, four Torch threads, batch32, float32, max sequence length256, raw profiles
+  only, no prefix instructions, gender prefixes retained, unit embeddings.
+  Model inputs never include labels/categories/subcategories/pair types.
+- Symmetric label-free pair features [abs(u-v),u*v]; UMAP2D n_neighbors15,
+  min_dist.1, euclidean, seed42, n_jobs1. External hdbscan HDBSCAN
+  min_cluster_size15/min_samples5/euclidean/core_dist_n_jobs1.
+  Maps fitted separately per split, labels used afterward for coloring/purity.
+- Direct-feature sensitivity excluded as optional before outcomes. Clustered-only
+  purity/noise/counts/sizes/observed and balanced-label majority baselines recorded.
+- Cache under ignored .cache/embeddings/, keyed by ordered record IDs, raw text,
+  model files, preprocessing, execution/software. Checksums/shape/norm checked.
+- No truncation: maximum profile token length fit36/validation33/evaluation35.
+- Reports: fit_baseline_metrics.json, validation_baseline_metrics.json,
+  baseline_metrics.json (evaluation). All metrics, denominators, null reasons,
+  exact category/pair-type support and breakdowns, both target tiers recorded.
+- reports/baseline/: three row-aligned prediction CSVs and nine inspected PNGs
+  (similarity, label-colored pair UMAP with noise, ROC for each split).
+- reports/baseline_manifest.json seals seventeen tracked artifacts by SHA-256,
+  inputs/config/quality/model/software/code provenance and split runtime.
+  Repeat baseline verifies seal and returns without inference/evaluation rerun.
+  Never use evaluation baseline for thresholds, selection, early stopping, or
+  targeted augmentation. Development decisions use validation only.
 
-| Dimension | Score /20 |
-|---|---:|
-| Data quality | 19.332331831079955 |
-| Diversity | 19.47796695042564 |
-| Bias diagnostics | 17.03562042229338 |
-| Linguistic quality | 20.0 |
-| Real-life matching | 18.75 |
+## Measured results
 
-This is a heuristic dataset quality score, not model performance or proof of
-fairness/real-world relationship validity. The stratified human sample
-overrepresents rare pair types and is diagnostic, not a population estimate.
+| Split | N | Margin | Signed d | FPR at .5 | Accuracy | AUC | Coverage-adjusted purity |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Fit | 4792 | -0.0843702154 | -0.3904995676 | 0.4956158664 | 0.3879382304 | 0.3992387840 | 0.4578464107 |
+| Validation | 1199 | -0.0877095853 | -0.4048328864 | 0.5075125209 | 0.3753127606 | 0.4016193656 | 0.4962468724 |
+| Evaluation | 1469 | -0.0787518547 | -0.3640484156 | 0.4802631579 | 0.4050374404 | 0.4007571821 | 0.5180394826 |
 
-## Preserved data and provenance
+No baseline performance target is met in either target tier. This is baseline
+measurement completion, not a claim of target attainment. Signed separation is
+negative; do not invert scores or change threshold after looking at outcomes.
+The model measures semantic similarity, not calibrated romantic compatibility.
+S3 quality passing does not guarantee useful model separation.
 
-- Dataset revision: 69b750dd024d5732ca19596d86bffc253abee92e. Original 6,000
-  training /1,469 evaluation rows and metadata unchanged.
-- Approved S2 quarantine removes only nine exact cross-file training pairs.
-  Eligible: 5,991 rows, split 4,792 fit /1,199 validation with seed 42 and connected
-  normalized-profile groups. Eligible/evaluation pair overlap zero; profile and
-  template overlap diagnostics remain recorded. Immutable S2 artifacts under
-  reports/quarantine-v1/; historical audits/proposal retained.
-- Human sample: 20 unique normalized fit pairs, two per nine pair types plus two
-  remaining pairs, seed 42, shuffled. No validation/evaluation/quarantined IDs.
-  All CSV identity/text/labels/metadata/order match prior commit.
-- Frozen rubric SHA-256:
-  4cc4ac5def892b0273f8901f23bc9e31f85730859bb6770fc85aac63bd31ec4d.
-- reports/quality_rubric_manifest.json SHA-256:
-  31a871ae6cd3082b7e56b7ef4bf1156b067ab528d54d79ad0e4036176e230cc7.
-- reports/human_review_sample.json SHA-256:
-  3f767adf9891e0f82d154ce48905919f91013fc7f473ae8b219e315ab5ac1834.
-- Completed docs/human_review_responses.csv SHA-256:
-  9a04fbc37121858bc3b3baaa8f9235b6cd5f4422e4b4547fd23b1bc5ceed2f99.
-- Completed reports/quality_report.json file SHA-256:
-  e68d7bd82d22d352678258356b35136e3e69d1e6c27b8dfa7525d41ad0738dc8.
+Clusters: fit70/1394noise/largest378; validation4/17noise/largest1108;
+evaluation7/18noise/largest1303. Clustered-only purity .645674/.503384/.524466,
+respectively. Coverage-adjusted purity gives noise zero credit over all pairs.
+Evaluation purity .518039 is close to observed majority baseline .517359.
+Separate UMAP axes are arbitrary and not aligned. No bootstrap purity claims.
+Paired uncertainty belongs to S7; S4 computes no bootstrap intervals.
 
-## Implementation and checks
+## Actual validation and execution receipts
 
-- quality.py and review.py: frozen scoring, fit-only sampling, strict responses,
-  source-bound recomputing guard. Future training must call
-  load_eligible_bundle() and require_quality_gate().
-- review_guide.py: guided actual human entry, explicit per-pair confirmation,
-  atomic save, resume, --pair revisiting, external-edit protection, no AI ratings.
-- Current full pytest: exit 0, 75 passed in 6.75 seconds. Tests cover missing/
-  failed/ambiguous reviews, forged/stale reports, changed provenance, guided
-  resume, and protected writes.
-- Original repairs retained in Git: tuple/array comparison uses canonical digest;
-  guided JSON reader reads UTF-8 text; test mock limited to sample path.
-  Rubric, thresholds, sample never altered to pass.
-- Completed user CSV and current report reviewed. No code/dependency changes
-  in this completion checkpoint.
+- BEFORE model loading: 20 hand-calculated metric/cache/seal tests passed.
+  Tests check weighted ddof1 d and sign, FPR denominator, >= ties, continuous AUC,
+  one-class/zero-variance/null cases, pair symmetry, noise/all-noise purity,
+  record alignment, frozen inputs, cache corruption and seal tampering.
+- Final full pytest: exit0, 96 passed in11.53s (75 prior +21 S4 cases).
+  Added explicit gate-before-download check after initial95-pass full suite.
+- First sandbox baseline command: exit1, Hub snapshot unavailable/network error.
+  Retried with requested network approval and the same frozen config; actual
+  baseline exit0, BASELINE PASS. No scoring/config change or discarded result.
+- Split elapsed times: fit31.802s, validation6.709s, evaluation6.727s, including
+  encoding/clustering/plots. Fit includes initial UMAP/JIT overhead; these are
+  inference/analysis times, not training throughput or compute provisioning evidence.
+- Repeated baseline command: exit0, BASELINE SEALED ARTIFACTS VERIFIED;
+  no inference or evaluation repeated.
+- Independent audit reproduced all metrics, category/pair-type breakdowns, and
+  cluster purity from saved predictions, checked source IDs/order/labels and
+  threshold predictions for all 4792/1199/1469 rows.
+- Eleven model file hashes verified. Nine PNGs loaded and visually inspected:
+  readable axes, split/sample counts, class legends, threshold, noise and ROC.
+- No code/scientific repair after model outcomes; only tests/documentation added.
+  No training, fine-tuned weights, API inference, remote or paid compute active.
 
-## Environment and saving
+## Preserved data and scientific limits
 
-- Project .venv Python 3.12.13, locked uv environment unchanged. Local macOS27.0,
-  arm64 Mac14,2, 24GiB RAM; earlier CPU/MPS doctor checks passed.
-- Assistant GPT-6 family per instructions; exact picker/reasoning unavailable.
-  User preference Sol 6.1. Context telemetry unavailable; exact 75% boundary
-  unmeasurable. No agents, paid compute, or training active.
-- Branch main, private repository https://github.com/Cloisterwood/mini-project-5.
-  Starting checkpoint 37c0391d941405451142a870b87b66a6d4685297. Final commit and
-  verified remote SHA recorded on CLO-45; a commit cannot contain its own SHA.
-- Linear S3 completion/publication receipt recorded at closeout.
-  S0–S3 Done; S4 not started. STOP: S3 complete.
+- Original pinned 6000-row training and1469-row evaluation sources/metadata
+  unchanged. Approved nine-row quarantine =>5991 eligible, seed42 grouped split
+  4792fit/1199validation. Eligible/evaluation pair overlap zero; profile/template
+  overlap remains disclosed. Active immutable manifests under reports/quarantine-v1/.
+- S3 frozen rubric/sample and completed actual human responses unchanged.
+  Label agreement15 acceptable/3 ambiguous/2 unacceptable; other fields20 acceptable.
+- Structural eligibility and source-bound quality guard required for future training.
+- Synthetic labels, heuristic human diagnostics, residual profile/template overlap,
+  fixed seeds and no real-world romantic ground truth limit claims.
+
+## Provenance, environment and saving
+
+- reports/baseline_config_manifest.json file SHA:
+  12e9f737d1c711313d0f0ff38a49d7b1adae5a217785b7eec76677e77f801bd6.
+- reports/base_model_manifest.json file SHA:
+  7eba2f5aa611bda902405181576a6fda82a2c0d0009c5d95892e599e58e45097.
+- reports/baseline_metrics.json evaluation file SHA:
+  deac4e61b8d4ab14a7d3e25fb0d73acf9716cddd511f607f27dc7bcac2690bb1.
+- reports/baseline_manifest.json file SHA:
+  402dee34a2006b1fc89203a6e18031787880fcd51aae672a91ab13d2965a8236.
+- Locked .venv Python3.12.13, local arm64 Mac14,2/macOS27.0/24GiB. Actual baseline
+  library versions recorded per report; no dependencies or lock changed.
+- Code commit at execution c645e05585d605c087b62dec5790a6999b5b345f plus exact
+  uncommitted implementation SHA hashes in every baseline report. Final delivery
+  commit is recorded on CLO-46; a commit cannot contain its own SHA.
+- Assistant GPT-6 family per instructions, exact picker/reasoning not exposed;
+  user preference Sol6.1. Context telemetry unavailable; exact75% boundary
+  unmeasurable. Sequential work, no agents, no paid compute.
+- Main, private https://github.com/Cloisterwood/mini-project-5. Starting commit
+  c645e05585d605c087b62dec5790a6999b5b345f. Reviewed code/config/reports/CSVs/PNGs/
+  docs committed and pushed, live remote SHA verified at closeout on CLO-46.
+  Original data, model weights and caches excluded.
+- S0–S4 Done; S5 not started. STOP: S4 complete.
