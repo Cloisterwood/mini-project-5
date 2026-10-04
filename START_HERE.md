@@ -1,6 +1,6 @@
 # Mini-project 5: staged implementation
 
-Planning date: October 3, 2026. Status: plan ready; implementation has not started.
+Planning date: October 3, 2026. Status: Stage 0 complete October 4; Stage 1 is next.
 
 Build a reproducible dating compatibility experiment using `sentence-transformers/all-MiniLM-L6-v2` and `CosineSimilarityLoss`. OpenAI models assist with development; the assignment explicitly specifies the embedding model being trained.
 
@@ -26,6 +26,6 @@ The existing `docs/superpowers/plans/2026-07-04-dating-compatibility-finetuning.
 
 See [RESOURCES.md](docs/implementation/RESOURCES.md) for the private Cloisterwood GitHub repository, Linear project and ten issues, and the verified Hugging Face dataset revision and file names. No additional source links are needed.
 
-Stage 0 is in progress. The user confirmed Sol 6.1 is available in VS Code; use it as the default development assistant. The next VS Code session should confirm Linear access, then finish the Stage 0 checkpoint. GPU spending decisions are deferred until a measured need in Stage 5.
+Stage 0 is complete. Linear access and the private GitHub destination were verified in the development session on October 4. The user confirmed Sol 6.1 is available in VS Code; use it as the default development assistant. The next session should execute only Stage 1: reproducible environment and package skeleton. GPU spending decisions are deferred until a measured need in Stage 5.
 
 No dataset files have been downloaded and no training code has been implemented. The historical July plan remains preserved.
