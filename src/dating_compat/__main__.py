@@ -19,7 +19,24 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument("--reports-dir", type=Path, default=Path("reports/quarantine-v1") if name == "explore" else Path("reports"))
         if name == "explore":
             command.add_argument("--quarantine-policy", type=Path, default=Path("configs/quarantine-v1.json"))
+    quality = commands.add_parser("quality", help="Prepare human review and compute the frozen quality gate")
+    quality.add_argument("--data-dir", type=Path, default=Path("data"))
+    quality.add_argument("--output", type=Path, default=Path("reports/quality_report.json"))
+    quality.add_argument("--responses", type=Path, default=Path("docs/human_review_responses.csv"))
     args = parser.parse_args(argv)
+    if args.command == "quality":
+        from dating_compat.data import DataError
+        from dating_compat.quality import quality_report
+        try:
+            report = quality_report(args.data_dir, args.output, args.responses)
+        except (DataError, OSError) as exc:
+            print(f"QUALITY ERROR: {exc}")
+            return 1
+        status = report["gate"]["status"]
+        print("QUALITY GATE PASS" if status == "passed" else f"QUALITY GATE {status.upper()}")
+        if report["gate"]["failed_dimensions"]:
+            print("Failed dimensions: " + ", ".join(report["gate"]["failed_dimensions"]))
+        return 0 if status == "passed" else 1
     if args.command != "doctor":
         from dating_compat.data import DataError, acquire
         try:

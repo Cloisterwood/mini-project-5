@@ -10,6 +10,9 @@ rows that overlap evaluation, leaving **5,991 eligible rows**. Original files an
 all 1,469 evaluation rows are preserved. See [the data audit](docs/DATA_AUDIT.md).
 The structural data gate passes; the S3 human quality gate is still required.
 
+Stage 3 quality scoring and guard checks are implemented. The human review is
+pending; the overall quality score remains null and training remains blocked.
+
 ## Setup
 
 Run these commands in Terminal or the VS Code integrated terminal from the project
@@ -90,6 +93,40 @@ calls `assert_data_ready`. Training must also pass the separate S3 human gate.
 There are still 519 normalized individual profiles shared with evaluation; pair
 quarantine does not establish independence between people or writing templates.
 
+## Quality gate and human review
+
+```bash
+.venv/bin/python -m dating_compat quality
+```
+
+This uses only the approved eligible cohort and the frozen
+`configs/quality-rubric.yaml`. It writes `reports/quality_report.json`, preserving
+individual components, evidence, numerators/denominators, undefined reasons,
+mapping rules, both score scales, and source/cohort/split/rubric/review hashes.
+The rubric hash is frozen in `reports/quality_rubric_manifest.json` before scoring.
+
+Until human ratings are complete, expected output is
+`QUALITY GATE PENDING_HUMAN_REVIEW` with exit **1**. This is a required gate stop.
+The current automated dimensions are data quality 19.33/20, diversity 19.48/20,
+and bias diagnostics 17.04/20. Linguistic and real-life totals plus overall score
+remain null pending review. A high heuristic score does not prove absence of bias
+or real-world relationship validity.
+
+Read [the 20-pair human review sheet](docs/HUMAN_REVIEW.md) and fill
+`docs/human_review_responses.csv`. Each row requires six explicit
+acceptable/ambiguous/unacceptable ratings, a reviewer name/alias, and
+`human_reviewed=yes`. Add notes for every ambiguous or unacceptable judgment.
+Ratings are intentionally blank. The seeded sample covers all nine pair types,
+uses fit IDs only, and is diagnostic rather than a population estimate.
+
+Rerun quality after entering the ratings. Passing requires every dimension >=12/20,
+overall >=60/100, complete human evidence, unchanged valid source data, and
+`QUALITY GATE PASS` / exit 0. If it fails, keep the frozen thresholds and seek
+instructor/data-owner guidance. Future training must call `require_quality_gate()`
+from dating_compat.quality; it revalidates structural provenance, verifies the
+sample, recomputes scores from actual responses, and rejects stale or modified
+quality reports. Changing a JSON passed flag cannot bypass the gate.
+
 ## Implementation choices
 
 Python is constrained to 3.12 for this lock. The sentence-transformers 5.x and
@@ -121,5 +158,5 @@ Every stage ends with a checkpoint and stop; context usage at 75% also triggers 
 Raw data, caches, credentials, and model weights are excluded from Git. Schema,
 counts, and metadata have been validated; the approved derived cohort passes the
 structural leakage gate.
-No training experiment has run and no performance targets are claimed. Paid compute
+Human quality scoring is pending. No training experiment has run and no performance targets are claimed. Paid compute
 decisions wait for measured need in Stage 5.

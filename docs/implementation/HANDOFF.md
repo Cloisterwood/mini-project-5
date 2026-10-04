@@ -1,86 +1,95 @@
 # Current handoff
 
-Updated: 2026-10-04. Status: STAGE 2 COMPLETE — STAGE 3 NOT STARTED.
+Updated: 2026-10-04. Status: S3 IMPLEMENTED AND VERIFIED — HUMAN REVIEW PENDING.
 
 ## Next single action
 
-Read the shared operating rules, revised experiment contract, and S3 in 01-STAGES.md.
-Implement the frozen quality rubric and training-only human review sheet using
-`load_eligible_bundle()` from dating_compat.cohort. Do not use root historical split
-IDs or quarantine IDs in quality samples, fit, or validation. Stop at S3 completion
-or when human review is needed; an LLM cannot supply the user's human ratings.
+The user completes the 20-pair human review using docs/HUMAN_REVIEW.md and
+editable docs/human_review_responses.csv, or sends explicit numbered ratings in
+chat for exact transcription. Do not infer ratings from this assistant's opinions.
+Each row needs six acceptable/ambiguous/unacceptable ratings, reviewer name/alias,
+and human_reviewed=yes; notes required for any ambiguous/unacceptable judgment.
+Do not change identity/text/label/metadata columns, header, or sample order.
 
-Resume prompt: “Continue with Stage 3. Use the verified eligible cohort from the
-handoff, implement and freeze the quality rubric, prepare the training-only human
-review sheet, verify quality-gate protection, save Linear/GitHub evidence, then stop.”
+After actual ratings arrive, run `.venv/bin/python -m dating_compat quality` and
+`require_quality_gate()`. Finish ONLY S3. If any dimension <12/20 or overall <60/100,
+keep the frozen rubric, document failures, and seek instructor/data-owner guidance.
+Do not start S4, download a model, or train while S3 is pending or failed.
 
-## Approved protocol revision S2-Q1
+Resume prompt: “Resume S3. Read the handoff and my actual human ratings, record
+those responses exactly, rerun quality and its gate verification, save Linear/GitHub
+evidence, then stop. Do not replace missing human ratings with LLM judgments.”
 
-The user authorized on October 4: “Use only the eligible rows and proceed with the
-quarantine.” Policy is recorded in configs/quarantine-v1.json. Exactly nine original
-training IDs whose normalized unordered pairs occur in evaluation are quarantined
-from eligibility. All original source files and all 1,469 evaluation rows are unchanged.
-This structural remedy uses no model outcomes. Source hashes and exact exclusion IDs
-are frozen in the policy and active cohort manifest. The original blocked reports
-and proposal remain historical evidence under reports/; initial unverified coding
-artifacts remain under reports/s2-initial-audit/ and must not be used for training.
+## Stage 3 work and observed results
 
-Active reports: reports/quarantine-v1/cohort_manifest.json, exploration.json,
-and split_manifest.json. Original metadata still describes 6,000 original training
-rows; eligible cohort statistics and quality denominators use 5,991 rows.
+- Issue: S3 / CLO-45, Agent Needs Input; not Done until actual human review and gate acceptance.
+- Scope: 5,991 eligible original-training rows from approved S2 quarantine. Human sample
+  comes ONLY from the 4,792 fit IDs. All original/evaluation files and S2 manifests unchanged.
+- configs/quality-rubric.yaml frozen BEFORE quality scoring. Exact source hash:
+  4cc4ac5def892b0273f8901f23bc9e31f85730859bb6770fc85aac63bd31ec4d.
+  reports/quality_rubric_manifest.json records the freeze. No threshold revised after scoring.
+- All five dimensions have four explicit components, each with raw statistic, numerator,
+  denominator, evidence, undefined reason, 0–1 raw range, 0–5 score range, and mapping rule.
+  Dimension totals are /20 and scaled /100; earlier 80/60/50/50 targets reported separately.
+  Earlier real-life target was unspecified and remains null.
+- Automated scores: data_quality 19.332331831079955/20; diversity 19.47796695042564/20;
+  bias_detection 17.03562042229338/20. No known automated dimension fails the 12/20 gate.
+- Linguistic-quality and real-life totals remain null because human ratings are missing.
+  Overall score is null; gate passed=false, status=pending_human_review. No passing quality
+  review or model performance is claimed.
+- Diagnostics: prefix-order Cramers V 0.010180560912763911; support-weighted category
+  positive-rate deviation 0.1525160382871085; absolute length/label Pearson r
+  0.1322652930768004. No token meets the frozen frequent-shortcut phi>=.30 cutoff.
+  These are heuristic diagnostics, not proof of fairness or absence of shortcuts.
+- Human selection: seed42, 20 unique normalized eligible fit pairs; two per nine pair
+  types, then two random remaining pairs; shuffled display. Pair-type counts 2 each,
+  except incompatible and subtle_mismatch 3 each. No validation/eval/quarantine IDs.
+- Six fields: label_agreement, naturalness, coherence, preference_realism,
+  hierarchy_consistency, clarity. Only acceptable counts; ambiguity preserved with notes.
+  Sample overrepresents rare types and is diagnostic, not a population estimate.
+- Generated docs/HUMAN_REVIEW.md and docs/human_review_responses.csv. ALL ratings,
+  reviewer fields, and human attestations remain blank. No human response invented.
+- Added quality.py, review.py, quality CLI, frozen sample, current quality report,
+  scoring/gate/review tests, and README commands. No dependency changes.
 
-## Actual Stage 2 results
+## Actual checks and repair
 
-- Issue: S2 / CLO-44. Structural gate passes; S3 human quality gate has not run.
-- Original source counts and matching metadata: 6,000 training / 1,469 evaluation.
-- Eligible training: 5,991 (2,997 positive / 2,994 negative); excluded: nine label-0 rows.
-- Seed-42 connected-profile split: 4,792 fit / 1,199 validation.
-- Fit: 2,397 positive / 2,395 negative. Validation: 600 positive / 599 negative.
-- Zero normalized unordered pair overlap between eligible training and evaluation.
-- Zero shared normalized profiles or pairs between fit and validation.
-- Evaluation is preserved in full, including its original two within-file duplicate extras.
-- Remaining eligible/evaluation shared profiles: 519. Surface template proxies: 436.
-- Fit/validation shared surface template proxies: 344. Proxies are only first-three-word
-  scaffold diagnostics, not confirmed generator templates. Do not claim new unseen
-  people/templates or statistically independent evaluation pairs without qualification.
-- Original training duplicate extras: 40, evaluation: two; no contradictory duplicate labels.
-- Grouping is never abandoned; label/category/pair_type strata were coarsened to
-  label/pair_type only after reporting insufficient distinct-component support.
+- `.venv/bin/python -m dating_compat quality`: exit1, QUALITY GATE PENDING_HUMAN_REVIEW.
+  This is the expected required stop, not a failed installation or code exception.
+- Full `.venv/bin/python -m pytest -q`: exit0, 68 passed (46 prior +22 quality/review tests).
+- Focused quality tests: final exit0,22 passed. Initial 21 passed/1 failed exposed JSON
+  tuple-to-array differences in saved-report comparison. Corrected by canonical JSON
+  digest comparison; scores/rubric/sample unchanged. The final guard now rejects for
+  the actual missing-human reason, not a spurious stale-report claim.
+- Fresh require_quality_gate: EXPECTED HUMAN-REVIEW GUARD REJECTION with
+  pending_human_review. Completed test-fixture reviews can pass, failed/ambiguous reviews
+  reject, changed responses and forged passed flags reject. Test-fixture ratings exist
+  only under pytest temporary paths; never copied into actual review evidence.
+- Human sample verification: 20 unique fit IDs, all response ratings blank, no validation,
+  evaluation, or quarantined rows. All five original SOURCE_HASHES unchanged.
+- Current report rechecks data/cohort/split/rubric/sample/response hashes and recomputes
+  scores from real CSV evidence before training eligibility. Source/rubric/report changes
+  cannot silently bypass the gate. Structural gate still required through load_eligible_bundle.
+- git diff --check: exit0. No training, model download, API inference, or paid compute.
 
-## Implementation and verified checks
+## Provenance and saving
 
-- cohort.py verifies the policy's exact source hashes, exclusion IDs, original metadata
-  gate, and actual source overlap. It preserves raw texts/evaluation, writes complete
-  eligible/evaluation ID provenance, and recomputes saved cohort/split integrity.
-- `load_eligible_bundle()` reloads original sources, checks pinned acquisition and policy,
-  rederives eligibility, compares the saved cohort, then calls assert_data_ready on the
-  active split. Later stages must use this entry point and add the separate S3 human gate.
-- `python -m dating_compat explore` now defaults to the approved policy and writes
-  active reports under reports/quarantine-v1/. Acquire remains rooted in reports/.
-- `.venv/bin/python -m dating_compat explore`: exit 0, DATA EXPLORATION PASS.
-- `.venv/bin/python -m pytest -q`: exit 0, 46 passed. New tests protect exact exclusions,
-  source hashes, structural blockers, evaluation preservation, tampered eligibility,
-  rehashed false cohort claims, saved cohort JSON roundtrip, and quarantine exclusion
-  from both partitions. Prior loader/split/doctor tests continue to pass.
-- Fresh `load_eligible_bundle()` plus saved-manifest validation: ELIGIBLE DATA PASS,
-  5,991 train / 1,469 eval. Original SOURCE_HASHES verified unchanged for all five files.
-- Identical explore rerun leaves frozen active reports unchanged and passes again.
-- Active file SHA-256: cohort cbae2a16662a51b1e7d6e62bc8ced75d15d661ce08c25b99300d16ef678f2675;
-  exploration 3e0f1cfaf562598aecf01fe91b401f3f29a2e34f3bdb68e210bae75570e0e6e2;
-  split 8b0695476b179cfaedbbbdd51d7c3337136a04c9d17e0f1c4b65dceb63285851.
-- git diff --check: exit 0. No dependencies changed; uv.lock and environment reports unchanged.
-
-## Saving, host, and stop
-
-- Local macOS 27.0 arm64 Mac14,2, 24 GiB RAM; project .venv Python 3.12.13.
-- No model download, training process, paid compute, API inference, or subscription change.
-  All audit/test sessions finished before closeout. CPU/MPS verification remains S1 evidence.
+- reports/quality_rubric_manifest.json SHA-256:
+  31a871ae6cd3082b7e56b7ef4bf1156b067ab528d54d79ad0e4036176e230cc7.
+- reports/human_review_sample.json SHA-256:
+  3f767adf9891e0f82d154ce48905919f91013fc7f473ae8b219e315ab5ac1834.
+- reports/quality_report.json SHA-256 at this pending checkpoint:
+  28f82736a6bc644e79b9aacb3dffa087cb2ff79975bafb901cb020614ab7b4c7.
+- docs/human_review_responses.csv (blank ratings) SHA-256:
+  3f9f4bd56108abb4c7a2cf1b83ac86ccd844e16a1ff7d9d34a02650c7b891c81.
+- Current quality_report.json is a status report and updates after real human input;
+  rubric/sample/source/cohort/split artifacts remain frozen. Git preserves earlier receipts.
+- Local macOS27.0 arm64 Mac14,2,24GiB RAM; project .venv Python3.12.13, unchanged uv.lock.
 - Assistant GPT-6 family per session instructions; exact picker model/reasoning not exposed.
-  Saved preference Sol 6.1. Context indicator unavailable; exact 75% boundary cannot be measured.
-- Branch main; confirmed private GitHub https://github.com/Cloisterwood/mini-project-5.
-  Starting checkpoint 0d878ea9dd30d7031f61787e2aff2edbe9f07e1f. Final reviewed commit and
-  verified remote SHA are recorded on CLO-44; this commit cannot contain its own SHA.
-- Linear moved back In Progress when quarantine was approved; completion and verified
-  publishing receipt recorded at closeout. S2 Done only after these actual checks.
-- Stop reason: Stage 2 complete. No unresolved data-policy decision. Do not start S3 until
-  the user says continue. Preserve original-source audit evidence and the historical July plan.
+  Saved preference Sol6.1. Context indicator unavailable; exact75% boundary unmeasurable.
+- All audit/test sessions completed before checkpoint. No paid compute or training active.
+- Branch main; private repository https://github.com/Cloisterwood/mini-project-5.
+  Starting commit 64868649128ac14d26e6e4b96432222f4f7a661f. Final reviewed WIP commit and
+  verified remote SHA are recorded on CLO-45; a commit cannot contain its own SHA.
+- Linear sync: implementation/review receipts and Agent Needs Input state recorded at
+  closeout. S0–S2 remain Done. Stop reason: required human ratings; S4 not started.

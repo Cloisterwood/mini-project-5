@@ -27,7 +27,7 @@ All four required files are present at the repository root. In Stage 2 download 
 | S0 | [CLO-42](https://linear.app/cloisterwood/issue/CLO-42/mp5-s0-access-destinations-and-decisions) | Done |
 | S1 | [CLO-43](https://linear.app/cloisterwood/issue/CLO-43/mp5-s1-reproducible-environment-and-package-skeleton) | Done |
 | S2 | [CLO-44](https://linear.app/cloisterwood/issue/CLO-44/mp5-s2-dataset-validation-exploration-and-split) | Done |
-| S3 | [CLO-45](https://linear.app/cloisterwood/issue/CLO-45/mp5-s3-quality-gate-and-human-review) | Todo |
+| S3 | [CLO-45](https://linear.app/cloisterwood/issue/CLO-45/mp5-s3-quality-gate-and-human-review) | Needs Input: human review |
 | S4 | [CLO-46](https://linear.app/cloisterwood/issue/CLO-46/mp5-s4-metrics-and-baseline) | Todo |
 | S5 | [CLO-47](https://linear.app/cloisterwood/issue/CLO-47/mp5-s5-training-smoke-test-and-compute-decision) | Todo |
 | S6 | [CLO-48](https://linear.app/cloisterwood/issue/CLO-48/mp5-s6-three-bounded-training-experiments) | Todo |

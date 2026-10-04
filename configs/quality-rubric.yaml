@@ -1,0 +1,64 @@
+version: s3-quality-v1
+frozen_on: '2026-10-04'
+scope: approved eligible training cohort only; human sample from fit IDs only
+limitations: Project screening heuristics, not validated fairness, language, or romantic-compatibility instruments. Stratified human sample is diagnostic, not a population estimate.
+gate:
+  overall_minimum: 60
+  each_dimension_minimum: 12
+  missing_human_review: pending_and_training_blocked
+human:
+  seed: 42
+  sample_size: 20
+  minimum_per_pair_type: 2
+  ratings: [acceptable, ambiguous, unacceptable]
+  scoring: Only acceptable counts; ambiguous and unacceptable contribute zero. Every rating is required; notes required for nonacceptable judgments.
+  fields: [label_agreement, naturalness, coherence, preference_realism, hierarchy_consistency, clarity]
+required_categories: [lifestyle, interests, values, dealbreakers, realistic_example]
+required_pair_types: [compatible, incompatible, dealbreaker, complex_compatible, complex_incompatible, llm_judged_compatible, llm_judged_incompatible, curated_realistic, subtle_mismatch]
+heuristics:
+  vocabulary_minimum_document_fraction: 0.01
+  vocabulary_phi_cutoff: 0.30
+  vocabulary_stopwords: [boy, girl, i, me, my, we, our, you, your, a, an, the, and, or, of, to, in, on, for, with, is, are, am, be, it, that, this]
+  text_minimum_alpha_characters: 5
+  text_maximum_character_run: 10
+  truncation_markers: ['...', '…', '[truncated]']
+  template_definition: First three normalized word tokens after removing boy:/girl:; largest scaffold frequency across profile occurrences.
+  shortcut_definition: Pair contains any non-stopword token present in at least 1 percent of pairs with absolute token-presence/label phi >= 0.30. Includes negation; documents pair-level presence, not repeated token frequency.
+  justification: Association cutoffs flag strong structural shortcuts without treating category skew as proof of unfairness. Repetition cutoff flags domination by one surface opening. Thresholds are frozen before scoring and cannot be weakened to pass.
+  examples:
+    association: Cramers V 0.05 scores 5; 0.175 scores 2.5; 0.30 scores 0.
+    vocabulary: Shortcut-covered pair fraction 0.10 scores 5; 0.35 scores 2.5; 0.60 scores 0.
+    repetition: Largest opening-template share 0.05 scores 5; 0.125 scores 2.5; 0.20 scores 0.
+    human: 16 acceptable of 20 scores 4; ambiguous counts zero and remains visible.
+dimensions:
+  data_quality:
+    schema_completeness: {method: acceptable_fraction, rule: '5 * valid eligible rows / eligible rows; loader rejects invalid sources'}
+    label_metadata_consistency: {method: acceptable_fraction, rule: '5 * eligible labels covered by verified cohort and original metadata provenance / eligible rows; pair_type never supplies label'}
+    unordered_duplicates: {method: lower_better, good: 0.0, bad: 0.05, rule: 'Duplicate extras divided by eligible pairs; linearly decrease 5 to 0 from rate 0 to .05'}
+    contradictory_pairs: {method: acceptable_fraction, rule: '5 * rows not in contradictory normalized pair groups / eligible rows; any unresolved contradiction independently blocks training'}
+  diversity:
+    label_balance: {method: label_balance, rule: '5 for positive fraction in [.4,.6]; linear to 0 at 0 or 1'}
+    category_coverage: {method: acceptable_fraction, rule: '5 * required exact base categories present / 5; compound categories reported separately'}
+    pair_type_coverage: {method: acceptable_fraction, rule: '5 * required pair types present / 9'}
+    unique_profiles: {method: acceptable_fraction, rule: '5 * unique normalized profiles / 2N profile occurrences'}
+  bias_detection:
+    gender_prefix_association: {method: lower_better, good: 0.05, bad: 0.30, rule: 'Uncorrected Cramers V for prefix-order versus label, including other; undefined if only one order/class'}
+    category_label_skew: {method: lower_better, good: 0.05, bad: 0.30, rule: 'Support-weighted absolute category positive-rate deviation from overall positive rate; all categories included, with support counts'}
+    length_label_association: {method: lower_better, good: 0.05, bad: 0.50, rule: 'Absolute Pearson r of total raw characters in both texts versus label; signed r and class counts recorded; undefined for constant inputs'}
+    vocabulary_shortcuts: {method: lower_better, good: 0.10, bad: 0.60, rule: 'Fraction of pairs containing at least one frequent shortcut token as defined above; token phi and supports reported'}
+  linguistic_quality:
+    naturalness: {method: human_fraction, field: naturalness, rule: '5 * human acceptable / 20 sampled fit pairs'}
+    coherence: {method: human_fraction, field: coherence, rule: '5 * human acceptable / 20 sampled fit pairs'}
+    template_repetition: {method: lower_better, good: 0.05, bad: 0.20, rule: 'Largest normalized opening-template share among 2N profile occurrences'}
+    text_integrity: {method: acceptable_fraction, rule: '5 * profiles without blank/control/replacement text, fewer than 5 alpha characters, runs >=10, or explicit truncation markers / 2N; imperfect surface diagnostic, not model-token truncation'}
+  real_life_matching:
+    label_agreement: {method: human_fraction, field: label_agreement, rule: '5 * human acceptable label agreement / 20'}
+    plausible_preferences: {method: human_fraction, field: preference_realism, rule: '5 * human acceptable preference realism / 20'}
+    hierarchy_consistency: {method: human_fraction, field: hierarchy_consistency, rule: '5 * human acceptable stated preference hierarchy consistency / 20'}
+    ambiguity_contradictions: {method: human_fraction, field: clarity, rule: '5 * human clear and noncontradictory judgments / 20; ambiguous counts zero'}
+earlier_dimension_targets_out_of_100:
+  data_quality: 80
+  diversity: 60
+  bias_detection: 50
+  linguistic_quality: 50
+  real_life_matching: null

@@ -79,6 +79,17 @@ Scoring specification to implement in `configs/quality-rubric.yaml` during S3: e
 
 Conservative working gate: overall >=60 and every dimension >=12/20. Show earlier dimension targets (80/60/50/50 out of 100) separately, because they differ. Missing human review leaves gate pending. Structural invalidity, contradictory unresolved records, and cross-file pair leakage block training regardless of aggregate score. The rubric is a project heuristic; a high score is not proof of unbiased or realistic matchmaking.
 
+S3 implementation freeze, October 4: exact component mappings and heuristic
+thresholds are in configs/quality-rubric.yaml, frozen before quality scoring by
+reports/quality_rubric_manifest.json. Human review uses 20 unique eligible fit pairs,
+seed 42, two per pair type plus two random remaining pairs. Its unweighted ratings
+are diagnostic and overrepresent rare types. Six human fields support the human
+components: label agreement, naturalness, coherence, preference realism, hierarchy
+consistency, and clarity. Only acceptable judgments count toward the fraction;
+ambiguous/unacceptable judgments and notes remain in the record. Missing human
+ratings keep the overall score null and training blocked. The earlier real-life
+dimension target is unspecified and reported as null, never invented.
+
 ## Bound the scope
 
 Required: MiniLM, CosineSimilarityLoss, five quality dimensions, all metrics/charts, three actual training configurations, reproducible artifacts. No OpenAI API calls are required for this pipeline. Optional instruction prefixes, alternate losses, extra generated data, dashboards, and cross-domain evaluation come only after required deliverables and a new scoped decision. MultipleNegativesRankingLoss is not a drop-in replacement for labeled negative pairs and can create false in-batch negatives; keep it out of the core pathway.
