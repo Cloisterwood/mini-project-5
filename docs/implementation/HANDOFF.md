@@ -1,5 +1,75 @@
 # Current handoff
 
+Updated: 2026-10-04. Status: S6B COMPLETE — runs001–002 complete; S6 In Progress (2/3).
+
+## Next single action: S6C only
+
+Wait for “Continue Stage 6 with run-003.” Run only the third experiment, then
+freeze run selection using the S6 rule and stop. Do not start S7.
+Read the stage plan/experiment contract/operating rules, freshly prepare-training,
+verify smoke receipts. Proposed single change from run-002: reduce LR2e-5->1e-5
+while retaining six epochs and all other values. Small gains from extra training
+justify testing smaller updates as the final bounded alternative; no instability
+was observed. Freeze rationale/config before launch from the same pinned base,
+never initialize from previously trained weights. No extra run budget authorized.
+After three successful runs: core targets first, highest validation d, lower FPR
+tie-break; if unmet use documented fallback. Final evaluation/uncertainty in S7
+only after selection is frozen and separately authorized.
+
+## S6B execution and verification
+
+- Pre-launch plan/config committed b2cbf4e53f74a1f7235b59379969cc5c3554c425;
+  reports/run-002-plan.json and configs/train-run-002.yaml. Only config value
+  changed: epochs4->6. Ratio warmup/linear decay extends too:180/1800 steps
+  versus120/1200. This is a six-epoch schedule comparison, not an identical prefix.
+- Fresh prepare-training and saved train-smoke verification passed, no smoke
+  retraining. Original sources, human gate, baseline and run-001 unchanged.
+- Actual run-002 from pinned base completed1800 steps on local CPU4threads,
+  4792 fit/1199 validation, batch16/LR2e-5/warmup.1/seed42/float32/max256,
+  CosineSimilarityLoss. No failed/interrupted training attempt or paid compute.
+- Trainer runtime463.3596 seconds (7.72min), validation generation40.124987s.
+  Epoch validation losses .1311007142, .1167688221, .1155654490, .1153148040,
+  .1148024052, .1139603481. Lowest loss at epoch6/checkpoint-1800 selected.
+- Selected model checkpoints/run-002/selected; state SHA
+  8c79ccf853ccd4e24e64e55b637b68f2d7847c6208ca2911cc7e69ea9e2a59f4.
+  Full model/optimizer/scheduler/RNG receipts in selected_checkpoint_manifest.json.
+  Weights/checkpoints retained ignored locally, no remote model backup.
+- Validation run-001 -> run-002: d2.1841410550 ->2.2064050189;
+  FPR .2170283806 -> .2103505843; AUC .9136700056 -> .9164718976;
+  margin .5792293519 -> .5767153208; accuracy .8315262719 -> .8306922435;
+  precision .8024316109 -> .8058551618; recall .88 -> .8716666667;
+  F1 .8394276630 -> .8374699760; coverage-adjusted purity .8315262719 -> .8340283570.
+- All four primary validation targets pass. Earlier strict FPR and classification
+  targets except AUC remain unmet. Small gains, no uncertainty/significance claim.
+  Both meet primary targets; run-002 provisionally leads by higher d. No final
+  selection before run-003; run-001 retained. Validation is development evidence.
+- TN473/FP126/FN77/TP523.19 clusters,8 noise/1199; clustered-only purity .8396306;
+  all-pair denominator1199, noise zero credit. Frozen threshold.5 and preprocessing,
+  same label-free UMAP/HDBSCAN config. Independently fitted UMAP axes unaligned.
+- No evaluation source/results opened by training/validation workers; no evaluation
+  inference with selected model. Training code and dependencies/lock unchanged.
+- Immutable reports/runs/run-002/ contains config/provenance/losses/predictions,
+  metrics/breakdowns/target tiers, checkpoint receipt, four figures and nine-file
+  validation seal. Separately sealed comparison_run_001.json records signed deltas.
+  docs/ITERATION_LOG.md and reports/iterations.jsonl updated.
+- validate-run passed; repeat verified nine artifact hashes without inference.
+  Independent CSV audit reproduces metrics/purity and exact validation IDs/labels;
+  manifests confirm same preflight/IDs/config except epochs and current source hashes.
+  One audit initially resolved code basenames from the wrong directory; corrected
+  to src/dating_compat and passed without product changes. Four plots visually
+  checked; temporary plotting/font-cache warnings did not prevent output.
+- Full pytest112 passed in14.23s. No product source edits or new tests this run.
+- No active training process/paid resources. Context telemetry unavailable;
+  sequential GPT-6 family, exact picker unexposed; user preference Sol6.1.
+- Reviewed named config/reports/docs committed and pushed to private main;
+  final delivery SHA and live remote verification on CLO-48; worktree clean.
+  S6 stays In Progress until third run/selection complete. Commit cannot contain
+  its own SHA. No run-003 started.
+
+STOP: S6B complete. Next prompt: “Continue Stage 6 with run-003.”
+
+## Historical S6A checkpoint (superseded next action)
+
 Updated: 2026-10-04. Status: S6A COMPLETE — run-001 complete; S6 remains In Progress (1/3).
 
 ## Next single action: S6B only

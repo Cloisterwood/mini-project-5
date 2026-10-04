@@ -1,5 +1,62 @@
 # Training iteration log
 
+## run-002 — completed 2026-10-04 (S6B)
+
+Single config change: epochs4->6 from the same pinned base, all other defaults
+unchanged. Rationale recorded before launch in reports/run-002-plan.json and
+configs/train-run-002.yaml, committed at b2cbf4e53f74a1f7235b59379969cc5c3554c425.
+All four run-001 epoch validation losses improved with diminishing gains; test
+additional training without claiming established underfitting. The ratio-based
+warmup/linear decay schedule extends with the total steps:180 warmup/1800 total,
+versus120/1200. This is not an identical four-epoch prefix plus two epochs.
+
+Completed1800 steps in463.3596 Trainer seconds; validation artifact generation
+40.124987 seconds. Lowest epoch validation loss .1139603481 selected epoch6,
+checkpoint-1800. Failure/interruption status: none. Seed42, CPU4threads, float32,
+batch16, LR2e-5, warmup.1, max256, CosineSimilarityLoss; fit4792/validation1199.
+
+| Validation metric | run-001 | run-002 | Signed delta |
+|---|---:|---:|---:|
+| Margin | 0.579229 | 0.576715 | -0.002514 |
+| Cohen's d | 2.184141 | 2.206405 | +0.022264 |
+| FPR | 0.217028 | 0.210351 | -0.006678 |
+| AUC | 0.913670 | 0.916472 | +0.002802 |
+| Accuracy | 0.831526 | 0.830692 | -0.000834 |
+| Precision | 0.802432 | 0.805855 | +0.003424 |
+| Recall | 0.880000 | 0.871667 | -0.008333 |
+| F1 | 0.839428 | 0.837470 | -0.001958 |
+| Coverage-adjusted purity | 0.831526 | 0.834028 | +0.002502 |
+
+Keep as provisional leader: both runs meet all four primary targets, and run-002
+has higher d under the frozen selection rule. FPR is also lower. Gains are small;
+accuracy, recall, F1 and margin slightly decline. Earlier strict FPR and
+accuracy/precision/recall/F1 targets remain unmet. No significance claim or final
+selection until run-003. TN473/FP126/FN77/TP523;19 clusters,8 noise rows,
+clustered-only purity .839631. Baseline comparisons and exact deltas in
+reports/runs/run-002/validation_metrics.json; run-001 comparison separately sealed
+in comparison_run_001.json. These are development validation results only.
+
+Selected model checkpoints/run-002/selected, weights state SHA
+8c79ccf853ccd4e24e64e55b637b68f2d7847c6208ca2911cc7e69ea9e2a59f4.
+Optimizer, scheduler and RNG checkpoint hashes verified. Local weights retained
+and ignored; GitHub saves reports/hash receipts, not model binaries. Original
+sources, baseline, run-001 and frozen split unchanged. No evaluation inference.
+
+Verification: full112 tests passed in14.23s; independent CSV audit reproduces
+metrics/purity and validates IDs/labels/order. Frozen config/source/preflight/IDs
+verified. An audit initially resolved source basenames from the wrong directory;
+corrected to src/dating_compat and passed without product changes. Nine validation
+artifact hashes verified on repeat; four plots visually checked. Temporary font
+cache warnings did not prevent plot output. No dependencies or source changed.
+
+Proposed run-003, pending continuation: keep six epochs and reduce LR2e-5->1e-5,
+all other values unchanged. Given small gains from extending training, compare
+smaller parameter updates as the final bounded alternative; this is not a fix for
+observed instability. Record rationale/config before launch from the same base.
+Then freeze selection among all three by the specified rule and STOP S6C.
+
+STOP S6B; run-003 and S7 not started.
+
 ## run-001 — completed 2026-10-04 (S6A)
 
 First specified default comparison: four epochs, batch16, learning rate2e-5,

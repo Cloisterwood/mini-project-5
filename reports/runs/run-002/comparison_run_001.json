@@ -1,0 +1,55 @@
+{
+  "classification_deltas": {
+    "accuracy": {
+      "after": 0.8306922435362802,
+      "before": 0.8315262718932444,
+      "delta": -0.0008340283569641116
+    },
+    "auc": {
+      "after": 0.9164718976071229,
+      "before": 0.9136700055648302,
+      "delta": 0.002801892042292642
+    },
+    "cohens_d": {
+      "after": 2.206405018910305,
+      "before": 2.1841410549736566,
+      "delta": 0.022263963936648423
+    },
+    "f1": {
+      "after": 0.8374699759807847,
+      "before": 0.8394276629570747,
+      "delta": -0.001957686976290063
+    },
+    "fpr": {
+      "after": 0.21035058430717862,
+      "before": 0.21702838063439064,
+      "delta": -0.006677796327212021
+    },
+    "margin": {
+      "after": 0.5767153207730538,
+      "before": 0.5792293519301897,
+      "delta": -0.0025140311571358875
+    },
+    "precision": {
+      "after": 0.8058551617873652,
+      "before": 0.8024316109422492,
+      "delta": 0.003423550845115919
+    },
+    "recall": {
+      "after": 0.8716666666666667,
+      "before": 0.88,
+      "delta": -0.008333333333333304
+    }
+  },
+  "decision": "keep_as_provisional_leader",
+  "purity_comparison": {
+    "after": 0.8340283569641368,
+    "before": 0.8315262718932444,
+    "delta": 0.002502085070892446
+  },
+  "reason": "Both runs meet primary targets; run-002 has higher d and lower FPR. Final selection waits for run-003. No significance claim.",
+  "reference_report_sha256": "d9848b23f838f5034b6c1c1cdea0824e7179b44b2982be78a6a04b3f93e0131b",
+  "reference_run": "run-001",
+  "run_id": "run-002",
+  "run_report_sha256": "354d4405c3603b78deec1804ac6b5eceb025e8536a03bab91e2446db108e8f5f"
+}
