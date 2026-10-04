@@ -1,0 +1,2050 @@
+{
+  "cohort_manifest_sha256": "abaf68d44503359ce5d0ae963e0d8ac79a8bbc214aba8623e19e11806290c320",
+  "metadata_comparison": {
+    "eval": {
+      "differences": {},
+      "expected_count": 1469,
+      "observed": {
+        "categories_used": [
+          "dealbreakers",
+          "dealbreakers_and_interests",
+          "interests",
+          "interests_and_lifestyle",
+          "interests_and_values",
+          "lifestyle",
+          "lifestyle_and_interests",
+          "lifestyle_and_values",
+          "values",
+          "values_and_interests",
+          "values_and_lifestyle"
+        ],
+        "compatible_pairs": 709,
+        "complex_pairs": 150,
+        "dealbreaker_pairs": 215,
+        "incompatible_pairs": 760,
+        "llm_judged_pairs": 299,
+        "realistic_pairs": 0,
+        "subtle_mismatch_pairs": 280,
+        "total_pairs": 1469
+      },
+      "observed_count": 1469
+    },
+    "train": {
+      "differences": {},
+      "expected_count": 6000,
+      "observed": {
+        "categories_used": [
+          "dealbreakers",
+          "dealbreakers_and_interests",
+          "interests",
+          "interests_and_lifestyle",
+          "interests_and_values",
+          "lifestyle",
+          "lifestyle_and_interests",
+          "lifestyle_and_values",
+          "realistic_example",
+          "values",
+          "values_and_interests",
+          "values_and_lifestyle"
+        ],
+        "compatible_pairs": 2997,
+        "complex_pairs": 600,
+        "dealbreaker_pairs": 900,
+        "incompatible_pairs": 3003,
+        "llm_judged_pairs": 1200,
+        "realistic_pairs": 20,
+        "subtle_mismatch_pairs": 1180,
+        "total_pairs": 6000
+      },
+      "observed_count": 6000
+    }
+  },
+  "metadata_comparison_scope": "Original immutable files; eligible training count is in cohort_manifest.json",
+  "model_input_fields": [
+    "text_1",
+    "text_2"
+  ],
+  "normalization": "NFKC + casefold + collapsed whitespace; audit/grouping only, raw model text preserved",
+  "original_train_eval_audit": {
+    "overlapping_pair_count": 9,
+    "overlapping_pairs": [
+      {
+        "labels": [
+          0
+        ],
+        "left_ids": [
+          "501f24e3373ee3fdd10572c0c8244824ba4261c4f4b503bfc3240e2941b06780"
+        ],
+        "left_lines": [
+          2776
+        ],
+        "pair_key_sha256": "6b1ee7fc2013fe9626d6d7863a9c271a0d9cb867f4d2f0b447faffb2e36e62bd",
+        "right_ids": [
+          "a54b0333b34c65ea0452911828e9e6e303dbcc4b8498736f965ed6374f492ab1"
+        ],
+        "right_lines": [
+          566
+        ]
+      },
+      {
+        "labels": [
+          0
+        ],
+        "left_ids": [
+          "e30b231247611ffeb3768f4e0f5fe2e28e11ee6c45b9a5e03d5a5bb6c1187574"
+        ],
+        "left_lines": [
+          360
+        ],
+        "pair_key_sha256": "7aa5b389f6368a8e4c318c7891db5ea79beb09e61f6da55053c31d574c9da0c5",
+        "right_ids": [
+          "f3ad0cec8935cf5ccd45ec1f869feaba6d19f2a9503996edf071a950773af8ba"
+        ],
+        "right_lines": [
+          958
+        ]
+      },
+      {
+        "labels": [
+          0
+        ],
+        "left_ids": [
+          "3d3a683b0963ab1689610f9c6e82cf6f4df4dec1bae946733e0535fd12b21e82"
+        ],
+        "left_lines": [
+          2398
+        ],
+        "pair_key_sha256": "f52f537f6b797e168140ce51cd5d142a79a4906226105a01fcb8280ef9e78678",
+        "right_ids": [
+          "15eba4467f138b063fdaa506f3ed258eebee25b6be5b135c07b24ff200455f0a"
+        ],
+        "right_lines": [
+          956
+        ]
+      },
+      {
+        "labels": [
+          0
+        ],
+        "left_ids": [
+          "48db5f09a6cf83c8b04e103ca28c5a2f573fc719955df14a0b59a6818a2efa5c"
+        ],
+        "left_lines": [
+          1704
+        ],
+        "pair_key_sha256": "c6eaaeab00abc1bd8c2ecbcbc32aad0831a05106e23a4ebd38c3d1401185724c",
+        "right_ids": [
+          "b6e0e100aa4df21adc760c5566de721fd4b31a4d6df161971e2fe6479233f302"
+        ],
+        "right_lines": [
+          1068
+        ]
+      },
+      {
+        "labels": [
+          0
+        ],
+        "left_ids": [
+          "ed509776ea10c043f48c6c779ed4274c24f060fa7213a83365d126ae8563844d"
+        ],
+        "left_lines": [
+          1690
+        ],
+        "pair_key_sha256": "532c0391168572b23809081c63c3bbffc04ced0d14cdd7c37ec00a01396bc403",
+        "right_ids": [
+          "dde176e904b60af9d3c1eed2a7d607fe4a1abb92d23cbf51fe605ac8d09499cc"
+        ],
+        "right_lines": [
+          369
+        ]
+      },
+      {
+        "labels": [
+          0
+        ],
+        "left_ids": [
+          "eca47199ccfdcffee988def2ee44b66c68843e7dbb8765dff7243fe1d3aaf97c"
+        ],
+        "left_lines": [
+          511
+        ],
+        "pair_key_sha256": "1ea9b371a8c5c079a87e8693f69cc191873ef1c39a5845093cedcf51199599d4",
+        "right_ids": [
+          "36548e0355db964c8e8398204975c96623f1df55915af2bd903432762e7cf21e"
+        ],
+        "right_lines": [
+          1238
+        ]
+      },
+      {
+        "labels": [
+          0
+        ],
+        "left_ids": [
+          "d30eee671e59060a4689510b5a5383420d9f4e2fbbea3449b195fc19c32b15f4"
+        ],
+        "left_lines": [
+          1290
+        ],
+        "pair_key_sha256": "caf5fe591c9a7f05473b07fc65e6da2416d24d388e0e6e819e46cc7c6e3018b1",
+        "right_ids": [
+          "e3f696d5c06fb9924c07ea9d3428c5e3ca6502e4ce5af44a517c5a8867f17630"
+        ],
+        "right_lines": [
+          579
+        ]
+      },
+      {
+        "labels": [
+          0
+        ],
+        "left_ids": [
+          "cd787ef36f857edf49098f506422620cbdc334e0fda20e44fd665942e807eccc"
+        ],
+        "left_lines": [
+          4164
+        ],
+        "pair_key_sha256": "e03212907e0a75127a8a9f95c1dcfc24361910c0bbabb505b40006689feffa99",
+        "right_ids": [
+          "4df93f00f19ec6b2a91a2d8131a1d77904030fec1bcc33ec34be18b326c2b3f8"
+        ],
+        "right_lines": [
+          458
+        ]
+      },
+      {
+        "labels": [
+          0
+        ],
+        "left_ids": [
+          "66b59f11c3f0d8a52327d5eaeca1f6190067d076b616c66d73e5bf4039788d75"
+        ],
+        "left_lines": [
+          1256
+        ],
+        "pair_key_sha256": "feab3ffe3eea871e9b7fbcaf73e6401ba7f8ca57efa664d7f2bcd92f73c90b2d",
+        "right_ids": [
+          "31d544c539c91e30afe119986981441e8fda1f56279240c6a8d2aed20be84ce0"
+        ],
+        "right_lines": [
+          1037
+        ]
+      }
+    ],
+    "shared_normalized_profiles": 527,
+    "shared_template_proxies": 436,
+    "template_proxy_definition": "First three word tokens after removing boy:/girl:; coarse surface-form proxy, not proven template identity"
+  },
+  "pair_type_used_as_target": false,
+  "protocol_version": "s2-quarantine-v1",
+  "source_hashes": {
+    "dating_pairs.jsonl": "ccdffa2e004f0b36ff7102b23023f3a65bba2c7c02afb1d7029d03490e319302",
+    "dating_pairs_metadata.json": "5e0486fc6068de27dd133dc4363dbdbc5501a635760f7a873783893a2c145d24",
+    "eval_pairs.jsonl": "0ef015ff913bdc21c2ac9897a0e67ebfee788d64b63fca98b195ce262401a8d2",
+    "eval_pairs_metadata.json": "66f963049c974ed8cc685c33ea5b7e191598fdc71501d758c990c4a756767013"
+  },
+  "split_manifest_sha256": "e95745c57e129c95d5af8234bb29e6714e5f178a20946ef094729a4ca3c5b16f",
+  "splits": {
+    "eval": {
+      "distributions": {
+        "category": {
+          "dealbreakers": 215,
+          "dealbreakers_and_interests": 25,
+          "interests": 278,
+          "interests_and_lifestyle": 129,
+          "interests_and_values": 181,
+          "lifestyle": 268,
+          "lifestyle_and_interests": 24,
+          "lifestyle_and_values": 22,
+          "values": 267,
+          "values_and_interests": 31,
+          "values_and_lifestyle": 29
+        },
+        "label": {
+          "0": 760,
+          "1": 709
+        },
+        "pair_type": {
+          "compatible": 315,
+          "complex_compatible": 92,
+          "complex_incompatible": 58,
+          "dealbreaker": 215,
+          "incompatible": 210,
+          "llm_judged_compatible": 151,
+          "llm_judged_incompatible": 148,
+          "subtle_mismatch": 280
+        },
+        "subcategory": {
+          "active": 21,
+          "active_and_extroverted": 1,
+          "active_vs_extroverted": 2,
+          "active_vs_health_conscious": 1,
+          "active_vs_honesty": 1,
+          "active_vs_introverted": 1,
+          "active_vs_pet_lover": 1,
+          "active_vs_reading": 2,
+          "active_vs_relaxed": 2,
+          "active_vs_travel": 1,
+          "arts": 27,
+          "arts_and_food": 1,
+          "arts_and_outdoors": 1,
+          "arts_and_reading": 1,
+          "arts_vs_extroverted": 1,
+          "arts_vs_family": 1,
+          "arts_vs_food": 1,
+          "arts_vs_gaming": 2,
+          "arts_vs_honesty": 1,
+          "arts_vs_music": 2,
+          "arts_vs_outdoors": 2,
+          "arts_vs_reading": 1,
+          "arts_vs_spirituality": 1,
+          "arts_vs_travel": 4,
+          "career": 18,
+          "career_and_family": 2,
+          "career_and_independence": 1,
+          "career_vs_active": 1,
+          "career_vs_creativity": 6,
+          "career_vs_environment": 2,
+          "career_vs_family": 3,
+          "career_vs_honesty": 2,
+          "career_vs_independence": 4,
+          "career_vs_music": 1,
+          "career_vs_spirituality": 1,
+          "creativity": 19,
+          "creativity_and_environment": 3,
+          "creativity_and_spirituality": 2,
+          "creativity_vs_arts": 2,
+          "creativity_vs_career": 2,
+          "creativity_vs_environment": 1,
+          "creativity_vs_extroverted": 1,
+          "creativity_vs_family": 3,
+          "creativity_vs_food": 2,
+          "creativity_vs_honesty": 4,
+          "creativity_vs_independence": 1,
+          "creativity_vs_music": 2,
+          "creativity_vs_outdoors": 3,
+          "creativity_vs_pet_lover": 1,
+          "creativity_vs_spirituality": 3,
+          "creativity_vs_tech_savvy": 2,
+          "environment": 25,
+          "environment_and_career": 1,
+          "environment_and_spirituality": 1,
+          "environment_vs_active": 2,
+          "environment_vs_career": 3,
+          "environment_vs_creativity": 1,
+          "environment_vs_family": 3,
+          "environment_vs_food": 1,
+          "environment_vs_honesty": 3,
+          "environment_vs_introverted": 1,
+          "environment_vs_outdoors": 2,
+          "environment_vs_relaxed": 1,
+          "environment_vs_spirituality": 1,
+          "extroverted": 29,
+          "extroverted_and_active": 1,
+          "extroverted_and_introverted": 1,
+          "extroverted_and_relaxed": 1,
+          "extroverted_vs_active": 4,
+          "extroverted_vs_career": 1,
+          "extroverted_vs_food": 1,
+          "extroverted_vs_health_conscious": 1,
+          "extroverted_vs_introverted": 1,
+          "extroverted_vs_music": 1,
+          "extroverted_vs_outdoors": 1,
+          "extroverted_vs_pet_lover": 2,
+          "extroverted_vs_reading": 1,
+          "extroverted_vs_relaxed": 6,
+          "extroverted_vs_tech_savvy": 5,
+          "family": 22,
+          "family_and_honesty": 1,
+          "family_vs_career": 3,
+          "family_vs_creativity": 2,
+          "family_vs_environment": 3,
+          "family_vs_health_conscious": 3,
+          "family_vs_honesty": 1,
+          "family_vs_independence": 3,
+          "family_vs_introverted": 1,
+          "family_vs_travel": 2,
+          "food": 28,
+          "food_and_gaming": 1,
+          "food_and_outdoors": 1,
+          "food_vs_arts": 2,
+          "food_vs_extroverted": 1,
+          "food_vs_gaming": 2,
+          "food_vs_music": 2,
+          "food_vs_outdoors": 2,
+          "food_vs_reading": 4,
+          "food_vs_spirituality": 1,
+          "food_vs_tech_savvy": 2,
+          "food_vs_travel": 1,
+          "gaming": 22,
+          "gaming_and_arts": 1,
+          "gaming_and_travel": 1,
+          "gaming_vs_active": 1,
+          "gaming_vs_arts": 5,
+          "gaming_vs_environment": 1,
+          "gaming_vs_food": 1,
+          "gaming_vs_introverted": 1,
+          "gaming_vs_outdoors": 5,
+          "gaming_vs_pet_lover": 2,
+          "gaming_vs_reading": 2,
+          "gaming_vs_tech_savvy": 1,
+          "gaming_vs_travel": 2,
+          "health_conscious": 23,
+          "health_conscious_and_active": 2,
+          "health_conscious_and_introverted": 1,
+          "health_conscious_and_pet_lover": 1,
+          "health_conscious_vs_active": 3,
+          "health_conscious_vs_arts": 1,
+          "health_conscious_vs_career": 1,
+          "health_conscious_vs_creativity": 1,
+          "health_conscious_vs_extroverted": 4,
+          "health_conscious_vs_gaming": 1,
+          "health_conscious_vs_honesty": 1,
+          "health_conscious_vs_introverted": 2,
+          "health_conscious_vs_music": 1,
+          "health_conscious_vs_pet_lover": 4,
+          "health_conscious_vs_relaxed": 3,
+          "health_conscious_vs_spirituality": 1,
+          "health_conscious_vs_tech_savvy": 1,
+          "health_conscious_vs_travel": 1,
+          "honesty": 12,
+          "honesty_and_career": 1,
+          "honesty_and_creativity": 1,
+          "honesty_and_environment": 1,
+          "honesty_vs_active": 2,
+          "honesty_vs_career": 3,
+          "honesty_vs_creativity": 3,
+          "honesty_vs_extroverted": 1,
+          "honesty_vs_family": 1,
+          "honesty_vs_food": 3,
+          "honesty_vs_health_conscious": 2,
+          "honesty_vs_independence": 2,
+          "honesty_vs_music": 2,
+          "honesty_vs_relaxed": 1,
+          "honesty_vs_spirituality": 1,
+          "independence": 32,
+          "independence_and_creativity": 2,
+          "independence_and_environment": 1,
+          "independence_vs_active": 1,
+          "independence_vs_career": 2,
+          "independence_vs_creativity": 4,
+          "independence_vs_extroverted": 1,
+          "independence_vs_family": 2,
+          "independence_vs_gaming": 1,
+          "independence_vs_honesty": 4,
+          "independence_vs_introverted": 1,
+          "independence_vs_outdoors": 2,
+          "independence_vs_pet_lover": 1,
+          "independence_vs_reading": 2,
+          "independence_vs_spirituality": 2,
+          "independence_vs_travel": 1,
+          "introverted": 27,
+          "introverted_and_active": 2,
+          "introverted_and_relaxed": 1,
+          "introverted_and_tech_savvy": 2,
+          "introverted_vs_active": 1,
+          "introverted_vs_creativity": 1,
+          "introverted_vs_extroverted": 2,
+          "introverted_vs_food": 2,
+          "introverted_vs_health_conscious": 1,
+          "introverted_vs_honesty": 1,
+          "introverted_vs_independence": 1,
+          "introverted_vs_pet_lover": 1,
+          "introverted_vs_relaxed": 2,
+          "introverted_vs_spirituality": 1,
+          "introverted_vs_tech_savvy": 1,
+          "lifestyle": 74,
+          "music": 18,
+          "music_and_gaming": 1,
+          "music_vs_active": 2,
+          "music_vs_family": 1,
+          "music_vs_food": 4,
+          "music_vs_gaming": 3,
+          "music_vs_honesty": 1,
+          "music_vs_introverted": 1,
+          "music_vs_outdoors": 4,
+          "music_vs_reading": 1,
+          "music_vs_relaxed": 1,
+          "music_vs_travel": 6,
+          "outdoors": 25,
+          "outdoors_and_arts": 1,
+          "outdoors_and_reading": 2,
+          "outdoors_vs_arts": 2,
+          "outdoors_vs_environment": 2,
+          "outdoors_vs_extroverted": 1,
+          "outdoors_vs_family": 3,
+          "outdoors_vs_gaming": 2,
+          "outdoors_vs_health_conscious": 1,
+          "outdoors_vs_honesty": 1,
+          "outdoors_vs_reading": 3,
+          "outdoors_vs_relaxed": 1,
+          "outdoors_vs_spirituality": 1,
+          "personality": 67,
+          "pet_lover": 17,
+          "pet_lover_and_active": 1,
+          "pet_lover_vs_active": 3,
+          "pet_lover_vs_career": 1,
+          "pet_lover_vs_creativity": 1,
+          "pet_lover_vs_extroverted": 2,
+          "pet_lover_vs_family": 1,
+          "pet_lover_vs_food": 2,
+          "pet_lover_vs_health_conscious": 4,
+          "pet_lover_vs_honesty": 1,
+          "pet_lover_vs_introverted": 1,
+          "pet_lover_vs_outdoors": 1,
+          "pet_lover_vs_reading": 1,
+          "pet_lover_vs_relaxed": 4,
+          "pet_lover_vs_tech_savvy": 1,
+          "reading": 24,
+          "reading_and_gaming": 2,
+          "reading_vs_active": 1,
+          "reading_vs_arts": 3,
+          "reading_vs_career": 1,
+          "reading_vs_extroverted": 1,
+          "reading_vs_food": 1,
+          "reading_vs_health_conscious": 1,
+          "reading_vs_honesty": 1,
+          "reading_vs_independence": 1,
+          "reading_vs_introverted": 2,
+          "reading_vs_music": 2,
+          "reading_vs_outdoors": 1,
+          "reading_vs_relaxed": 2,
+          "reading_vs_spirituality": 2,
+          "reading_vs_travel": 5,
+          "relaxed": 19,
+          "relaxed_and_introverted": 1,
+          "relaxed_vs_active": 3,
+          "relaxed_vs_extroverted": 3,
+          "relaxed_vs_family": 1,
+          "relaxed_vs_food": 2,
+          "relaxed_vs_health_conscious": 1,
+          "relaxed_vs_introverted": 4,
+          "relaxed_vs_reading": 1,
+          "relaxed_vs_spirituality": 1,
+          "relaxed_vs_tech_savvy": 3,
+          "score_3": 54,
+          "score_4": 51,
+          "score_5": 100,
+          "score_6": 65,
+          "score_7": 15,
+          "score_8": 9,
+          "score_9": 5,
+          "spirituality": 22,
+          "spirituality_and_career": 1,
+          "spirituality_and_creativity": 2,
+          "spirituality_and_honesty": 1,
+          "spirituality_vs_arts": 2,
+          "spirituality_vs_career": 3,
+          "spirituality_vs_creativity": 2,
+          "spirituality_vs_environment": 2,
+          "spirituality_vs_family": 8,
+          "spirituality_vs_health_conscious": 1,
+          "spirituality_vs_honesty": 2,
+          "spirituality_vs_travel": 3,
+          "substances": 74,
+          "tech_savvy": 17,
+          "tech_savvy_and_introverted": 1,
+          "tech_savvy_and_pet_lover": 1,
+          "tech_savvy_vs_active": 3,
+          "tech_savvy_vs_arts": 2,
+          "tech_savvy_vs_environment": 1,
+          "tech_savvy_vs_extroverted": 2,
+          "tech_savvy_vs_health_conscious": 4,
+          "tech_savvy_vs_honesty": 1,
+          "tech_savvy_vs_independence": 2,
+          "tech_savvy_vs_introverted": 2,
+          "tech_savvy_vs_outdoors": 2,
+          "tech_savvy_vs_pet_lover": 1,
+          "tech_savvy_vs_relaxed": 4,
+          "tech_savvy_vs_spirituality": 2,
+          "travel": 23,
+          "travel_and_arts": 2,
+          "travel_and_gaming": 1,
+          "travel_and_reading": 1,
+          "travel_vs_career": 1,
+          "travel_vs_environment": 1,
+          "travel_vs_honesty": 1,
+          "travel_vs_independence": 2,
+          "travel_vs_music": 4,
+          "travel_vs_outdoors": 3,
+          "travel_vs_reading": 4,
+          "travel_vs_relaxed": 1,
+          "travel_vs_tech_savvy": 1
+        }
+      },
+      "gender_prefix_order": {
+        "boy/girl": 717,
+        "girl/boy": 752
+      },
+      "lengths": {
+        "characters": {
+          "count": 2938,
+          "max": 155,
+          "mean": 57.18141592920354,
+          "median": 52.0,
+          "min": 18,
+          "p95": 97.0
+        },
+        "word_tokens": {
+          "count": 2938,
+          "max": 28,
+          "mean": 10.075221238938052,
+          "median": 9.0,
+          "min": 4,
+          "p95": 17.0
+        }
+      },
+      "pair_audit": {
+        "contradictory_groups": [],
+        "duplicate_groups": [
+          {
+            "ids": [
+              "0c464176eda04af8df827bef1ed9874ef5ac293fe481fd19a1d768f2ef02efb9",
+              "7820cba9fa40b82623d367ffdacab34e50d5bbaeb560b0d3dfd96755306d1be7"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              202,
+              913
+            ],
+            "pair_key_sha256": "0de792c9a698c078a22d9e889da7feccfc0f64c471ea4a1c67f0d33967734e6e"
+          },
+          {
+            "ids": [
+              "8200a72bbcfb69a6485172861d5bf3ffcf416140e5844b070aacbeda752bb7a6",
+              "e88dc75762835e820e7e491eae97a9d2afd03954eaeb40672a334b312435f8ce"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              254,
+              1451
+            ],
+            "pair_key_sha256": "a425a9489fd0c512c8c8a57fe1742e4222e9b815ae0a43079e737d33f4d46068"
+          }
+        ],
+        "exact_ordered_duplicate_extras": 1,
+        "normalization_only_duplicate_extras": 0,
+        "normalized_unordered_duplicate_extras": 2,
+        "raw_unordered_duplicate_extras": 2,
+        "reversed_duplicate_extras": 1
+      },
+      "profiles": {
+        "occurrences": 2938,
+        "repeated_occurrences": 75,
+        "unique_normalized": 2863,
+        "unique_ratio": 0.9744724302246426
+      },
+      "rows": 1469,
+      "vocabulary": {
+        "definition": "NFKC/casefold Unicode word tokens including apostrophes; not model tokenizer",
+        "most_common_30": [
+          [
+            "i",
+            2967
+          ],
+          [
+            "boy",
+            1469
+          ],
+          [
+            "girl",
+            1469
+          ],
+          [
+            "and",
+            942
+          ],
+          [
+            "i'm",
+            828
+          ],
+          [
+            "about",
+            522
+          ],
+          [
+            "for",
+            428
+          ],
+          [
+            "into",
+            404
+          ],
+          [
+            "in",
+            367
+          ],
+          [
+            "a",
+            327
+          ],
+          [
+            "of",
+            307
+          ],
+          [
+            "with",
+            304
+          ],
+          [
+            "to",
+            298
+          ],
+          [
+            "on",
+            264
+          ],
+          [
+            "but",
+            251
+          ],
+          [
+            "am",
+            246
+          ],
+          [
+            "time",
+            243
+          ],
+          [
+            "get",
+            238
+          ],
+          [
+            "family",
+            227
+          ],
+          [
+            "love",
+            212
+          ],
+          [
+            "enjoy",
+            208
+          ],
+          [
+            "can't",
+            186
+          ],
+          [
+            "find",
+            183
+          ],
+          [
+            "the",
+            182
+          ],
+          [
+            "really",
+            172
+          ],
+          [
+            "value",
+            163
+          ],
+          [
+            "always",
+            163
+          ],
+          [
+            "make",
+            163
+          ],
+          [
+            "live",
+            163
+          ],
+          [
+            "excited",
+            163
+          ]
+        ],
+        "total_tokens": 29601,
+        "unique_tokens": 728
+      }
+    },
+    "train": {
+      "distributions": {
+        "category": {
+          "dealbreakers": 891,
+          "dealbreakers_and_interests": 88,
+          "interests": 1083,
+          "interests_and_lifestyle": 466,
+          "interests_and_values": 769,
+          "lifestyle": 1152,
+          "lifestyle_and_interests": 114,
+          "lifestyle_and_values": 108,
+          "realistic_example": 20,
+          "values": 1075,
+          "values_and_interests": 94,
+          "values_and_lifestyle": 131
+        },
+        "label": {
+          "0": 2994,
+          "1": 2997
+        },
+        "pair_type": {
+          "compatible": 1263,
+          "complex_compatible": 367,
+          "complex_incompatible": 233,
+          "curated_realistic": 20,
+          "dealbreaker": 891,
+          "incompatible": 837,
+          "llm_judged_compatible": 690,
+          "llm_judged_incompatible": 510,
+          "subtle_mismatch": 1180
+        },
+        "subcategory": {
+          "active": 96,
+          "active_and_extroverted": 1,
+          "active_and_introverted": 1,
+          "active_and_relaxed": 2,
+          "active_and_tech_savvy": 2,
+          "active_vs_arts": 3,
+          "active_vs_career": 2,
+          "active_vs_creativity": 5,
+          "active_vs_environment": 1,
+          "active_vs_extroverted": 12,
+          "active_vs_family": 2,
+          "active_vs_gaming": 1,
+          "active_vs_health_conscious": 14,
+          "active_vs_honesty": 5,
+          "active_vs_independence": 3,
+          "active_vs_introverted": 10,
+          "active_vs_music": 4,
+          "active_vs_outdoors": 7,
+          "active_vs_pet_lover": 10,
+          "active_vs_reading": 2,
+          "active_vs_relaxed": 14,
+          "active_vs_spirituality": 2,
+          "active_vs_tech_savvy": 9,
+          "active_vs_travel": 7,
+          "arts": 86,
+          "arts_and_food": 1,
+          "arts_and_gaming": 1,
+          "arts_and_music": 2,
+          "arts_and_outdoors": 4,
+          "arts_and_reading": 2,
+          "arts_and_travel": 2,
+          "arts_vs_career": 1,
+          "arts_vs_environment": 2,
+          "arts_vs_extroverted": 1,
+          "arts_vs_family": 2,
+          "arts_vs_food": 7,
+          "arts_vs_gaming": 10,
+          "arts_vs_health_conscious": 3,
+          "arts_vs_honesty": 1,
+          "arts_vs_independence": 3,
+          "arts_vs_introverted": 2,
+          "arts_vs_music": 7,
+          "arts_vs_outdoors": 10,
+          "arts_vs_pet_lover": 2,
+          "arts_vs_reading": 8,
+          "arts_vs_relaxed": 2,
+          "arts_vs_spirituality": 3,
+          "arts_vs_tech_savvy": 2,
+          "arts_vs_travel": 6,
+          "both_deeply_value_honesty_and_directness_in_relationships": 1,
+          "both_introverts_with_different_hobbies_but_compatible_energy": 1,
+          "both_say_adventure_but_mean_very_different_things": 1,
+          "both_value_career_and_family_balance": 1,
+          "both_value_independence_and_personal_boundaries": 1,
+          "both_value_spirituality_though_expressed_differently": 1,
+          "career": 83,
+          "career_and_creativity": 3,
+          "career_and_environment": 5,
+          "career_and_independence": 1,
+          "career_vs_active": 3,
+          "career_vs_arts": 1,
+          "career_vs_creativity": 9,
+          "career_vs_environment": 9,
+          "career_vs_extroverted": 1,
+          "career_vs_family": 12,
+          "career_vs_food": 1,
+          "career_vs_gaming": 1,
+          "career_vs_health_conscious": 5,
+          "career_vs_honesty": 4,
+          "career_vs_independence": 8,
+          "career_vs_introverted": 2,
+          "career_vs_music": 2,
+          "career_vs_outdoors": 2,
+          "career_vs_pet_lover": 1,
+          "career_vs_reading": 3,
+          "career_vs_relaxed": 1,
+          "career_vs_spirituality": 14,
+          "career_vs_tech_savvy": 2,
+          "career_vs_travel": 4,
+          "complementary_personality_traits_can_strengthen_a_relationship": 1,
+          "controlling_tendencies_vs_dealbreaker": 1,
+          "creativity": 89,
+          "creativity_and_career": 2,
+          "creativity_and_family": 1,
+          "creativity_and_honesty": 1,
+          "creativity_and_independence": 1,
+          "creativity_vs_active": 4,
+          "creativity_vs_arts": 2,
+          "creativity_vs_career": 12,
+          "creativity_vs_environment": 9,
+          "creativity_vs_extroverted": 3,
+          "creativity_vs_family": 9,
+          "creativity_vs_food": 5,
+          "creativity_vs_health_conscious": 1,
+          "creativity_vs_honesty": 13,
+          "creativity_vs_independence": 6,
+          "creativity_vs_music": 1,
+          "creativity_vs_outdoors": 4,
+          "creativity_vs_reading": 2,
+          "creativity_vs_spirituality": 6,
+          "creativity_vs_travel": 1,
+          "dealbreaker_smoking_overrides_shared_interests": 1,
+          "different_social_styles_but_shared_value_of_meaningful_relationships": 1,
+          "environment": 86,
+          "environment_and_career": 1,
+          "environment_and_creativity": 1,
+          "environment_and_family": 1,
+          "environment_and_honesty": 1,
+          "environment_and_independence": 2,
+          "environment_and_spirituality": 1,
+          "environment_vs_active": 4,
+          "environment_vs_career": 7,
+          "environment_vs_creativity": 5,
+          "environment_vs_extroverted": 2,
+          "environment_vs_family": 12,
+          "environment_vs_food": 2,
+          "environment_vs_gaming": 1,
+          "environment_vs_health_conscious": 3,
+          "environment_vs_honesty": 7,
+          "environment_vs_independence": 7,
+          "environment_vs_introverted": 2,
+          "environment_vs_music": 1,
+          "environment_vs_outdoors": 4,
+          "environment_vs_pet_lover": 2,
+          "environment_vs_reading": 1,
+          "environment_vs_relaxed": 3,
+          "environment_vs_spirituality": 9,
+          "environment_vs_tech_savvy": 1,
+          "environment_vs_travel": 3,
+          "extreme_work_prioritization_conflicts_with_family_values": 1,
+          "extroverted": 95,
+          "extroverted_and_active": 1,
+          "extroverted_and_health_conscious": 3,
+          "extroverted_and_introverted": 1,
+          "extroverted_and_pet_lover": 1,
+          "extroverted_and_tech_savvy": 2,
+          "extroverted_vs_active": 8,
+          "extroverted_vs_arts": 2,
+          "extroverted_vs_career": 1,
+          "extroverted_vs_creativity": 2,
+          "extroverted_vs_environment": 1,
+          "extroverted_vs_family": 2,
+          "extroverted_vs_food": 2,
+          "extroverted_vs_gaming": 2,
+          "extroverted_vs_health_conscious": 9,
+          "extroverted_vs_honesty": 1,
+          "extroverted_vs_independence": 2,
+          "extroverted_vs_introverted": 8,
+          "extroverted_vs_music": 2,
+          "extroverted_vs_outdoors": 2,
+          "extroverted_vs_pet_lover": 9,
+          "extroverted_vs_reading": 2,
+          "extroverted_vs_relaxed": 15,
+          "extroverted_vs_spirituality": 3,
+          "extroverted_vs_tech_savvy": 12,
+          "extroverted_vs_travel": 1,
+          "family": 96,
+          "family_and_career": 2,
+          "family_and_environment": 3,
+          "family_and_honesty": 1,
+          "family_and_independence": 1,
+          "family_and_spirituality": 2,
+          "family_values_outweigh_exercise_preferences": 1,
+          "family_vs_active": 2,
+          "family_vs_arts": 4,
+          "family_vs_career": 8,
+          "family_vs_creativity": 14,
+          "family_vs_environment": 15,
+          "family_vs_extroverted": 1,
+          "family_vs_food": 2,
+          "family_vs_gaming": 1,
+          "family_vs_health_conscious": 2,
+          "family_vs_honesty": 10,
+          "family_vs_independence": 9,
+          "family_vs_introverted": 4,
+          "family_vs_music": 1,
+          "family_vs_outdoors": 2,
+          "family_vs_pet_lover": 1,
+          "family_vs_reading": 1,
+          "family_vs_relaxed": 1,
+          "family_vs_spirituality": 10,
+          "family_vs_tech_savvy": 1,
+          "financial_values_dealbreaker": 1,
+          "food": 99,
+          "food_and_arts": 4,
+          "food_and_gaming": 1,
+          "food_and_outdoors": 3,
+          "food_and_reading": 2,
+          "food_vs_active": 3,
+          "food_vs_arts": 4,
+          "food_vs_career": 3,
+          "food_vs_creativity": 2,
+          "food_vs_extroverted": 2,
+          "food_vs_family": 3,
+          "food_vs_gaming": 14,
+          "food_vs_health_conscious": 3,
+          "food_vs_honesty": 3,
+          "food_vs_independence": 2,
+          "food_vs_music": 9,
+          "food_vs_outdoors": 8,
+          "food_vs_pet_lover": 1,
+          "food_vs_reading": 5,
+          "food_vs_relaxed": 1,
+          "food_vs_spirituality": 3,
+          "food_vs_travel": 3,
+          "fundamentally_different_daily_rhythms_and_lifestyle_priorities": 1,
+          "gaming": 99,
+          "gaming_and_arts": 2,
+          "gaming_and_food": 2,
+          "gaming_and_music": 3,
+          "gaming_and_reading": 1,
+          "gaming_and_travel": 3,
+          "gaming_vs_active": 2,
+          "gaming_vs_arts": 11,
+          "gaming_vs_career": 4,
+          "gaming_vs_environment": 1,
+          "gaming_vs_extroverted": 2,
+          "gaming_vs_family": 3,
+          "gaming_vs_food": 8,
+          "gaming_vs_health_conscious": 1,
+          "gaming_vs_honesty": 4,
+          "gaming_vs_independence": 1,
+          "gaming_vs_introverted": 3,
+          "gaming_vs_music": 12,
+          "gaming_vs_outdoors": 10,
+          "gaming_vs_pet_lover": 3,
+          "gaming_vs_reading": 9,
+          "gaming_vs_relaxed": 3,
+          "gaming_vs_spirituality": 1,
+          "gaming_vs_tech_savvy": 1,
+          "gaming_vs_travel": 10,
+          "health_conscious": 93,
+          "health_conscious_and_active": 1,
+          "health_conscious_and_extroverted": 3,
+          "health_conscious_and_introverted": 2,
+          "health_conscious_and_tech_savvy": 2,
+          "health_conscious_vs_active": 11,
+          "health_conscious_vs_arts": 2,
+          "health_conscious_vs_career": 1,
+          "health_conscious_vs_creativity": 5,
+          "health_conscious_vs_extroverted": 9,
+          "health_conscious_vs_family": 2,
+          "health_conscious_vs_food": 4,
+          "health_conscious_vs_gaming": 2,
+          "health_conscious_vs_honesty": 2,
+          "health_conscious_vs_introverted": 15,
+          "health_conscious_vs_music": 1,
+          "health_conscious_vs_outdoors": 3,
+          "health_conscious_vs_pet_lover": 9,
+          "health_conscious_vs_reading": 1,
+          "health_conscious_vs_relaxed": 9,
+          "health_conscious_vs_spirituality": 1,
+          "health_conscious_vs_tech_savvy": 13,
+          "honesty": 95,
+          "honesty_and_career": 3,
+          "honesty_and_family": 3,
+          "honesty_and_independence": 2,
+          "honesty_and_spirituality": 1,
+          "honesty_vs_active": 1,
+          "honesty_vs_arts": 2,
+          "honesty_vs_career": 12,
+          "honesty_vs_creativity": 10,
+          "honesty_vs_environment": 14,
+          "honesty_vs_family": 11,
+          "honesty_vs_gaming": 3,
+          "honesty_vs_health_conscious": 3,
+          "honesty_vs_independence": 9,
+          "honesty_vs_introverted": 4,
+          "honesty_vs_music": 2,
+          "honesty_vs_outdoors": 5,
+          "honesty_vs_pet_lover": 1,
+          "honesty_vs_reading": 1,
+          "honesty_vs_relaxed": 2,
+          "honesty_vs_spirituality": 9,
+          "honesty_vs_tech_savvy": 2,
+          "honesty_vs_travel": 2,
+          "independence": 81,
+          "independence_and_creativity": 2,
+          "independence_and_environment": 2,
+          "independence_and_family": 3,
+          "independence_vs_active": 1,
+          "independence_vs_arts": 1,
+          "independence_vs_career": 6,
+          "independence_vs_creativity": 10,
+          "independence_vs_environment": 12,
+          "independence_vs_extroverted": 2,
+          "independence_vs_family": 10,
+          "independence_vs_food": 1,
+          "independence_vs_gaming": 1,
+          "independence_vs_health_conscious": 3,
+          "independence_vs_honesty": 9,
+          "independence_vs_introverted": 3,
+          "independence_vs_music": 3,
+          "independence_vs_outdoors": 2,
+          "independence_vs_pet_lover": 8,
+          "independence_vs_reading": 2,
+          "independence_vs_relaxed": 2,
+          "independence_vs_spirituality": 5,
+          "independence_vs_tech_savvy": 1,
+          "independence_vs_travel": 2,
+          "introverted": 88,
+          "introverted_and_pet_lover": 2,
+          "introverted_and_tech_savvy": 1,
+          "introverted_vs_active": 11,
+          "introverted_vs_arts": 1,
+          "introverted_vs_career": 2,
+          "introverted_vs_creativity": 1,
+          "introverted_vs_environment": 9,
+          "introverted_vs_extroverted": 10,
+          "introverted_vs_family": 2,
+          "introverted_vs_food": 1,
+          "introverted_vs_health_conscious": 15,
+          "introverted_vs_honesty": 2,
+          "introverted_vs_independence": 4,
+          "introverted_vs_music": 1,
+          "introverted_vs_outdoors": 1,
+          "introverted_vs_pet_lover": 8,
+          "introverted_vs_reading": 3,
+          "introverted_vs_relaxed": 12,
+          "introverted_vs_spirituality": 1,
+          "introverted_vs_tech_savvy": 13,
+          "introverted_vs_travel": 3,
+          "lifestyle": 298,
+          "music": 105,
+          "music_and_gaming": 1,
+          "music_and_outdoors": 2,
+          "music_and_reading": 2,
+          "music_vs_active": 2,
+          "music_vs_arts": 5,
+          "music_vs_career": 3,
+          "music_vs_creativity": 1,
+          "music_vs_environment": 1,
+          "music_vs_extroverted": 2,
+          "music_vs_food": 5,
+          "music_vs_gaming": 8,
+          "music_vs_health_conscious": 2,
+          "music_vs_honesty": 2,
+          "music_vs_independence": 3,
+          "music_vs_introverted": 1,
+          "music_vs_outdoors": 5,
+          "music_vs_pet_lover": 1,
+          "music_vs_reading": 7,
+          "music_vs_spirituality": 2,
+          "music_vs_tech_savvy": 5,
+          "music_vs_travel": 11,
+          "outdoors": 83,
+          "outdoors_and_arts": 1,
+          "outdoors_and_food": 3,
+          "outdoors_and_gaming": 4,
+          "outdoors_and_music": 1,
+          "outdoors_and_reading": 1,
+          "outdoors_and_travel": 3,
+          "outdoors_vs_active": 3,
+          "outdoors_vs_arts": 10,
+          "outdoors_vs_career": 3,
+          "outdoors_vs_environment": 1,
+          "outdoors_vs_extroverted": 1,
+          "outdoors_vs_family": 2,
+          "outdoors_vs_food": 7,
+          "outdoors_vs_gaming": 4,
+          "outdoors_vs_health_conscious": 2,
+          "outdoors_vs_honesty": 4,
+          "outdoors_vs_independence": 2,
+          "outdoors_vs_introverted": 1,
+          "outdoors_vs_music": 7,
+          "outdoors_vs_pet_lover": 3,
+          "outdoors_vs_reading": 4,
+          "outdoors_vs_relaxed": 1,
+          "outdoors_vs_spirituality": 5,
+          "outdoors_vs_tech_savvy": 1,
+          "outdoors_vs_travel": 13,
+          "personality": 297,
+          "pet_love_and_values_alignment_despite_lifestyle_difference": 1,
+          "pet_lover": 100,
+          "pet_lover_and_active": 1,
+          "pet_lover_and_extroverted": 4,
+          "pet_lover_and_health_conscious": 3,
+          "pet_lover_and_introverted": 2,
+          "pet_lover_and_relaxed": 1,
+          "pet_lover_and_tech_savvy": 2,
+          "pet_lover_vs_active": 16,
+          "pet_lover_vs_arts": 2,
+          "pet_lover_vs_career": 3,
+          "pet_lover_vs_creativity": 2,
+          "pet_lover_vs_environment": 1,
+          "pet_lover_vs_extroverted": 9,
+          "pet_lover_vs_family": 1,
+          "pet_lover_vs_food": 5,
+          "pet_lover_vs_gaming": 7,
+          "pet_lover_vs_health_conscious": 11,
+          "pet_lover_vs_honesty": 1,
+          "pet_lover_vs_independence": 5,
+          "pet_lover_vs_introverted": 6,
+          "pet_lover_vs_outdoors": 5,
+          "pet_lover_vs_reading": 4,
+          "pet_lover_vs_relaxed": 10,
+          "pet_lover_vs_tech_savvy": 10,
+          "pet_lover_vs_travel": 1,
+          "reading": 93,
+          "reading_and_food": 3,
+          "reading_and_gaming": 2,
+          "reading_and_music": 1,
+          "reading_and_outdoors": 2,
+          "reading_and_travel": 2,
+          "reading_vs_active": 1,
+          "reading_vs_arts": 8,
+          "reading_vs_career": 1,
+          "reading_vs_environment": 1,
+          "reading_vs_extroverted": 1,
+          "reading_vs_family": 3,
+          "reading_vs_food": 8,
+          "reading_vs_gaming": 18,
+          "reading_vs_health_conscious": 3,
+          "reading_vs_honesty": 3,
+          "reading_vs_independence": 1,
+          "reading_vs_music": 6,
+          "reading_vs_outdoors": 2,
+          "reading_vs_pet_lover": 1,
+          "reading_vs_relaxed": 1,
+          "reading_vs_tech_savvy": 1,
+          "reading_vs_travel": 9,
+          "relaxed": 90,
+          "relaxed_and_active": 1,
+          "relaxed_and_health_conscious": 2,
+          "relaxed_and_introverted": 1,
+          "relaxed_and_pet_lover": 2,
+          "relaxed_and_tech_savvy": 3,
+          "relaxed_vs_active": 13,
+          "relaxed_vs_arts": 4,
+          "relaxed_vs_career": 3,
+          "relaxed_vs_creativity": 1,
+          "relaxed_vs_environment": 4,
+          "relaxed_vs_extroverted": 12,
+          "relaxed_vs_food": 1,
+          "relaxed_vs_gaming": 1,
+          "relaxed_vs_health_conscious": 9,
+          "relaxed_vs_honesty": 3,
+          "relaxed_vs_independence": 5,
+          "relaxed_vs_introverted": 8,
+          "relaxed_vs_music": 2,
+          "relaxed_vs_outdoors": 6,
+          "relaxed_vs_pet_lover": 10,
+          "relaxed_vs_reading": 1,
+          "relaxed_vs_spirituality": 2,
+          "relaxed_vs_tech_savvy": 10,
+          "relaxed_vs_travel": 2,
+          "score_1": 2,
+          "score_3": 189,
+          "score_4": 178,
+          "score_5": 380,
+          "score_6": 294,
+          "score_7": 97,
+          "score_8": 31,
+          "score_9": 29,
+          "shared_cooking_passion_outweighs_dietary_differences": 1,
+          "shared_core_values_about_honesty_and_peace": 1,
+          "shared_environmental_values_bridge_different_lifestyle_preferences": 1,
+          "shared_vocabulary_about_smoking_but_opposite_stances": 1,
+          "social_media_habits_conflict_with_presence_values": 1,
+          "spirituality": 86,
+          "spirituality_and_creativity": 1,
+          "spirituality_and_environment": 1,
+          "spirituality_and_family": 1,
+          "spirituality_and_honesty": 2,
+          "spirituality_and_independence": 2,
+          "spirituality_vs_active": 3,
+          "spirituality_vs_arts": 2,
+          "spirituality_vs_career": 11,
+          "spirituality_vs_creativity": 6,
+          "spirituality_vs_environment": 10,
+          "spirituality_vs_extroverted": 4,
+          "spirituality_vs_family": 13,
+          "spirituality_vs_food": 3,
+          "spirituality_vs_gaming": 2,
+          "spirituality_vs_health_conscious": 2,
+          "spirituality_vs_honesty": 13,
+          "spirituality_vs_independence": 12,
+          "spirituality_vs_introverted": 2,
+          "spirituality_vs_music": 2,
+          "spirituality_vs_outdoors": 3,
+          "spirituality_vs_pet_lover": 2,
+          "spirituality_vs_relaxed": 1,
+          "spirituality_vs_tech_savvy": 3,
+          "spirituality_vs_travel": 3,
+          "substances": 296,
+          "tech_savvy": 85,
+          "tech_savvy_and_extroverted": 3,
+          "tech_savvy_and_health_conscious": 1,
+          "tech_savvy_and_relaxed": 1,
+          "tech_savvy_vs_active": 6,
+          "tech_savvy_vs_arts": 4,
+          "tech_savvy_vs_career": 2,
+          "tech_savvy_vs_creativity": 1,
+          "tech_savvy_vs_environment": 1,
+          "tech_savvy_vs_extroverted": 8,
+          "tech_savvy_vs_family": 3,
+          "tech_savvy_vs_food": 1,
+          "tech_savvy_vs_gaming": 1,
+          "tech_savvy_vs_health_conscious": 11,
+          "tech_savvy_vs_honesty": 4,
+          "tech_savvy_vs_independence": 1,
+          "tech_savvy_vs_introverted": 8,
+          "tech_savvy_vs_outdoors": 5,
+          "tech_savvy_vs_pet_lover": 8,
+          "tech_savvy_vs_reading": 1,
+          "tech_savvy_vs_relaxed": 6,
+          "tech_savvy_vs_spirituality": 1,
+          "tech_savvy_vs_travel": 1,
+          "travel": 95,
+          "travel_and_arts": 2,
+          "travel_and_gaming": 3,
+          "travel_and_music": 1,
+          "travel_and_reading": 5,
+          "travel_vs_active": 5,
+          "travel_vs_arts": 9,
+          "travel_vs_career": 4,
+          "travel_vs_creativity": 1,
+          "travel_vs_environment": 2,
+          "travel_vs_extroverted": 4,
+          "travel_vs_family": 5,
+          "travel_vs_food": 13,
+          "travel_vs_gaming": 9,
+          "travel_vs_health_conscious": 2,
+          "travel_vs_honesty": 2,
+          "travel_vs_independence": 1,
+          "travel_vs_music": 9,
+          "travel_vs_outdoors": 4,
+          "travel_vs_pet_lover": 1,
+          "travel_vs_reading": 6,
+          "travel_vs_relaxed": 2,
+          "travel_vs_spirituality": 2,
+          "travel_vs_tech_savvy": 1
+        }
+      },
+      "gender_prefix_order": {
+        "boy/girl": 3004,
+        "girl/boy": 2987
+      },
+      "lengths": {
+        "characters": {
+          "count": 11982,
+          "max": 153,
+          "mean": 56.87589717910198,
+          "median": 52.0,
+          "min": 17,
+          "p95": 97.0
+        },
+        "word_tokens": {
+          "count": 11982,
+          "max": 29,
+          "mean": 10.042563845768653,
+          "median": 9.0,
+          "min": 4,
+          "p95": 17.0
+        }
+      },
+      "pair_audit": {
+        "contradictory_groups": [],
+        "duplicate_groups": [
+          {
+            "ids": [
+              "1a635a91a6f359c567869bae18d73027b4116433229106a3546a55336898279c",
+              "7cb08fa2270bad7694153560bae15c751ecdf84844efceba9fb45a2cb5768743"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              202,
+              2690
+            ],
+            "pair_key_sha256": "bb2d61af30b7f204bcbafa2a717d789db07eb59410b92db96e2e41cefbb7476e"
+          },
+          {
+            "ids": [
+              "ee6599d2ecdb114fb18ae6a9da4c7cc1e8b95c6bfb3d5bedbfa6251bd52c1576",
+              "69b641f6235a24122a317ed6ac65900b533fc52fec2fd883952cf6176d35300b"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1447,
+              4666
+            ],
+            "pair_key_sha256": "23ece02d0765064ea5558483db27872f283b2738f2a647b59a9d29a6e51a87da"
+          },
+          {
+            "ids": [
+              "5b8a0f507be5ff58303eea65abdd487e2f9cc6c68ef51b7ecbc042cccc06eeba",
+              "ed2201168a09946e04ae1cda6e6d4359b1c18134efce35cfc0ab07fbd21d1ae0"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1980,
+              2088
+            ],
+            "pair_key_sha256": "4b0119e7e30fa8429e71f04676460c3696d54a80e7247db2177d28a7b7de0f26"
+          },
+          {
+            "ids": [
+              "428322ccc7ad6278112c40238829d4d1b5259dc58c77bd5fe5bea6e3bd32ab05",
+              "02463eb5372eba25ecf27386cdcd2b4e8045051b8c106896989b9ccc3357c4ce"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1221,
+              5864
+            ],
+            "pair_key_sha256": "178a42ead20dab45e67503088357e262da2975c37308670f32b3619147fda0cd"
+          },
+          {
+            "ids": [
+              "bba1d406c99ed436fd333bad98cadb252c8dd1cf204f9c63291963435de4a22a",
+              "257b0f538e183b4256672563c587e2dde7d1fe2623d49440dfbd03ed5719211d"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              3415,
+              5819
+            ],
+            "pair_key_sha256": "17fec6eff77b76ab2e070edcb2e82ae7f957f0374945f73e7ee0e0eca03757a0"
+          },
+          {
+            "ids": [
+              "63d20e0a8be8e4fa1f761b5a24fc7771b18a9cadcd63554cb02c44f1d9b2268d",
+              "d59fb159e04ea7990f999b0d63199975c44a599965972b5ca48c00c69e0e7031"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              3311,
+              5492
+            ],
+            "pair_key_sha256": "0dede257cd2e202cd47701d083621b10b218ef758ab003fca9afcb10c86854fc"
+          },
+          {
+            "ids": [
+              "6a7fea7e882fbc92efe72e093257e890ed426beed8a77b7a3fdc73412fb89a0e",
+              "3d35c07d08079df63a8bebd2e55181c968e79330d4bd417707dba7871dfef0b1"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              2015,
+              3459
+            ],
+            "pair_key_sha256": "597ba23972103a0025e9d702ce907e4cc17bde836312bfbd17f51dd3fd4c2f46"
+          },
+          {
+            "ids": [
+              "dc99cf9b6e07abb17bc5f5cfdcd9c41671e540f63c24eb93d4813b75f86290d5",
+              "421ae6e1b8de75fe42ca00c488fafb6fff4fb8d24348a6d70725f2d7c9ad744e"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              4763,
+              5513
+            ],
+            "pair_key_sha256": "c48336d36b1103c75ab6aa72938d057adb7c9444b3792065639e3834969094e4"
+          },
+          {
+            "ids": [
+              "e9280eff5a256c26baaac089274aa99b94398a7b64858f9b205fe9293f78aaa1",
+              "91548218916212a1b31d48d754a80b2978a85e4947b5055c22409ae86d795909"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              785,
+              957
+            ],
+            "pair_key_sha256": "9dba7cf3940b3d11e82bf51c99453d6f05b0a43bafa32f75f4c76c3e3f768f5d"
+          },
+          {
+            "ids": [
+              "3568dd5d1d297a01d0694eb983ed1912b2d125ef908ddc36916c45faf0e9b7f0",
+              "c9a6494e0e8b1add3abbb95c387ae5115a019d4aee76be7b0d1495453d8389e6"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1125,
+              5323
+            ],
+            "pair_key_sha256": "a67e064294fb91b79698281be252de13ab859331f3e001747f0e98a742beef32"
+          },
+          {
+            "ids": [
+              "185d97ae3b3250dc9092b6c64107472a4ce80d966150d2f7bef6bd3e493ebfd0",
+              "766c64a02e3451b65b079146a36368b55021bc521025a367b099239c7f62dfbb"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              2803,
+              4315
+            ],
+            "pair_key_sha256": "4c77d4b4c7ba5c3d4a9563081a722ec05ddda53428fdfa817908b4dbf33f94d0"
+          },
+          {
+            "ids": [
+              "ea748256b636fc1c9cd96a83ffa9af602b11eaea850d7823f86ea51ca8260b46",
+              "b985525b10e45baa85afb087ccc5bd6eedeec1b76d2136c4aa874b070760e339"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              3490,
+              5429
+            ],
+            "pair_key_sha256": "655e43d8303cd01364c2c76abd4260b3f3a42d22b3473a36ad72d9b982a105d7"
+          },
+          {
+            "ids": [
+              "342da56ef51010a21f102885239ac6e124f0c5ed9358d43be83e05ad27eac667",
+              "a3a428b65a2536e747b1d70fa5b13102c05d07ac18c20658301a89bddf72efb6"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              684,
+              4778
+            ],
+            "pair_key_sha256": "1a2aeabe8baeca61c077cb9fcc1fb9df4f8ba044b817ee83f476fce316b765de"
+          },
+          {
+            "ids": [
+              "ff737dae14ee18025b3afc0e44284858bddbc90f9c9eef14966760d591980158",
+              "d36cf6c120bcb222ddeadd29edf391b53b62de89328d7799ef29b05f01398e8a"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1519,
+              4458
+            ],
+            "pair_key_sha256": "4e7deb9d87ba466ad330eb294019ceac68eb6e1021d681c389d9ce35655591ea"
+          },
+          {
+            "ids": [
+              "b2e5f6696e879c88931b16df0f30f01066ac694a0308f7c910c8ded2d79f6420",
+              "a556362e212e114f202498689fe9cdc026aac05244d3dc1280a33e607f8b0a15"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              2565,
+              3334
+            ],
+            "pair_key_sha256": "f3edddba4bd0520121b422227731c11f093978f5f873120635c16b6e823c13bd"
+          },
+          {
+            "ids": [
+              "e3fed1e3427a5878427c789f4842889a39b008f7c338ea1bc329c54e395bfc20",
+              "6de5fb63f23514315d84f253567e1bcd9639f0b8170a08262e2ed89cc1167bf7"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              2927,
+              5367
+            ],
+            "pair_key_sha256": "248c737bc8846fe341e18058bdc2df1abb3cb90f661f87dfd3aee133d4407523"
+          },
+          {
+            "ids": [
+              "ab2db24bd1097f3eeeddcfcbdeb4d5afdc3285988b86330ba9cb42939fb4dd5d",
+              "ddbb754a305d1bca347911ee708431f97ce6221266066483cbec280b0a1b4453"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              252,
+              755
+            ],
+            "pair_key_sha256": "b64e8e0f4d50179c0f9aa2e7af6805f4c38d391631f5b050a49e51548e2b3fc8"
+          },
+          {
+            "ids": [
+              "fe0c68e06ee73195c1410b9cb1ed61b5e45a67ddd9d5a6ac85152d2a016a80ab",
+              "eb220e61379bde45e9f5bafb521b3e7d43b122d2d047860a3f4137fe480e765d"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              352,
+              4819
+            ],
+            "pair_key_sha256": "c168ab38b548747e1118739bea0b2fa10d45f08a7a757704617e817b52810bca"
+          },
+          {
+            "ids": [
+              "8016ad313e928bc669b8054d406264f5ccb823eed43cfbf2057fe04640ad9307",
+              "6dffadfc3e3b9c71bf8af4d95085dc8d167a1926098db6d583c32939dcf522b2"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              444,
+              3695
+            ],
+            "pair_key_sha256": "c7e1f55237a3c242c801061937311864bc431ea5fb7de58332c5c44e70c96290"
+          },
+          {
+            "ids": [
+              "e2b82845d3b6ada532347ec613d44d97653799fff5b671adcf9a9b13ef8c2c4e",
+              "0bc7d30bc641989637cea891873706afeb87cacc3e137ea1d04b4b647f940680"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              2821,
+              3988
+            ],
+            "pair_key_sha256": "d45f0c06a1512e281be16fac7308ae2fc118057a210684bf059d6ba01dc95900"
+          },
+          {
+            "ids": [
+              "dcba6aaa905455a51a448ac5ecc0865ac2cc1c0473b3dbd85c06b1e0c5451e84",
+              "9835d2abdba301756438252768ddb15b0d3bf7cee09f0955496f28355cf1336b"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1414,
+              2515
+            ],
+            "pair_key_sha256": "ea8069deedaca5f9de764fd6bd26c99d079f08660ea50035b47015aa86f29174"
+          },
+          {
+            "ids": [
+              "d31601ef31e5c0f51305933e328e3ed9d8842992914bf0abb25976fe3d910bf9",
+              "c6afb5d734306c2d19058a9a1baf86460a04c05db8894db762a30f19c31f52de"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1718,
+              2029
+            ],
+            "pair_key_sha256": "8675b2f492053da81bb98b79a02480679c21b6203e93aed12f3463ed5d0ab8a2"
+          },
+          {
+            "ids": [
+              "59c7cff1b258f4d138c669c3dfffc7cc56bc946c862d59cbfcad0ccb08709ba6",
+              "df908e575dded16e44a6ea21453346ad39edf22ff3d25850c784396abb2cdc4b"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              362,
+              398
+            ],
+            "pair_key_sha256": "f2b016cc0dcc4ca66d24a4a48e353aad94562b6296ba2e59460af82cc9d5171e"
+          },
+          {
+            "ids": [
+              "1371292614b2d700e18fc7903645412100f69527ed955c5ba14960dda8f664f6",
+              "e3249f2165dec28d39d9df78b83f846ec56e6ab1d393a3fee0b3e5fb974d71dd"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              5015,
+              5790
+            ],
+            "pair_key_sha256": "3b6c70627f97a4f16c6c4fe76f8a5c076c5f4c17963f37cfa37a327dc5b790e3"
+          },
+          {
+            "ids": [
+              "8a3f8acfbe580674edf3b033a3ebc8d481cd950d2b3d6c003ee448e6204baff7",
+              "2f3f6c6f25168e62d5b1e01f7377c397ba48c0dfb13c7bf0b690b8ff0d850c3b"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1089,
+              5155
+            ],
+            "pair_key_sha256": "c6c29f181ad5ab0c5f3670839faf4d994ef3d0cf363a14d19513cf0db02455eb"
+          },
+          {
+            "ids": [
+              "128f1fdd6f2a76f16449b12c933369aacffc51a58592a005c489085b55e6f457",
+              "82dfc27077116feca738ec878af9dbf90b28001dc82a6ad04f9b083c6612bd48"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              2505,
+              3042
+            ],
+            "pair_key_sha256": "f3930e9e2b07bd56d90518a95f81403a1662e81da066df53479ac88bfd1868a4"
+          },
+          {
+            "ids": [
+              "914c67f72a3e76a35d15f55d1d4364d74c68166b26ff3316698c1252050ab144",
+              "0cecc8978ca3e30ad915bed38ab5162689187af435c5aa9bb7725a1af061ab32"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1217,
+              3725
+            ],
+            "pair_key_sha256": "9c600427a4c0d3075a45883a5dd3d9ad22d3baac5d9bb4ba417b294af270f6c2"
+          },
+          {
+            "ids": [
+              "58db447dae6185303af93f0c1fc818308d47a40b2d2ccb753101c91753643a52",
+              "20f2ec9594d7b64367ba15393ef87e3618dd9d5dcc02cd47cf917d77208c9b38"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              451,
+              667
+            ],
+            "pair_key_sha256": "95b8d4d1c40ca0db80bf2871773c5f2ad7fe4defd47909a670c680de89bdaa26"
+          },
+          {
+            "ids": [
+              "a948774232306db24231ead1b28dd404cdcee3ff8547e85ce1f35f4be5b30380",
+              "5c04ea59a0a9ba8458266ac9b5ca43d3cfae7745a172968ddfafdac974d78b5b"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1702,
+              5659
+            ],
+            "pair_key_sha256": "b9e4c143e4423592c9a1605007490b26f9e473a6398176c357722ba2098a5ad9"
+          },
+          {
+            "ids": [
+              "8ba7fb4afd9dc822d9c6d959322f2e050d0129cdabf966a69799c0e136bd9e2c",
+              "3d752bbd54690547b79bdd3d5011213fe84d455c08ed48369390aae85ab00a9b"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              2122,
+              4342
+            ],
+            "pair_key_sha256": "2841be28ef3bb3a9243360db1c2a5ad0c53d2ca871d5ee1a4d792a1ca7e2b6ef"
+          },
+          {
+            "ids": [
+              "cc7f5c9ad9e8b82a3dea0378297a59c04bd45dc9e68fa73792143d57f346b837",
+              "35981383879d861486412d210be13fdb8daffffb429c7c676c8fa816c9446b19"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              2955,
+              4488
+            ],
+            "pair_key_sha256": "b09002d94b09e12ac1ae70abeec5f15883b7d7bb5b823b82b0897f57fd072334"
+          },
+          {
+            "ids": [
+              "2b53a4e711b82491b89e84e89a753656d16337642c5608fa287350b9121cc3cd",
+              "7876c310cba1649330d0aeddc2a0930956ece016f67b8289aa074cc378928dab",
+              "8262057772890014977480f31d31004b8cc5578f3e3ad76597c2e3bbbb9822be"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              2856,
+              3926,
+              5832
+            ],
+            "pair_key_sha256": "6b883c061100280a92e1ad1f8c686324f71a180be8efb260ebc6fcd3e4024c8f"
+          },
+          {
+            "ids": [
+              "9c0daa4c1c160c937eb1c56b32797184a444d8c68b34bad3b512beec882f8f1c",
+              "7677b0c85c3e97aa62f58dcbf82ef0bfaab860e5007606aae07235b3e61afdfb"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              3431,
+              5584
+            ],
+            "pair_key_sha256": "0fee7e7891f7065741fd6a43932a9ddce5aad4e924ca699a6fb8117189ca3297"
+          },
+          {
+            "ids": [
+              "1dd607a926974371b5322d122ad6904d400699037a5514b94240129dca81b4a7",
+              "e7984fe81c4f70dd7b0e6074648e2a61f2d2e3010d6f2a55891138711f1cda73"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              1053,
+              2411
+            ],
+            "pair_key_sha256": "6c53eacb08f13229dbc51f2407b98cb3149dd76fb691030fc47ef4f1083e5b49"
+          },
+          {
+            "ids": [
+              "34024900e4a7872ed767d7b1100233df741a014a55981a437638f346af3fa701",
+              "c25bbb8f8a0c70eee29dfc2b4eca15baa57be6476c7f1a46a78d841255e6fca1",
+              "221380b5be11778a89e209b40759f4cb33fe1b74491a2eefd4992a2c65e2d46e"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              676,
+              1616,
+              3935
+            ],
+            "pair_key_sha256": "d7f877a5d34a4dca7125089a855f5e12ecd2ae494f56ed7c5a377137534c3fc8"
+          },
+          {
+            "ids": [
+              "04f24c34122f34268e43755efa803842d61f9a6301cd76714a8d006d6beb3ad3",
+              "515bc6fef1bed4952f7c29b26a1932638645e6fae55f6c4ab9a621e978e484c1"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              3210,
+              4347
+            ],
+            "pair_key_sha256": "2a7f32caabc5846a8baea5ee7979a42c4be3246b69f810748b9c0621783c3e5c"
+          },
+          {
+            "ids": [
+              "82df9d06bd15c340913f0668df9413964b47e728f30e3a21944cdd9b13a91acc",
+              "6282e49873fbaa6c94cdbd17bed3442c89fa3e247a590e621b60207767a721e4"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              607,
+              3462
+            ],
+            "pair_key_sha256": "3b55594b57acb80edaa0eb2b1f97b1de92e501140c0ffa827a3c6b15ae0a1485"
+          },
+          {
+            "ids": [
+              "ef5bdbec1d983d753783744e2afb2d3bb841395882dd79f668159dd4b9441569",
+              "135c7cf887f4142fe7dfbb66417d11392d24bef2190ba3b74a6f29e7f72e03f1"
+            ],
+            "labels": [
+              0
+            ],
+            "lines": [
+              4291,
+              5239
+            ],
+            "pair_key_sha256": "27b8860c33097134cd628f54c2286d33498f5e1fa14ca9a2408d47bd93313d30"
+          }
+        ],
+        "exact_ordered_duplicate_extras": 22,
+        "normalization_only_duplicate_extras": 0,
+        "normalized_unordered_duplicate_extras": 40,
+        "raw_unordered_duplicate_extras": 40,
+        "reversed_duplicate_extras": 18
+      },
+      "profiles": {
+        "occurrences": 11982,
+        "repeated_occurrences": 1251,
+        "unique_normalized": 10731,
+        "unique_ratio": 0.8955933900851277
+      },
+      "rows": 5991,
+      "vocabulary": {
+        "definition": "NFKC/casefold Unicode word tokens including apostrophes; not model tokenizer",
+        "most_common_30": [
+          [
+            "i",
+            12128
+          ],
+          [
+            "girl",
+            5991
+          ],
+          [
+            "boy",
+            5991
+          ],
+          [
+            "and",
+            3866
+          ],
+          [
+            "i'm",
+            3436
+          ],
+          [
+            "about",
+            2255
+          ],
+          [
+            "for",
+            1677
+          ],
+          [
+            "into",
+            1633
+          ],
+          [
+            "in",
+            1523
+          ],
+          [
+            "a",
+            1272
+          ],
+          [
+            "to",
+            1266
+          ],
+          [
+            "with",
+            1185
+          ],
+          [
+            "of",
+            1092
+          ],
+          [
+            "on",
+            1088
+          ],
+          [
+            "am",
+            1066
+          ],
+          [
+            "but",
+            1012
+          ],
+          [
+            "family",
+            962
+          ],
+          [
+            "get",
+            915
+          ],
+          [
+            "time",
+            896
+          ],
+          [
+            "love",
+            892
+          ],
+          [
+            "enjoy",
+            875
+          ],
+          [
+            "really",
+            786
+          ],
+          [
+            "find",
+            760
+          ],
+          [
+            "can't",
+            704
+          ],
+          [
+            "my",
+            685
+          ],
+          [
+            "the",
+            667
+          ],
+          [
+            "treasure",
+            659
+          ],
+          [
+            "value",
+            649
+          ],
+          [
+            "genuinely",
+            624
+          ],
+          [
+            "appreciate",
+            624
+          ]
+        ],
+        "total_tokens": 120330,
+        "unique_tokens": 797
+      }
+    }
+  },
+  "status": "ready_for_quality_review",
+  "target_field": "label",
+  "train_eval_audit": {
+    "overlapping_pair_count": 0,
+    "overlapping_pairs": [],
+    "shared_normalized_profiles": 519,
+    "shared_template_proxies": 436,
+    "template_proxy_definition": "First three word tokens after removing boy:/girl:; coarse surface-form proxy, not proven template identity"
+  },
+  "training_blockers": []
+}

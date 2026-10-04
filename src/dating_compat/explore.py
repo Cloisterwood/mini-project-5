@@ -6,9 +6,9 @@ from pathlib import Path
 
 import numpy as np
 
-from dating_compat.data import (DataError, SOURCE_HASHES, cross_audit, load_bundle,
+from dating_compat.data import (DataError, SOURCE_HASHES, cross_audit, digest, load_bundle,
                                normalize, pair_audit, verify_acquisition, write_immutable)
-from dating_compat.split import make_split, validate_manifest
+from dating_compat.split import assert_data_ready, make_split, validate_manifest
 
 
 def statistics(values: list[int]) -> dict:
@@ -43,7 +43,8 @@ def describe(records) -> dict:
         "pair_audit": pair_audit(records)}
 
 
-def explore(directory: Path = Path("data"), reports: Path = Path("reports")) -> dict:
+def explore(directory: Path = Path("data"), reports: Path = Path("reports"),
+            policy_path: Path | None = None) -> dict:
     # Acquire is separate: explore is always offline and requires all original files.
     try:
         bundle = load_bundle(directory)
@@ -54,13 +55,18 @@ def explore(directory: Path = Path("data"), reports: Path = Path("reports")) -> 
     hashes = bundle["hashes"]
     blockers = list(bundle["blockers"])
     try:
-        verify_acquisition(directory, reports)
+        verify_acquisition(directory, reports.parent if policy_path else reports)
     except DataError as exc:
         blockers.append(str(exc))
     # This project is frozen to these observed original source hashes.
     for name, actual in hashes.items():
         if actual != SOURCE_HASHES[name]:
             blockers.append(f"{name}: hash differs from pinned original acquisition")
+    original_overlap = cross_audit(bundle["records"]["train"], bundle["records"]["eval"])
+    cohort = None
+    if policy_path:
+        from dating_compat.cohort import derive_cohort, load_policy
+        bundle, cohort = derive_cohort(bundle, load_policy(policy_path))
     descriptions = {split: describe(records) for split, records in bundle["records"].items()}
     for split, description in descriptions.items():
         if description["pair_audit"]["contradictory_groups"]:
@@ -74,9 +80,20 @@ def explore(directory: Path = Path("data"), reports: Path = Path("reports")) -> 
         "train_eval_audit": overlap, "model_input_fields": ["text_1", "text_2"],
         "target_field": "label", "pair_type_used_as_target": False,
         "normalization": "NFKC + casefold + collapsed whitespace; audit/grouping only, raw model text preserved"}
+    if cohort:
+        report["protocol_version"] = "s2-quarantine-v1"
+        report["cohort_manifest_sha256"] = cohort["manifest_sha256"]
+        report["original_train_eval_audit"] = original_overlap
+        report["metadata_comparison_scope"] = "Original immutable files; eligible training count is in cohort_manifest.json"
     try:
         manifest = make_split(bundle["records"]["train"], hashes, blockers)
+        if cohort:
+            manifest["protocol_version"] = "s2-quarantine-v1"
+            manifest["cohort_manifest_sha256"] = cohort["manifest_sha256"]
+            manifest["manifest_sha256"] = digest({k: v for k, v in manifest.items() if k != "manifest_sha256"})
         validate_manifest(manifest, bundle["records"]["train"], hashes, require_unblocked=False)
+        if not blockers:
+            assert_data_ready(bundle, manifest)
         report["split_manifest_sha256"] = manifest["manifest_sha256"]
     except DataError as exc:
         report["training_blockers"].append(f"Split: {exc}")
@@ -84,5 +101,7 @@ def explore(directory: Path = Path("data"), reports: Path = Path("reports")) -> 
         manifest = None
     write_immutable(reports / "exploration.json", report)
     if manifest is not None:
+        if cohort:
+            write_immutable(reports / "cohort_manifest.json", cohort)
         write_immutable(reports / "split_manifest.json", manifest)
     return report

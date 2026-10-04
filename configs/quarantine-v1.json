@@ -1,0 +1,24 @@
+{
+  "approval": "Use only the eligible rows and proceed with the quarantine",
+  "approved_by": "user",
+  "approved_on": "2026-10-04",
+  "excluded_training_ids": [
+    "e30b231247611ffeb3768f4e0f5fe2e28e11ee6c45b9a5e03d5a5bb6c1187574",
+    "eca47199ccfdcffee988def2ee44b66c68843e7dbb8765dff7243fe1d3aaf97c",
+    "66b59f11c3f0d8a52327d5eaeca1f6190067d076b616c66d73e5bf4039788d75",
+    "d30eee671e59060a4689510b5a5383420d9f4e2fbbea3449b195fc19c32b15f4",
+    "ed509776ea10c043f48c6c779ed4274c24f060fa7213a83365d126ae8563844d",
+    "48db5f09a6cf83c8b04e103ca28c5a2f573fc719955df14a0b59a6818a2efa5c",
+    "3d3a683b0963ab1689610f9c6e82cf6f4df4dec1bae946733e0535fd12b21e82",
+    "501f24e3373ee3fdd10572c0c8244824ba4261c4f4b503bfc3240e2941b06780",
+    "cd787ef36f857edf49098f506422620cbdc334e0fda20e44fd665942e807eccc"
+  ],
+  "protocol_version": "s2-quarantine-v1",
+  "reason": "Remove original train/eval pair overlap from eligible training only; retain immutable originals and all evaluation rows",
+  "source_hashes": {
+    "dating_pairs.jsonl": "ccdffa2e004f0b36ff7102b23023f3a65bba2c7c02afb1d7029d03490e319302",
+    "dating_pairs_metadata.json": "5e0486fc6068de27dd133dc4363dbdbc5501a635760f7a873783893a2c145d24",
+    "eval_pairs.jsonl": "0ef015ff913bdc21c2ac9897a0e67ebfee788d64b63fca98b195ce262401a8d2",
+    "eval_pairs_metadata.json": "66f963049c974ed8cc685c33ea5b7e191598fdc71501d758c990c4a756767013"
+  }
+}

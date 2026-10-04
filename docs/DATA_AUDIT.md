@@ -1,14 +1,14 @@
 # Stage 2 data audit
 
-Status: implementation verified; original-source leakage gate BLOCKED. No source rows were removed or changed.
+Status: Stage 2 complete. The original source has nine overlapping pairs; the user-approved derived training cohort passes the structural gate. No original source rows were removed or changed.
 
 Original counts are 6,000 train (2,997 positive / 3,003 negative) and 1,469 evaluation (709 positive / 760 negative). Both metadata files match every observed summary field.
 
 Training has 40 normalized unordered duplicate extras (22 ordered repeats and 18 reversed repeats); evaluation has 2 (1 ordered, 1 reversed). Neither file has contradictory duplicate labels.
 
-The training-only profile-component split is 4,799 fit / 1,201 validation, with zero shared normalized profiles or pairs. There are 4,796 profile components; the largest contains 21 pairs. Fine category/pair-type strata had insufficient distinct-group support, so stratification was coarsened to label/pair_type while preserving all profile groups. Seed is 42.
+The original-source audit split was 4,799 fit / 1,201 validation. The approved eligible split is **4,792 fit / 1,199 validation**, seed 42, with zero shared normalized profiles or pairs. Fine category/pair-type strata lacked sufficient distinct-group support, so stratification was coarsened to label/pair_type while preserving connected profile groups. Counts and component statistics are in the active manifest.
 
-Fit and validation share 312 coarse template proxies. Original train/eval share 527 individual normalized profiles and 436 template proxies. Proxies are the first three words after a gender prefix, not confirmed generator templates. These findings limit claims about unseen people or writing templates.
+Active fit and validation share 344 coarse template proxies. Original train/eval share 527 individual normalized profiles; eligible train/eval share 519. Both original and eligible train/eval share 436 template proxies. Proxies are the first three words after a gender prefix, not confirmed generator templates. These findings limit claims about unseen people or writing templates.
 
 ## Exact source leakage
 
@@ -26,11 +26,11 @@ All nine overlapping pairs have label 0. Exact stable IDs and hashes are in repo
 | 4164 | 458 |
 | 1256 | 1037 |
 
-## Proposed remedy — not applied
+## Approved remedy — applied October 4, 2026
 
-Quarantine the 9 training rows whose normalized unordered pair appears in evaluation. Preserve all original files, retain all 1469 evaluation rows, and record every excluded ID plus hashes in a versioned derived-cohort manifest. Eligible training would be 5991 rows (2997 positive / 2994 negative). Pair overlap would be zero; 519 individual profiles would still be shared with evaluation, requiring disclosure.
+The user authorized: “Use only the eligible rows and proceed with the quarantine.” The nine original training IDs listed in configs/quarantine-v1.json are excluded from both fit and validation. All original files and all 1,469 evaluation rows are preserved. Eligible training is 5,991 rows (2,997 positive / 2,994 negative). Pair overlap is zero; 519 profiles remain shared with evaluation and must be disclosed.
 
-The proposal is in reports/remediation_proposal.json. This changes the eligible training cohort from the frozen 6,000-row source, so a user decision is required before applying it. Alternatively keep S2 blocked and seek instructor/data-owner guidance. No claim of a clean final holdout is made for the current files.
+The historical proposal and original blocked audit remain at the report root. Active evidence is in reports/quarantine-v1/cohort_manifest.json, exploration.json, and split_manifest.json. This is an explicit protocol revision to eligibility, not an edit of the 6,000-row source or the evaluation set. It uses structural pair identity only, with no model outcomes. The active cohort/split manifests are immutable and revalidated from original source bytes by load_eligible_bundle(). S3 quality and human review are still required before training.
 
 ## Checks and report integrity
 

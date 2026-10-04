@@ -16,7 +16,9 @@ def main(argv: list[str] | None = None) -> int:
     for name in ("acquire", "explore"):
         command = commands.add_parser(name, help="Acquire pinned data" if name == "acquire" else "Audit and split data offline")
         command.add_argument("--data-dir", type=Path, default=Path("data"))
-        command.add_argument("--reports-dir", type=Path, default=Path("reports"))
+        command.add_argument("--reports-dir", type=Path, default=Path("reports/quarantine-v1") if name == "explore" else Path("reports"))
+        if name == "explore":
+            command.add_argument("--quarantine-policy", type=Path, default=Path("configs/quarantine-v1.json"))
     args = parser.parse_args(argv)
     if args.command != "doctor":
         from dating_compat.data import DataError, acquire
@@ -26,7 +28,7 @@ def main(argv: list[str] | None = None) -> int:
                 print("ACQUISITION PASS")
                 return 0
             from dating_compat.explore import explore
-            report = explore(args.data_dir, args.reports_dir)
+            report = explore(args.data_dir, args.reports_dir, args.quarantine_policy)
             if report["training_blockers"]:
                 print("DATA GATE BLOCKED: " + "; ".join(report["training_blockers"]))
                 return 1

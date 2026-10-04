@@ -16,6 +16,19 @@ Report both columns. The instructor may clarify grading; these defaults do not e
 
 ## Data and holdout policy
 
+Protocol revision S2-Q1, approved October 4, 2026: the original source audit found
+nine normalized unordered pairs shared by training and evaluation. The user
+authorized their quarantine from training eligibility only. Preserve the original
+6,000-row training file and all 1,469 evaluation rows; eligible training is 5,991
+rows. The exact approved exclusion IDs and original hashes are in
+`configs/quarantine-v1.json`. Active cohort and fit/validation manifests are under
+`reports/quarantine-v1/`; the grouped split is 4,792/1,199, seed 42. Later quality
+analysis, human sampling, fit, and validation use only this eligible cohort through
+`load_eligible_bundle()`. Original metadata continues to describe original sources.
+No model result informed this structural remedy. Remaining shared profiles/templates
+must be disclosed; this change removes pair overlap but does not establish person-level
+independence of the supplied evaluation set.
+
 - Original JSONL and metadata are immutable. Record SHA-256, source URL, acquisition date, and verified license; the supplied Hugging Face dataset card declares Apache-2.0; see RESOURCES.md for its verified revision and download paths.
 - `dating_pairs.jsonl`: split into fit and validation; both originate exclusively from the allowed training file. Fix split before any tuning. Record achieved counts if grouping prevents exactly 80/20.
 - `eval_pairs.jsonl`: supplied held-out evaluation. Structural validation and the required baseline are allowed; prohibit model selection, early stopping, threshold tuning, or targeted training augmentation based on its results.

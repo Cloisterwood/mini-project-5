@@ -5,7 +5,8 @@
 quality, baseline, training, and evaluation reports. No model performance is measured in S1.
 
 S2 artifacts: `acquisition_manifest.json`, `exploration.json`, `split_manifest.json`,
-and `remediation_proposal.json`. The original source data gate is blocked by nine
-train/eval overlapping pairs; the proposed quarantine is not applied. The split
-manifest is a reproducible audit artifact, not permission to train. Initial invalid
+and `remediation_proposal.json`. These are historical original-source evidence;
+the original data has nine overlapping pairs. The approved eligible cohort and
+active split/exploration artifacts are under `quarantine-v1/`. Its structural gate
+passes; S3 human quality review is still required. Initial invalid
 checksum artifacts are preserved under `s2-initial-audit/` with an explanatory README.

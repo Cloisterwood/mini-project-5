@@ -119,6 +119,18 @@ def assert_data_ready(bundle: dict, manifest: dict) -> None:
     """
     if bundle["blockers"]:
         raise DataError(f"Training data gate blocked: {bundle['blockers']}")
+    if "cohort_manifest" in bundle:
+        from dating_compat.cohort import QuarantinePolicy, derive_cohort
+        # Recompute from originals; a ready flag or rehashed report is insufficient.
+        cohort = bundle["cohort_manifest"]
+        policy = QuarantinePolicy.model_validate(bundle["quarantine_policy"])
+        expected_bundle, expected_cohort = derive_cohort(bundle["original_bundle"], policy)
+        if cohort != expected_cohort or [r.id for r in bundle["records"]["train"]] != [r.id for r in expected_bundle["records"]["train"]]:
+            raise DataError("Eligible bundle differs from approved original-source derivation")
+        if [r.id for r in bundle["records"]["eval"]] != expected_cohort["evaluation_ids"]:
+            raise DataError("Evaluation cohort changed during quarantine")
+        if manifest.get("cohort_manifest_sha256") != cohort["manifest_sha256"]:
+            raise DataError("Split does not reference the approved cohort manifest")
     for split, records in bundle["records"].items():
         if pair_audit(records)["contradictory_groups"]:
             raise DataError(f"Training data gate blocked: {split} contradictory pairs")

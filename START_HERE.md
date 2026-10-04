@@ -1,6 +1,6 @@
 # Mini-project 5: staged implementation
 
-Planning date: October 3, 2026. Status: Stage 2 implemented; data gate blocked pending leakage remedy.
+Planning date: October 3, 2026. Status: Stage 2 complete October 4; Stage 3 is next.
 
 Build a reproducible dating compatibility experiment using `sentence-transformers/all-MiniLM-L6-v2` and `CosineSimilarityLoss`. OpenAI models assist with development; the assignment explicitly specifies the embedding model being trained.
 
@@ -26,6 +26,6 @@ The existing `docs/superpowers/plans/2026-07-04-dating-compatibility-finetuning.
 
 See [RESOURCES.md](docs/implementation/RESOURCES.md) for the private Cloisterwood GitHub repository, Linear project and ten issues, and the verified Hugging Face dataset revision and file names. No additional source links are needed.
 
-Stages 0 and 1 are complete. Stage 2 schema, exploration, and grouped splitting are implemented, but nine training/evaluation pair overlaps block advancement. See docs/DATA_AUDIT.md and the handoff for the proposed remedy. The locked Python 3.12.13 environment passes doctor on CPU and MPS. The user confirmed Sol 6.1 is available in VS Code; use it as the default development assistant. Finish S2 before starting S3. GPU spending decisions are deferred until a measured need in Stage 5.
+Stages 0–2 are complete. The approved quarantine excludes nine training IDs from eligibility, preserving original sources and all evaluation rows. Active reports are under reports/quarantine-v1/; eligible training is 5,991 rows (4,792 fit / 1,199 validation). Stage 3 must use load_eligible_bundle for quality analysis and human review. The locked Python 3.12.13 environment passes doctor on CPU and MPS. The user confirmed Sol 6.1 is available in VS Code; use it as the default development assistant. GPU spending decisions are deferred until a measured need in Stage 5.
 
 The pinned original dataset is downloaded into ignored data/ and preserved unchanged. Environment setup, diagnostics, acquisition, and exploration commands work; see README.md. No model weights or training code are present. The historical July plan remains preserved.

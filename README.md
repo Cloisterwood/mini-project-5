@@ -5,10 +5,10 @@ Staged fine-tuning coursework for `sentence-transformers/all-MiniLM-L6-v2` with
 environment diagnostics. Stage 2 adds data processing; training awaits later stages.
 
 Stage 2 implements acquisition, strict schema/metadata validation, data exploration,
-and a seeded profile-component split. **The original dataset currently fails the
-leakage gate:** 9 normalized pairs appear in both train and evaluation. See
-[the data audit](docs/DATA_AUDIT.md) and the proposed quarantine policy. Training
-remains blocked pending a decision; the original files are preserved.
+and a seeded profile-component split. The approved quarantine excludes 9 training
+rows that overlap evaluation, leaving **5,991 eligible rows**. Original files and
+all 1,469 evaluation rows are preserved. See [the data audit](docs/DATA_AUDIT.md).
+The structural data gate passes; the S3 human quality gate is still required.
 
 ## Setup
 
@@ -64,13 +64,15 @@ the recorded original SHA-256 checksums and Apache-2.0 card declaration, and wri
 .venv/bin/python -m dating_compat explore
 ```
 
-Expected acquisition marker: `ACQUISITION PASS`. With the current original data,
-exploration writes `reports/exploration.json` and `reports/split_manifest.json`,
-then prints `DATA GATE BLOCKED: Train/eval leakage: 9 normalized unordered pairs overlap`
-and exits **1**. This is a detected source-data problem. The tests should still pass.
+Expected markers: `ACQUISITION PASS` and `DATA EXPLORATION PASS`, both exit **0**.
+Explore defaults to the user-approved `configs/quarantine-v1.json` policy and
+writes active reports under `reports/quarantine-v1/`: `cohort_manifest.json`,
+`exploration.json`, and `split_manifest.json`. Original blocked reports remain
+at the report root as historical evidence.
 
-The manifest holds all 6,000 original training IDs in a 4,799 fit / 1,201 validation
-split, seed 42. Normalized profile connected components prevent repeated people
+The active manifest contains exactly the 5,991 eligible IDs in a 4,792 fit / 1,199
+validation split, seed 42. The nine quarantined IDs are excluded from both partitions.
+Normalized profile connected components prevent repeated people
 and reversed pairs from crossing these partitions. Stratification uses label and
 pair_type after reporting rare category strata; grouping is retained throughout.
 Raw profile text is preserved for model input; NFKC/casefold/whitespace normalization
@@ -78,10 +80,15 @@ is only for audits and grouping. Labels are strict integers 0/1; pair_type is me
 
 Reports are frozen: identical reruns are allowed, different contents fail instead
 of replacing earlier evidence. Use a new report directory for a documented protocol
-revision. The proposed 9-row quarantine has **not** been applied. Initial reports
+revision. The approved nine-row quarantine is applied only to eligibility; original
+data bytes and the entire evaluation set remain unchanged. Initial reports
 under `reports/s2-initial-audit/` are preserved coding-repair evidence and must not
-be used for training. Future training must call `assert_data_ready` on freshly loaded
-data, verify the saved manifest, and also pass the separate S3 human quality gate.
+be used for training. Quality/training must use `load_eligible_bundle()` from
+`dating_compat.cohort`. It reloads original data, verifies acquisition and approval
+hashes, recomputes the exact exclusion set, verifies both active manifests, and
+calls `assert_data_ready`. Training must also pass the separate S3 human gate.
+There are still 519 normalized individual profiles shared with evaluation; pair
+quarantine does not establish independence between people or writing templates.
 
 ## Implementation choices
 
@@ -112,6 +119,7 @@ Every stage ends with a checkpoint and stop; context usage at 75% also triggers 
 - [Linear project](https://linear.app/cloisterwood/project/mini-project-5-dating-compatibility-1a9f2484672e)
 
 Raw data, caches, credentials, and model weights are excluded from Git. Schema,
-counts, and metadata have been validated; the source leakage gate is blocked.
+counts, and metadata have been validated; the approved derived cohort passes the
+structural leakage gate.
 No training experiment has run and no performance targets are claimed. Paid compute
 decisions wait for measured need in Stage 5.

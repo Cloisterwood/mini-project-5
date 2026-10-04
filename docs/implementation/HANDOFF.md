@@ -1,63 +1,86 @@
 # Current handoff
 
-Updated: 2026-10-04. Status: S2 IMPLEMENTATION VERIFIED — DATA GATE BLOCKED.
+Updated: 2026-10-04. Status: STAGE 2 COMPLETE — STAGE 3 NOT STARTED.
 
 ## Next single action
 
-Resolve the pending user choice: quarantine the nine overlapping source-training
-rows from the derived training cohort (recommended), or keep S2 blocked and seek
-instructor/data-owner guidance. The concrete proposal and excluded IDs are in
-`docs/DATA_AUDIT.md` and `reports/remediation_proposal.json`. It has NOT been applied.
-Do not start S3 or training while this decision is pending.
+Read the shared operating rules, revised experiment contract, and S3 in 01-STAGES.md.
+Implement the frozen quality rubric and training-only human review sheet using
+`load_eligible_bundle()` from dating_compat.cohort. Do not use root historical split
+IDs or quarantine IDs in quality samples, fit, or validation. Stop at S3 completion
+or when human review is needed; an LLM cannot supply the user's human ratings.
 
-If approved, record a protocol revision that keeps original files immutable,
-retains all 1,469 evaluation rows, excludes the nine specified training IDs from
-fit/validation eligibility, and records all hashes. Eligible training becomes
-5,991 rows, 2,997 positive / 2,994 negative. Regenerate a NEW versioned manifest,
-update the structural readiness check to verify that derivation against original
-hashes and the exact exclusion list, and test zero cross-file pair leakage. Do not
-silently modify, overwrite, or delete the original acquisition/audit evidence.
-Shared individual profiles and template proxies still need disclosure; removing
-pair overlap does not prove independence or realistic compatibility.
+Resume prompt: “Continue with Stage 3. Use the verified eligible cohort from the
+handoff, implement and freeze the quality rubric, prepare the training-only human
+review sheet, verify quality-gate protection, save Linear/GitHub evidence, then stop.”
 
-Resume prompt: “Resume S2. Read the handoff and the user's leakage-remedy decision.
-Apply only the approved source-preserving derivation, verify its provenance and
-leakage checks, save Linear/GitHub receipts, then stop before S3.”
+## Approved protocol revision S2-Q1
 
-## S2 checkpoint and actual findings
+The user authorized on October 4: “Use only the eligible rows and proceed with the
+quarantine.” Policy is recorded in configs/quarantine-v1.json. Exactly nine original
+training IDs whose normalized unordered pairs occur in evaluation are quarantined
+from eligibility. All original source files and all 1,469 evaluation rows are unchanged.
+This structural remedy uses no model outcomes. Source hashes and exact exclusion IDs
+are frozen in the policy and active cohort manifest. The original blocked reports
+and proposal remain historical evidence under reports/; initial unverified coding
+artifacts remain under reports/s2-initial-audit/ and must not be used for training.
 
-- Issue: [CLO-44](https://linear.app/cloisterwood/issue/CLO-44/mp5-s2-dataset-validation-exploration-and-split). Implementation verified; not Done because the original data gate is blocked.
-- Stop reason: pending human decision on source leakage. Context indicator unavailable; exact 75% boundary cannot be measured. Assistant GPT-6 family per session instructions; picker model/reasoning not exposed. Saved preference Sol 6.1.
-- Host/interpreter: macOS 27.0 arm64 Mac14,2, 24 GiB RAM; project .venv Python 3.12.13. No model/device workload in S2; S1 verified CPU/MPS. uv.lock unchanged.
-- Pinned revision: 69b750dd024d5732ca19596d86bffc253abee92e. Five files acquired: four data/metadata files and dataset card. Raw bytes in ignored data/; all original checksums verified. Pinned card declares Apache-2.0.
-- Observed/expected counts: 6,000 train and 1,469 evaluation. Metadata matches all observed fields, including categories and both-class counts. No schema-invalid rows; none discarded.
-- Train labels: 2,997 positive / 3,003 negative. Eval labels: 709 positive / 760 negative. Pair type is metadata and never supplies the target.
-- Normalized unordered duplicate extras: train 40 (22 ordered + 18 reversed), eval 2 (1 ordered + 1 reversed). No contradictory duplicate groups.
-- Cross-file normalized unordered overlap: 9 pairs, all label 0. Exact original line numbers and stable IDs are recorded in DATA_AUDIT.md and exploration.json.
-- Training-only grouped split: 4,799 fit / 1,201 validation, seed 42. Zero shared normalized profiles or unordered pairs across fit/validation. Fit labels 2,397/2,402 positive/negative; validation 600/601.
-- Profile components: 4,796; largest 21 pairs. Rare label/category/pair_type strata lacked five distinct groups, so label/pair_type stratification was used without relaxing grouping. Distribution deviations and rare supports are reported.
-- Shared normalized profiles train/eval: 527. Shared coarse template proxies: fit/validation 312; train/eval 436. Templates are only first-three-word surface proxies, not confirmed generator identity.
-- Proposed training quarantine would leave zero pair overlap and 519 shared normalized profiles with evaluation. This is a proposal, not current eligibility.
+Active reports: reports/quarantine-v1/cohort_manifest.json, exploration.json,
+and split_manifest.json. Original metadata still describes 6,000 original training
+rows; eligible cohort statistics and quality denominators use 5,991 rows.
 
-## Code and checks
+## Actual Stage 2 results
 
-- Added data.py: strict frozen Pydantic schemas, filename/line errors, duplicate JSON-key/nonstandard-number rejection, immutable acquisition with known source checksums, metadata comparison, stable row IDs, normalized pair keys/audits, and model text columns with separate float labels.
-- Added split.py: connected-profile groups, seeded stratification with disclosed coarsening, frozen IDs/checksum, persisted-manifest verification, and `assert_data_ready` that recomputes source leakage/contradictions rather than trusting an editable ready flag. S3 must separately enforce its human quality gate.
-- Added explore.py and acquire/explore CLI commands, loader/split tests, README commands, audit/proposal docs, and JSON artifacts. Source text is never normalized before model input.
-- `.venv/bin/python -m dating_compat acquire`: exit 0, ACQUISITION PASS. Initial curl inside sandbox failed DNS; approved pinned downloads succeeded. No remaining access blocker.
-- `.venv/bin/python -m dating_compat explore`: reports produced; exit 1, DATA GATE BLOCKED: Train/eval leakage: 9 normalized unordered pairs overlap. Same failure is expected on identical offline reruns until source-preserving remediation is approved and implemented.
-- `.venv/bin/python -m pytest -q`: exit 0, 38 passed. Includes strict labels/text, malformed lines, missing metadata, metadata mismatch, reversed/contradictory pairs, connected-profile grouping, no unsafe fallback, gate rejection, source/manifest tampering, immutable writes, model input fields, and JSON roundtrip.
-- Saved JSON reloaded and validate_manifest(require_unblocked=False): SAVED MANIFEST PASS. assert_data_ready rejected the real cross-file leakage as expected. Corrected manifest preserves ALL original fit/validation IDs.
-- Coding repair: first reload failed checksum because integer histogram keys changed to strings in JSON. Corrected before hashing, added a roundtrip test including sizes 1/2/11. Initial unverified reports preserved in reports/s2-initial-audit/; do NOT use those for training. This is a coding repair, not a training experiment or changed split policy.
-- Current logical manifest digest: 9844c54bf0d8324c1957d5eed86f21b00f074dfd12cbc0c8efe9e22539bdd39a. File SHA differs by design (pretty JSON vs canonical payload digest).
-- Artifact file SHA-256: acquisition 7ad987c67de8d66fee4a77be863a6d282dcd75c53bfcb9d435ec940db9ac1913; exploration 5a6b2ae6e0f7c6ea24f3e84bc974f3e0daca62494a20c58553e3c439e89f2761; split 2a8ea5ae8f21329c54c31f089e740f5b9c4cdb04eddc2dddd6e12e97fe842e7f; proposal ff860db95ca0fdb07098192fda5f142e5b30ef16e6b3a8c0aae3b8b80761100a.
-- No training, model download, API inference, paid compute, or subscription changes. Acquisition/audit/test processes completed. Originals preserved; no learned metrics claimed.
+- Issue: S2 / CLO-44. Structural gate passes; S3 human quality gate has not run.
+- Original source counts and matching metadata: 6,000 training / 1,469 evaluation.
+- Eligible training: 5,991 (2,997 positive / 2,994 negative); excluded: nine label-0 rows.
+- Seed-42 connected-profile split: 4,792 fit / 1,199 validation.
+- Fit: 2,397 positive / 2,395 negative. Validation: 600 positive / 599 negative.
+- Zero normalized unordered pair overlap between eligible training and evaluation.
+- Zero shared normalized profiles or pairs between fit and validation.
+- Evaluation is preserved in full, including its original two within-file duplicate extras.
+- Remaining eligible/evaluation shared profiles: 519. Surface template proxies: 436.
+- Fit/validation shared surface template proxies: 344. Proxies are only first-three-word
+  scaffold diagnostics, not confirmed generator templates. Do not claim new unseen
+  people/templates or statistically independent evaluation pairs without qualification.
+- Original training duplicate extras: 40, evaluation: two; no contradictory duplicate labels.
+- Grouping is never abandoned; label/category/pair_type strata were coarsened to
+  label/pair_type only after reporting insufficient distinct-component support.
 
-## Saving and routing
+## Implementation and verified checks
 
-Branch main; confirmed private GitHub https://github.com/Cloisterwood/mini-project-5.
-Starting checkpoint b8f5f7be647b11de725c95606730a1f48223d7ec. Final reviewed WIP
-checkpoint and remote SHA verification are recorded on CLO-44; this commit cannot
-contain its own SHA. Linear moves to Agent Needs Input for the actual pending user
-decision; it must not be marked Done until resolution is verified. S0 and S1 remain
-complete. Preserve the frozen experiment contract and historical July plan.
+- cohort.py verifies the policy's exact source hashes, exclusion IDs, original metadata
+  gate, and actual source overlap. It preserves raw texts/evaluation, writes complete
+  eligible/evaluation ID provenance, and recomputes saved cohort/split integrity.
+- `load_eligible_bundle()` reloads original sources, checks pinned acquisition and policy,
+  rederives eligibility, compares the saved cohort, then calls assert_data_ready on the
+  active split. Later stages must use this entry point and add the separate S3 human gate.
+- `python -m dating_compat explore` now defaults to the approved policy and writes
+  active reports under reports/quarantine-v1/. Acquire remains rooted in reports/.
+- `.venv/bin/python -m dating_compat explore`: exit 0, DATA EXPLORATION PASS.
+- `.venv/bin/python -m pytest -q`: exit 0, 46 passed. New tests protect exact exclusions,
+  source hashes, structural blockers, evaluation preservation, tampered eligibility,
+  rehashed false cohort claims, saved cohort JSON roundtrip, and quarantine exclusion
+  from both partitions. Prior loader/split/doctor tests continue to pass.
+- Fresh `load_eligible_bundle()` plus saved-manifest validation: ELIGIBLE DATA PASS,
+  5,991 train / 1,469 eval. Original SOURCE_HASHES verified unchanged for all five files.
+- Identical explore rerun leaves frozen active reports unchanged and passes again.
+- Active file SHA-256: cohort cbae2a16662a51b1e7d6e62bc8ced75d15d661ce08c25b99300d16ef678f2675;
+  exploration 3e0f1cfaf562598aecf01fe91b401f3f29a2e34f3bdb68e210bae75570e0e6e2;
+  split 8b0695476b179cfaedbbbdd51d7c3337136a04c9d17e0f1c4b65dceb63285851.
+- git diff --check: exit 0. No dependencies changed; uv.lock and environment reports unchanged.
+
+## Saving, host, and stop
+
+- Local macOS 27.0 arm64 Mac14,2, 24 GiB RAM; project .venv Python 3.12.13.
+- No model download, training process, paid compute, API inference, or subscription change.
+  All audit/test sessions finished before closeout. CPU/MPS verification remains S1 evidence.
+- Assistant GPT-6 family per session instructions; exact picker model/reasoning not exposed.
+  Saved preference Sol 6.1. Context indicator unavailable; exact 75% boundary cannot be measured.
+- Branch main; confirmed private GitHub https://github.com/Cloisterwood/mini-project-5.
+  Starting checkpoint 0d878ea9dd30d7031f61787e2aff2edbe9f07e1f. Final reviewed commit and
+  verified remote SHA are recorded on CLO-44; this commit cannot contain its own SHA.
+- Linear moved back In Progress when quarantine was approved; completion and verified
+  publishing receipt recorded at closeout. S2 Done only after these actual checks.
+- Stop reason: Stage 2 complete. No unresolved data-policy decision. Do not start S3 until
+  the user says continue. Preserve original-source audit evidence and the historical July plan.
