@@ -92,4 +92,17 @@ dimension target is unspecified and reported as null, never invented.
 
 ## Bound the scope
 
+S5 implementation clarification, October 4: a separate prepare-training governance
+preflight freshly verifies original source/eligibility/quality and the sealed
+baseline, then certifies an isolated fit/validation package. The training worker
+checks the certificate and current permitted evidence/package hashes, accepts
+only two raw text columns plus float labels, and denies Python file opens of
+evaluation sources and baseline evaluation artifacts. It never receives evaluation
+examples or labels. Run the governance preflight before each experiment. Full-run
+checkpoint selection uses lowest validation loss, with epoch evaluation/saving;
+run selection in S6 still uses the frozen validation metric rule. Smoke uses a
+fixed 16-step schedule, paused at 8 and resumed to 16, compared with an uninterrupted
+reference. It is not a scored experiment. Local CPU is verified; other device
+resume behavior is not claimed.
+
 Required: MiniLM, CosineSimilarityLoss, five quality dimensions, all metrics/charts, three actual training configurations, reproducible artifacts. No OpenAI API calls are required for this pipeline. Optional instruction prefixes, alternate losses, extra generated data, dashboards, and cross-domain evaluation come only after required deliverables and a new scoped decision. MultipleNegativesRankingLoss is not a drop-in replacement for labeled negative pairs and can create false in-batch negatives; keep it out of the core pathway.

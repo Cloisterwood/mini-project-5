@@ -1,130 +1,139 @@
 # Current handoff
 
-Updated: 2026-10-04. Status: S4 COMPLETE — BASELINE MEASURED AND SEALED.
+Updated: 2026-10-04. Status: S5 COMPLETE — CPU SMOKE AND EXACT RESUME VERIFIED.
 
 ## Next single action
 
-Wait for “Continue with Stage 5.” Read S5 in 01-STAGES.md, the experiment contract,
-and operating rules. Implement only train.py, frozen default training config,
-checkpoint/resume, fit-only smoke test, and measured compute benchmark. Preserve
-CosineSimilarityLoss, base revision, 256-token raw-text preprocessing, gender
-prefixes, normalized cosine scoring and threshold .5. Smoke training uses only fit
-IDs; monitoring/checkpoint choice uses validation; training must not read eval.
-No paid provisioning without user choice. Stop after S5 or context checkpoint.
+Wait for “Continue with Stage 6.” Execute ONLY S6A/run-001, then stop.
+Read 01-STAGES.md S6, 02-EXPERIMENT-CONTRACT.md, and 03-OPERATING-RULES.md.
+Run prepare-training to freshly validate governance, then train-smoke --device cpu
+to verify existing evidence without retraining. Use the frozen default config for
+run-001: four epochs, batch16, LR2e-5, warmup.1, seed42, float32, max256,
+CosineSimilarityLoss, local CPU. Do not open evaluation results for development.
 
-Resume prompt: “Continue with Stage 5. Read the handoff, reverify data/quality and
-sealed baseline, implement training smoke test and checkpoint round-trip, measure
-local throughput, save Linear/GitHub evidence, then stop.”
+The full training interface is implemented:
+.venv/bin/python -m dating_compat train --run-id run-001 --device cpu
+It has NOT been executed. S6 must additionally compute selected-checkpoint
+validation metrics/plots versus validation baseline, save row-aligned validation
+predictions/config/checkpoint hashes, append iteration receipts, update Linear
+and GitHub, then STOP S6A. Run-002 and run-003 need separate user continuation.
 
-## Stage 4 completed work
+Resume prompt: “Continue with Stage 6. Execute only run-001 from the frozen base
+and fit/validation split, save actual validation comparison and iteration evidence,
+update Linear/GitHub, then stop after S6A.”
 
-- CLO-46 / S4 Done. Implemented metrics.py, cluster.py, evaluate.py and baseline CLI.
-- S3 quality gate freshly reverified: passed, 94.59591920379897/100, 20 real reviews.
-- configs/baseline.json frozen BEFORE model outcomes with config manifest.
-  SHA-256 f15fb4da6d4898f863d8df34c36b112dbb40df07932ef9b207d334c1bb4b64c1.
-- HF model API verified revision 1110a243fdf4706b3f48f1d95db1a4f5529b4d41 for
-  sentence-transformers/all-MiniLM-L6-v2. Downloaded eleven files (about 87MiB)
-  into ignored models/base-minilm/<revision>/. All actual file hashes verified.
-- CPU, four Torch threads, batch32, float32, max sequence length256, raw profiles
-  only, no prefix instructions, gender prefixes retained, unit embeddings.
-  Model inputs never include labels/categories/subcategories/pair types.
-- Symmetric label-free pair features [abs(u-v),u*v]; UMAP2D n_neighbors15,
-  min_dist.1, euclidean, seed42, n_jobs1. External hdbscan HDBSCAN
-  min_cluster_size15/min_samples5/euclidean/core_dist_n_jobs1.
-  Maps fitted separately per split, labels used afterward for coloring/purity.
-- Direct-feature sensitivity excluded as optional before outcomes. Clustered-only
-  purity/noise/counts/sizes/observed and balanced-label majority baselines recorded.
-- Cache under ignored .cache/embeddings/, keyed by ordered record IDs, raw text,
-  model files, preprocessing, execution/software. Checksums/shape/norm checked.
-- No truncation: maximum profile token length fit36/validation33/evaluation35.
-- Reports: fit_baseline_metrics.json, validation_baseline_metrics.json,
-  baseline_metrics.json (evaluation). All metrics, denominators, null reasons,
-  exact category/pair-type support and breakdowns, both target tiers recorded.
-- reports/baseline/: three row-aligned prediction CSVs and nine inspected PNGs
-  (similarity, label-colored pair UMAP with noise, ROC for each split).
-- reports/baseline_manifest.json seals seventeen tracked artifacts by SHA-256,
-  inputs/config/quality/model/software/code provenance and split runtime.
-  Repeat baseline verifies seal and returns without inference/evaluation rerun.
-  Never use evaluation baseline for thresholds, selection, early stopping, or
-  targeted augmentation. Development decisions use validation only.
+## Stage 5 completed implementation
 
-## Measured results
+- S5/CLO-47 Done. Added train.py, training_data.py, frozen train-default.yaml,
+  prepare-training/train-smoke/train CLI interfaces and protection tests.
+- Separate governance preparation reverified original sources, eligible grouped
+  split, actual human quality gate and sealed baseline. It exported ONLY fit4792
+  and validation1199 rows into ignored data/training-ready/.
+- Training worker verifies certificate and current allowed evidence/package
+  hashes without reading evaluation sources or baseline evaluation report/PNGs.
+  An active Python file-open audit guard rejects evaluation source/artifact names,
+  including resolved aliases. It is an application guard, not a separate OS account.
+- Trainer receives only text_1/text_2 and float32 binary labels; IDs kept in
+  provenance, metadata excluded. Eligibility, exact split IDs/order, exclusion
+  IDs, evaluation IDs, disjointness and float/text schema checked before model.
+- S3 quality remains94.59591920379897/100 from20 actual human reviews.
+  Sealed S4 baseline unchanged. Training worker uses certified preflight evidence;
+  full source revalidation is the separate governance step before each run.
+- Defaults: four epochs, batch16, LR2e-5, warmup ratio.1, seed42, float32,
+  max sequence length256, AdamW (non-fused adamw_torch), weight_decay0,
+  max_grad_norm1, logging every10 steps, epoch validation/save, lowest validation
+  loss checkpoint selection for full runs. Run selection uses S6's validation
+  metric rule. Raw profiles/gender prefixes/no instructions match baseline.
+- Explicit device argument. Actual training/round-trip/resume verified on CPU
+  with four Torch threads; no claims of MPS/CUDA training or resume support.
+- Full-run manifests freeze config/device/receipt/IDs/code/software. Existing run
+  cannot be overwritten; explicit resume verifies same run and complete checkpoint.
+  Models/checkpoints and optimizer state stay ignored under checkpoints/.
 
-| Split | N | Margin | Signed d | FPR at .5 | Accuracy | AUC | Coverage-adjusted purity |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Fit | 4792 | -0.0843702154 | -0.3904995676 | 0.4956158664 | 0.3879382304 | 0.3992387840 | 0.4578464107 |
-| Validation | 1199 | -0.0877095853 | -0.4048328864 | 0.5075125209 | 0.3753127606 | 0.4016193656 | 0.4962468724 |
-| Evaluation | 1469 | -0.0787518547 | -0.3640484156 | 0.4802631579 | 0.4050374404 | 0.4007571821 | 0.5180394826 |
+## Actual non-scored smoke
 
-No baseline performance target is met in either target tier. This is baseline
-measurement completion, not a claim of target attainment. Signed separation is
-negative; do not invert scores or change threshold after looking at outcomes.
-The model measures semantic similarity, not calibrated romantic compatibility.
-S3 quality passing does not guarantee useful model separation.
+- Seed42 sample256 fit pairs,64 validation pairs, from their frozen allowed sets.
+  Fixed total16-step schedule (two-step warmup), paused8 then resumed16.
+  Reference starts from identical base for uninterrupted16 steps.
+  This is32 actual optimizer steps across the two equivalent trajectories;
+  it is NOT a scored experiment and counts toward none of the three runs.
+- Finite per-step training and validation losses/gradients.
+- Initial weights SHA:
+  2c705a5e3279febcd4b210fc95a6231ced10be71e400e863ab41b623d5799508.
+- Resumed AND uninterrupted final weights SHA:
+  a951e7e580b2a6515e516150465ce3704749f26739ed2287596cee3f0d82b28a.
+  Weights changed and final state hashes match exactly.
+- Checkpoint8 model/inference reload: exact model state; maximum absolute
+  embedding difference0 on16 fit-only probe profiles.
+- Required resume files present: model.safetensors, optimizer.pt, scheduler.pt,
+  rng_state.pth, trainer_state.json.101 optimizer parameter states;
+  scheduler last_epoch equals8/16; Python/NumPy/CPU RNG keys present.
+- Checkpoint receipts/hash lists for resumed8/resumed16/uninterrupted16 saved in
+  reports/compute_benchmark.json. Smoke outputs about1GiB locally.
+- Independent audit: smoke IDs belong to correct splits and are disjoint; all16
+  resumed per-step training losses equal uninterrupted reference. Do not compare
+  Hugging Face resumed aggregate train_loss directly with the full reference
+  average; continuation aggregate divides by cumulative global steps.
+- Loss history and exact run/code/software provenance in reports/s5-smoke/.
+  Full validation LOSS forward pass used only to measure compute, not to score
+  or select a submitted model. No evaluation examples or labels accessed by worker.
 
-Clusters: fit70/1394noise/largest378; validation4/17noise/largest1108;
-evaluation7/18noise/largest1303. Clustered-only purity .645674/.503384/.524466,
-respectively. Coverage-adjusted purity gives noise zero credit over all pairs.
-Evaluation purity .518039 is close to observed majority baseline .517359.
-Separate UMAP axes are arbitrary and not aligned. No bootstrap purity claims.
-Paired uncertainty belongs to S7; S4 computes no bootstrap intervals.
+## Actual compute benchmark and selection
 
-## Actual validation and execution receipts
+- CPU reference measured14 training steps after excluding first two warmup steps.
+- Median step0.28486654144944623s; mean0.30800131242722273s;
+  approximately51.94783059173042 pairs/s at batch16.
+- Full1199-row validation loss pass runtime8.2427s.
+- Four-epoch full-fit step count1200. Extrapolated compute374.8106497393355s
+  (6.25min), including four validation passes; planning allowance749.621299478671s
+  (12.49min). Actual longer-run throughput may vary; checkpoint/init/I/O overhead
+  excluded from measured step time, covered approximately by2x planning allowance.
+  This is NOT an observed completed full run.
+- Selected environment local_cpu, paid_compute=false. Local measured training
+  and exact resume are viable; no rental alternative or provisioning needed.
+- No training process or paid resources active at this checkpoint.
 
-- BEFORE model loading: 20 hand-calculated metric/cache/seal tests passed.
-  Tests check weighted ddof1 d and sign, FPR denominator, >= ties, continuous AUC,
-  one-class/zero-variance/null cases, pair symmetry, noise/all-noise purity,
-  record alignment, frozen inputs, cache corruption and seal tampering.
-- Final full pytest: exit0, 96 passed in11.53s (75 prior +21 S4 cases).
-  Added explicit gate-before-download check after initial95-pass full suite.
-- First sandbox baseline command: exit1, Hub snapshot unavailable/network error.
-  Retried with requested network approval and the same frozen config; actual
-  baseline exit0, BASELINE PASS. No scoring/config change or discarded result.
-- Split elapsed times: fit31.802s, validation6.709s, evaluation6.727s, including
-  encoding/clustering/plots. Fit includes initial UMAP/JIT overhead; these are
-  inference/analysis times, not training throughput or compute provisioning evidence.
-- Repeated baseline command: exit0, BASELINE SEALED ARTIFACTS VERIFIED;
-  no inference or evaluation repeated.
-- Independent audit reproduced all metrics, category/pair-type breakdowns, and
-  cluster purity from saved predictions, checked source IDs/order/labels and
-  threshold predictions for all 4792/1199/1469 rows.
-- Eleven model file hashes verified. Nine PNGs loaded and visually inspected:
-  readable axes, split/sample counts, class legends, threshold, noise and ROC.
-- No code/scientific repair after model outcomes; only tests/documentation added.
-  No training, fine-tuned weights, API inference, remote or paid compute active.
+## Validation and preserved evidence
 
-## Preserved data and scientific limits
+- Initial focused training suite9 passed; initial full suite105 passed.
+- Final full .venv/bin/python -m pytest -q: exit0,109 passed in11.55s
+  (96 prior +13 training isolation/schema/checkpoint/gate cases).
+- Real train-smoke --device cpu: exit0, TRAINING SMOKE PASS.
+- Repeat same command: exit0, SMOKE SAVED CHECKPOINTS VERIFIED; no retraining.
+- Repeated baseline: exit0, BASELINE SEALED ARTIFACTS VERIFIED; no inference.
+- Tests reject absent/failed/stale preflight, changed human/source/package evidence,
+  evaluation proof paths, integer/bool labels or extra metadata columns,
+  missing checkpoint state and invalid run IDs. Worker explicitly denies
+  evaluation-file opens; data sampling/model schema tests pass.
+- Original6,000-row training and1,469-row evaluation and S2/S3/S4 artifacts
+  unchanged. Approved9-row quarantine =>5,991 eligible; profile-grouped
+  fit4792/validation1199, seed42. Residual profile/template overlap disclosed.
+- Baseline validation d -0.4048328864/FPR .5075125209/AUC .4016193656.
+  All baseline performance targets unmet. S5 supplies no scored improvements.
+  Cosine is not calibrated probability; synthetic labels are not real romance.
 
-- Original pinned 6000-row training and1469-row evaluation sources/metadata
-  unchanged. Approved nine-row quarantine =>5991 eligible, seed42 grouped split
-  4792fit/1199validation. Eligible/evaluation pair overlap zero; profile/template
-  overlap remains disclosed. Active immutable manifests under reports/quarantine-v1/.
-- S3 frozen rubric/sample and completed actual human responses unchanged.
-  Label agreement15 acceptable/3 ambiguous/2 unacceptable; other fields20 acceptable.
-- Structural eligibility and source-bound quality guard required for future training.
-- Synthetic labels, heuristic human diagnostics, residual profile/template overlap,
-  fixed seeds and no real-world romantic ground truth limit claims.
+## Provenance and saving
 
-## Provenance, environment and saving
-
-- reports/baseline_config_manifest.json file SHA:
-  12e9f737d1c711313d0f0ff38a49d7b1adae5a217785b7eec76677e77f801bd6.
-- reports/base_model_manifest.json file SHA:
-  7eba2f5aa611bda902405181576a6fda82a2c0d0009c5d95892e599e58e45097.
-- reports/baseline_metrics.json evaluation file SHA:
-  deac4e61b8d4ab14a7d3e25fb0d73acf9716cddd511f607f27dc7bcac2690bb1.
-- reports/baseline_manifest.json file SHA:
-  402dee34a2006b1fc89203a6e18031787880fcd51aae672a91ab13d2965a8236.
-- Locked .venv Python3.12.13, local arm64 Mac14,2/macOS27.0/24GiB. Actual baseline
-  library versions recorded per report; no dependencies or lock changed.
-- Code commit at execution c645e05585d605c087b62dec5790a6999b5b345f plus exact
-  uncommitted implementation SHA hashes in every baseline report. Final delivery
-  commit is recorded on CLO-46; a commit cannot contain its own SHA.
-- Assistant GPT-6 family per instructions, exact picker/reasoning not exposed;
-  user preference Sol6.1. Context telemetry unavailable; exact75% boundary
-  unmeasurable. Sequential work, no agents, no paid compute.
-- Main, private https://github.com/Cloisterwood/mini-project-5. Starting commit
-  c645e05585d605c087b62dec5790a6999b5b345f. Reviewed code/config/reports/CSVs/PNGs/
-  docs committed and pushed, live remote SHA verified at closeout on CLO-46.
-  Original data, model weights and caches excluded.
-- S0–S4 Done; S5 not started. STOP: S4 complete.
+- reports/training_preflight_manifest.json SHA:
+  4cba812338d9ee7b02269db1537322c07399e1c8e45563c47964ef2b103d5507.
+- reports/train_config_manifest.json SHA:
+  fdfc8e79983986b04dae9f0154bdfffbcc57ac1f60257c371dcea3ddfc9c2fa2.
+- reports/compute_benchmark.json SHA:
+  a82d25a1762853d66907e18fb3ac51e8b68aec0b2aa2ae246b8e9dbb970a36f3.
+- reports/s5-smoke/loss_history.json SHA:
+  7a25e8f86cf5fe94471e330d3aa26e6003118a72943d6035e8aa55d02f2056be.
+- Local Mac14,2 arm64/macOS27.0/24GiB, project Python3.12.13 and locked environment
+  unchanged; library versions in run manifest. No dependencies/lock changed.
+- Starting and smoke execution commit44204fe99ec69b61a8b8abe735aa5365a2221892,
+  plus exact uncommitted code SHA hashes in smoke manifest/benchmark.
+  Final delivery commit and live remote SHA recorded on CLO-47 at closeout;
+  a commit cannot contain its own SHA.
+- Assistant GPT-6 family per instructions; picker/reasoning not exposed; user
+  preference Sol6.1. Context telemetry unavailable; exact75% limit unmeasurable.
+  Sequential work, no agents. All model training stayed local CPU.
+- Branch main, private https://github.com/Cloisterwood/mini-project-5. Reviewed
+  named source/config/small reports/docs/tests committed/pushed; remote verified
+  and worktree clean at closeout. Data, cached embeddings, model weights and
+  checkpoints excluded; local checkpoint receipts describe retention.
+- Linear completion receipt recorded on CLO-47; S0–S5 Done.
+  S6 not started. STOP: S5 complete.

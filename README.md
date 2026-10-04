@@ -10,9 +10,10 @@ rows that overlap evaluation, leaving **5,991 eligible rows**. Original files an
 all 1,469 evaluation rows are preserved. See [the data audit](docs/DATA_AUDIT.md).
 The structural data gate and the S3 human quality gate pass.
 
-Stages 3 and 4 are complete. All 20 human reviews are recorded and the verified
+Stages 3–5 are complete. All 20 human reviews are recorded and the verified
 quality gate passes at **94.60/100**. The pinned MiniLM baseline is measured and
-sealed. Stage 5 training smoke test and compute decision are next; no training has started.
+sealed. CPU training, checkpoint reload, and exact resume passed a bounded smoke
+test. Stage 6 scored experiments are next; none has started.
 
 ## Setup
 
@@ -201,6 +202,61 @@ Implementation follows the installed APIs and official
 [UMAP reproducibility](https://umap-learn.readthedocs.io/en/latest/reproducibility.html),
 and [HDBSCAN](https://hdbscan.readthedocs.io/en/latest/api.html) documentation.
 
+## Training smoke test and compute decision
+
+Run the separate governance preflight, then the isolated training worker:
+
+```bash
+.venv/bin/python -m dating_compat prepare-training
+.venv/bin/python -m dating_compat train-smoke --device cpu
+```
+
+The preflight freshly verifies data eligibility, real human quality evidence, and
+the sealed baseline, exporting only fit/validation rows to ignored
+`data/training-ready/`. Its certificate is `reports/training_preflight_manifest.json`.
+The worker validates the certificate, current permitted evidence and package
+hashes. It denies Python file opens of evaluation sources and baseline evaluation
+artifacts; evaluation examples/labels never enter its datasets. Trainer receives
+only `text_1`, `text_2`, and float32 labels. Run the preflight before each experiment.
+
+`configs/train-default.yaml` fixes four epochs, batch 16, learning rate 2e-5, warmup
+ratio 0.1, seed 42, float32, max sequence length 256, AdamW and CosineSimilarityLoss. Raw texts, gender
+prefixes, model revision and inference scoring match baseline. Full runs monitor
+validation loss and reload the lowest-validation-loss checkpoint. Resume requires
+the same frozen run configuration, IDs, source certificate, code and software.
+
+The completed smoke used 256 fit pairs and 64 validation pairs, a fixed 16-step
+schedule paused at 8, resumed to 16, and an uninterrupted 16-step reference. Weights
+changed, losses were finite, and checkpoint reload reproduced embeddings with
+maximum absolute difference 0. Resumed final weights and all 16 per-step training
+losses matched the uninterrupted run exactly. Checkpoints include model,
+optimizer (101 parameter states), scheduler and Python/NumPy/CPU RNG states.
+This verifies CPU resume; other devices have not been benchmarked or verified.
+
+[`reports/compute_benchmark.json`](reports/compute_benchmark.json) records actual
+measurements: median 0.28487 seconds/step, mean 0.30800 seconds/step over 14 steps
+after two warmup steps; about 51.95 pairs/second. Full validation loss evaluation
+took 8.2427 seconds. Extrapolating 1,200 fit steps plus four validation passes gives
+**374.8 seconds (6.25 minutes)**, with a **749.6-second (12.49-minute)** planning
+allowance. Checkpoint I/O and initialization add overhead; this is an estimate,
+not an actual completed four-epoch run. Local CPU is the selected environment.
+
+Checkpoints (about 1 GiB) stay ignored under `checkpoints/s5-smoke/`; hashes and
+resume evidence are tracked in the benchmark. Run provenance and stepwise losses
+are in `reports/s5-smoke/`. Repeating `train-smoke` verifies saved checkpoint
+hashes and prints `TRAINING SMOKE PASS` without training again. The smoke is
+explicitly **not a scored experiment** and does not count toward the three runs.
+
+Stage 6's implemented interface is `train --run-id run-001 --device cpu`; it uses
+full fit and validation inputs. An existing run requires explicit
+`--resume checkpoints/run-001/checkpoint-N` and cannot be overwritten by a new
+run. Do not launch it until Stage 6 is authorized. Each Stage 6 experiment still
+requires validation metrics, an iteration receipt, and its own stop/checkpoint.
+
+The implementation uses [Sentence Transformer training arguments](https://sbert.net/docs/package_reference/sentence_transformer/training_args.html)
+and [Trainer checkpoint resume](https://sbert.net/docs/package_reference/sentence_transformer/trainer.html),
+checked against the installed APIs and actual saved states.
+
 ## Implementation choices
 
 Python is constrained to 3.12 for this lock. The sentence-transformers 5.x and
@@ -232,5 +288,6 @@ Every stage ends with a checkpoint and stop; context usage at 75% also triggers 
 Raw data, caches, credentials, and model weights are excluded from Git. Schema,
 counts, and metadata have been validated; the approved derived cohort passes the
 structural leakage gate.
-Human quality scoring is pending. No training experiment has run and no performance targets are claimed. Paid compute
-decisions wait for measured need in Stage 5.
+Human quality scoring passes and the measured baseline misses performance targets.
+The local CPU training smoke passed; no scored experiment has run. The measured
+local estimate supports proceeding on CPU when Stage 6 is authorized.

@@ -29,7 +29,7 @@ All four required files are present at the repository root. In Stage 2 download 
 | S2 | [CLO-44](https://linear.app/cloisterwood/issue/CLO-44/mp5-s2-dataset-validation-exploration-and-split) | Done |
 | S3 | [CLO-45](https://linear.app/cloisterwood/issue/CLO-45/mp5-s3-quality-gate-and-human-review) | Done |
 | S4 | [CLO-46](https://linear.app/cloisterwood/issue/CLO-46/mp5-s4-metrics-and-baseline) | Done |
-| S5 | [CLO-47](https://linear.app/cloisterwood/issue/CLO-47/mp5-s5-training-smoke-test-and-compute-decision) | Todo |
+| S5 | [CLO-47](https://linear.app/cloisterwood/issue/CLO-47/mp5-s5-training-smoke-test-and-compute-decision) | Done |
 | S6 | [CLO-48](https://linear.app/cloisterwood/issue/CLO-48/mp5-s6-three-bounded-training-experiments) | Todo |
 | S7 | [CLO-49](https://linear.app/cloisterwood/issue/CLO-49/mp5-s7-frozen-final-comparison-and-uncertainty) | Todo |
 | S8 | [CLO-50](https://linear.app/cloisterwood/issue/CLO-50/mp5-s8-all-figures-and-interpretation) | Todo |

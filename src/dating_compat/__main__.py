@@ -29,7 +29,34 @@ def main(argv: list[str] | None = None) -> int:
     review.add_argument("--pair", type=int, help="Revisit a specific sample number (1–20)")
     baseline_parser = commands.add_parser("baseline", help="Run or verify the frozen, gated base-model baseline")
     baseline_parser.add_argument("--data-dir", type=Path, default=Path("data"))
+    commands.add_parser("prepare-training", help="Separate governance preflight exports fit/validation inputs")
+    smoke_parser = commands.add_parser("train-smoke", help="Non-scored local checkpoint/resume and speed check")
+    smoke_parser.add_argument("--device", choices=("cpu", "mps", "cuda"), default="cpu")
+    train_parser = commands.add_parser("train", help="Run one authorized fit/validation-only experiment")
+    train_parser.add_argument("--run-id", required=True)
+    train_parser.add_argument("--config", type=Path, default=Path("configs/train-default.yaml"))
+    train_parser.add_argument("--device", choices=("cpu", "mps", "cuda"), default="cpu")
+    train_parser.add_argument("--resume", type=Path)
     args = parser.parse_args(argv)
+    if args.command in {"prepare-training", "train-smoke", "train"}:
+        from dating_compat.data import DataError
+        try:
+            if args.command == "prepare-training":
+                from dating_compat.training_data import prepare_training
+                prepare_training()
+                print("TRAINING PREFLIGHT PASS")
+            else:
+                from dating_compat.train import train_run, train_smoke
+                if args.command == "train-smoke":
+                    train_smoke(args.device)
+                    print("TRAINING SMOKE PASS")
+                else:
+                    train_run(args.run_id, args.config, args.device, args.resume)
+                    print("TRAINING RUN COMPLETE")
+        except (DataError, OSError) as exc:
+            print(f"TRAINING ERROR: {exc}")
+            return 1
+        return 0
     if args.command == "baseline":
         from dating_compat.data import DataError
         from dating_compat.evaluate import baseline

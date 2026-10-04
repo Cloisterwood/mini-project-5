@@ -24,3 +24,10 @@ baseline/ contains row-aligned predictions and nine inspected PNGs. All seventee
 artifacts are sealed by baseline_manifest.json. The baseline command verifies
 them on repeat invocation without inference. Do not overwrite evaluation evidence
 or use it for development decisions. Baseline performance targets are unmet.
+
+S5: training_preflight_manifest.json certifies the separate governance validation
+and fit/validation-only package; train_config_manifest.json freezes defaults.
+compute_benchmark.json records non-scored CPU training, exact resume and inference
+round-trip, checkpoint state/file hashes, measured throughput and full-run estimate.
+s5-smoke/ contains frozen run manifest and per-step training/validation loss logs.
+Checkpoints and prepared inputs stay ignored locally. No scored training run yet.
