@@ -1,5 +1,62 @@
 # Current handoff
 
+Updated: 2026-10-04. Status: S8 COMPLETE — six figures and six self-evaluation answers verified.
+
+## Next single action: Stage 9 only
+
+Wait for “Continue with Stage 9.” Complete README/artifact retrieval instructions,
+audit every original assignment checkbox in docs/DELIVERABLE_CHECKLIST.md,
+run relevant full checks and clean-environment smoke, verify saved-model inference
+and regeneration from stored predictions without retraining. Preserve final reports,
+selection, thresholds and all unmet targets. Evaluate dependency/environment limits
+honestly; do not claim model binaries are on GitHub. Local weights remain under
+checkpoints/run-002/selected. Stop after S9 delivery/closeout. No S9 work started.
+
+## Stage 8 completed evidence
+
+- Added visualize.py and visualize --output CLI. Default figures/ contains exactly
+  six required PNGs: similarity_distribution_before_after, umap_before_after,
+  category_effect_size, roc_curves, training_loss_curve and improvement_delta.
+- Saved S4/S7 prediction rows and selected run-002 loss history ONLY; no model
+  inference, training, UMAP/clustering fitting or bootstrap. Final reports and
+  prior run/source/selection artifacts unchanged; dependencies/lock unchanged.
+- Verifies baseline/final/selected validation seal digests and artifact hashes,
+  exact eval IDs/order/labels and reproduction of aggregate metrics before plotting.
+  figures/manifest.json binds all inputs, six PNG SHA hashes, code hash and counts.
+  Repeat visualize verifies saved inputs/outputs without drawing new figures.
+  New --output directory supports later regeneration without replacing originals.
+- All six PNGs visually checked: separate category/delta views and four-panel
+  preview of similarity, UMAP, ROC and loss. Axes/titles/counts/labels readable,
+  colorblind blue/orange, fonts>=10pt, grids. DPI150. Evaluation n1469 (+709/-760).
+  UMAP points are pairs, maps separately fitted/arbitrary axes explicitly disclosed;
+  category d unavailable for negative-only dealbreakers, with class support on ticks.
+  Large d in rare categories shown honestly as exploratory. Loss plot shows full
+  validation alongside fit10-step windows (fit4792/validation1199). Delta intervals
+  only for margin/d/FPR/AUC; five other metrics explicitly point estimates.
+- docs/SELF_EVALUATION.md answers all six assignment questions using measured
+  baseline/final/uncertainty/subgroup results and pre-training quality/human evidence.
+  Quality94.595919/100; five dimension scores reported. Actual jsd review15/20
+  acceptable labels,3 ambiguous,2 unacceptable; all20 preferences realistic and
+  hierarchy-consistent. Frozen sample is diagnostic stratified, not uniform random;
+  departure from literal assignment wording and population inference disclosed.
+- FPR>.40 category analysis records dealbreakers_and_interests6/12,
+  interests_and_values31/67, values53/119. Possible future clearly adjudicated data
+  is a hypothesis only; no tuning/augmentation follows final evaluation outcomes.
+  Synthetic labels do not establish real romance; cross-source overlap, templates,
+  one-seed/selection uncertainty, unaligned projections and no purity CI disclosed.
+- Full pytest121 passed in12.65s. Independent plot audit verifies all six hashes,
+  row/class counts, category support and unavailable d; prior seals remain valid.
+  visualize repeated FIGURES PASS. No errors or active training/paid resources.
+- Model weights remain ignored locally, not remotely backed up. Sequential GPT-6
+  family; exact picker unexposed, user preference Sol6.1; context telemetry unavailable.
+- Reviewed named code/docs/PNGs/manifest committed/pushed to private main; final
+  delivery SHA/live remote receipt on CLO-50. Worktree clean; S8 Done, S9 Todo.
+  Commit cannot include its own SHA.
+
+STOP: S8 complete. Next prompt: “Continue with Stage 9.”
+
+## Historical S7 checkpoint (superseded next action)
+
 Updated: 2026-10-04. Status: S7 COMPLETE — final run-002 evaluation and paired uncertainty sealed.
 
 ## Next single action: Stage 8 only

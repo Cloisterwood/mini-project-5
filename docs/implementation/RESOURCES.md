@@ -32,7 +32,7 @@ All four required files are present at the repository root. In Stage 2 download 
 | S5 | [CLO-47](https://linear.app/cloisterwood/issue/CLO-47/mp5-s5-training-smoke-test-and-compute-decision) | Done |
 | S6 | [CLO-48](https://linear.app/cloisterwood/issue/CLO-48/mp5-s6-three-bounded-training-experiments) | Done: 3/3; run-002 selected |
 | S7 | [CLO-49](https://linear.app/cloisterwood/issue/CLO-49/mp5-s7-frozen-final-comparison-and-uncertainty) | Done: final run-002 comparison and paired uncertainty sealed |
-| S8 | [CLO-50](https://linear.app/cloisterwood/issue/CLO-50/mp5-s8-all-figures-and-interpretation) | Todo |
+| S8 | [CLO-50](https://linear.app/cloisterwood/issue/CLO-50/mp5-s8-all-figures-and-interpretation) | Done: six figures and six self-evaluation answers |
 | S9 | [CLO-51](https://linear.app/cloisterwood/issue/CLO-51/mp5-s9-reproducibility-github-delivery-and-closeout) | Todo |
 
 Each issue contains the stage scope and acceptance checks; each successive stage is blocked by its predecessor. The user confirmed Sol 6.1 is available and selected as the default development model. S0 was marked Done on October 4 after Linear access in the active development session and the private GitHub destination were verified. Actual stage status lives in Linear and the handoff.

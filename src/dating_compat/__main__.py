@@ -41,7 +41,19 @@ def main(argv: list[str] | None = None) -> int:
     validation_parser.add_argument("--run-id", required=True)
     commands.add_parser("select-run", help="Freeze the final validation-only choice after all three experiments")
     commands.add_parser("final-evaluation", help="Evaluate the frozen selected model once and seal paired comparison")
+    plot_parser = commands.add_parser("visualize", help="Render six required figures from sealed predictions only")
+    plot_parser.add_argument("--output", type=Path, default=Path("figures"))
     args = parser.parse_args(argv)
+    if args.command == "visualize":
+        from dating_compat.data import DataError
+        from dating_compat.visualize import visualize
+        try:
+            visualize(args.output)
+        except (DataError, OSError) as exc:
+            print(f"FIGURES ERROR: {exc}")
+            return 1
+        print("FIGURES PASS: six sealed PNGs")
+        return 0
     if args.command == "final-evaluation":
         from dating_compat.data import DataError
         from dating_compat.final_evaluation import final_evaluation

@@ -270,7 +270,11 @@ repeat verifies the same evidence without inference. `final-evaluation` uses thi
 frozen model and the original evaluation rows, then seals final metrics, paired
 2000-draw profile-component bootstrap intervals, predictions and error analysis.
 Repeated calls verify saved final artifacts without inference or resampling.
-Stage 8 figures/self-evaluation await continuation. No further training or
+Stage 8 figures/self-evaluation are complete. `visualize` renders the six required
+PNGs under [figures/](figures/) from sealed saved predictions; repeat verifies their
+hashes. `visualize --output <new-directory>` supports regeneration without replacing
+the original figures. See [the six self-evaluation answers](docs/SELF_EVALUATION.md).
+Stage 9 reproducibility/deliverable audit awaits continuation. No further training or
 retraining on all data is scheduled.
 
 The implementation uses [Sentence Transformer training arguments](https://sbert.net/docs/package_reference/sentence_transformer/training_args.html)
