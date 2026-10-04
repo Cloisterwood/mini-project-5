@@ -13,10 +13,11 @@ The structural data gate and the S3 human quality gate pass.
 Stages 3–5 are complete. All 20 human reviews are recorded and the verified
 quality gate passes at **94.60/100**. The pinned MiniLM baseline is measured and
 sealed. CPU training, checkpoint reload, and exact resume passed a bounded smoke
-test. Stage 6 runs001–002 are complete; one experiment remains. Run-002 leads on
-validation d=2.2064, FPR=21.04%, AUC=0.9165, and coverage-adjusted purity=83.40%.
-Both completed runs meet all four primary validation targets.
-Final held-out comparison awaits S7 and frozen selection.
+test. Stage 6 is complete: three training experiments, with **run-002 selected** by
+the frozen validation rule. Its validation metrics are d=2.2064, FPR=21.04%,
+AUC=0.9165, and coverage-adjusted purity=83.40%.
+All three runs meet all four primary validation targets.
+Final held-out comparison awaits Stage 7; selection is already frozen.
 
 ## Setup
 
@@ -257,11 +258,14 @@ run. After training, `validate-run --run-id run-001` compares the selected check
 with the sealed validation baseline using the same IDs, preprocessing, threshold,
 UMAP and HDBSCAN configuration. Repeated validation verifies saved hashes without
 new inference. See `reports/runs/run-001/` and [the iteration log](docs/ITERATION_LOG.md).
-Runs001–002 are authorized and complete. Run-002 uses `--config configs/train-run-002.yaml`
+All three runs are complete. Run-002 uses `--config configs/train-run-002.yaml`
 for six epochs; its validation report and `comparison_run_001.json` record small
 gains in d/FPR/AUC/purity and slight declines in accuracy/recall/F1. Final selection
-waits for run-003. Each subsequent experiment needs
-user continuation, validation evidence, an iteration receipt, and its own stop.
+is frozen in `reports/selected_run_manifest.json`: run-002, then run-001, then
+run-003. Run-003 lowered LR to1e-5 for six epochs and had lower d/higher FPR.
+`select-run` verifies all three saved validation seals and freezes the decision;
+repeat verifies the same evidence without inference. Stage 7 remains pending
+user continuation. No further training or retraining on all data is scheduled.
 
 The implementation uses [Sentence Transformer training arguments](https://sbert.net/docs/package_reference/sentence_transformer/training_args.html)
 and [Trainer checkpoint resume](https://sbert.net/docs/package_reference/sentence_transformer/trainer.html),

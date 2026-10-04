@@ -1,0 +1,47 @@
+{
+  "selected_files": {
+    "1_Pooling/config.json": "4fef0a7e8c8ee36e74c0fad89bab60ade72324442d43f559ea219bb7c2580710",
+    "README.md": "b3c2b8d77e023e03910e7e0edbda2919bf9ce18ce52ccb45096f8fb65ef29a9e",
+    "config.json": "4599e8a5d74ed192b70919aa02124c2d68580070b22e89db956c0353618bccd9",
+    "config_sentence_transformers.json": "da9b5e777885dd8c7394fe61ec05e21ac13713970e633300c4f5556025d5722e",
+    "model.safetensors": "6d439c9ac3eb4779888b8e4f872c88246b35078dcb9ec6bc9ac9919d3cabf7c2",
+    "modules.json": "fa7d796a215e1b2416773062891923b191fc5a4849bc44e322997433c90f459c",
+    "sentence_bert_config.json": "3084164002c0bca01b0259c5327123803fce32e660a57feb93184ffead186fc8",
+    "special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+    "tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+    "tokenizer_config.json": "c128cee663cc23ce44cf253471d2a538d1623c7c3ead5e465b13519a017ca1f0",
+    "training_args.bin": "d352593f5a8fac977dbeebe5f6fedae7133d628c0b87717b284d9a10e726403d",
+    "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+  },
+  "selected_path": "checkpoints/run-003/selected",
+  "selected_weights_sha256": "f052a9e9e6f59bdc7bbef0a970da2911f7377cbf5ec653cd266af3677a28d9ff",
+  "trainer_checkpoint": {
+    "files": {
+      "1_Pooling/config.json": "4fef0a7e8c8ee36e74c0fad89bab60ade72324442d43f559ea219bb7c2580710",
+      "README.md": "400b4e1d857fb73952d17eac8e681c061c69a40932c4ff7ef7466e8a6d501395",
+      "config.json": "4599e8a5d74ed192b70919aa02124c2d68580070b22e89db956c0353618bccd9",
+      "config_sentence_transformers.json": "da9b5e777885dd8c7394fe61ec05e21ac13713970e633300c4f5556025d5722e",
+      "model.safetensors": "6d439c9ac3eb4779888b8e4f872c88246b35078dcb9ec6bc9ac9919d3cabf7c2",
+      "modules.json": "fa7d796a215e1b2416773062891923b191fc5a4849bc44e322997433c90f459c",
+      "optimizer.pt": "5e71da030a3047f1cd67f3860af00a0f0383d67020cdb9972c8f1a55e2ce8c95",
+      "rng_state.pth": "09e5a3787731b3f98cf49d3ce332f2dd9e7d7a31a5c171582d50ba7d11550e52",
+      "scheduler.pt": "8a6fa7dabe1c3869aa5365a5e22785ef9ebb92a60e25d2c1762751455de055f6",
+      "sentence_bert_config.json": "3084164002c0bca01b0259c5327123803fce32e660a57feb93184ffead186fc8",
+      "special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+      "tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+      "tokenizer_config.json": "c128cee663cc23ce44cf253471d2a538d1623c7c3ead5e465b13519a017ca1f0",
+      "trainer_state.json": "28395ccaf258c0f24c47fa1191cbd2d4dee10434673fa8252d95824c86b6e0f4",
+      "training_args.bin": "d352593f5a8fac977dbeebe5f6fedae7133d628c0b87717b284d9a10e726403d",
+      "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    },
+    "global_step": 1800,
+    "optimizer_parameter_states": 101,
+    "path": "checkpoints/run-003/checkpoint-1800",
+    "rng_keys": [
+      "cpu",
+      "numpy",
+      "python"
+    ],
+    "scheduler_last_epoch": 1800
+  }
+}

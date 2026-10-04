@@ -39,7 +39,18 @@ def main(argv: list[str] | None = None) -> int:
     train_parser.add_argument("--resume", type=Path)
     validation_parser = commands.add_parser("validate-run", help="Compare completed selected checkpoint on validation only")
     validation_parser.add_argument("--run-id", required=True)
+    commands.add_parser("select-run", help="Freeze the final validation-only choice after all three experiments")
     args = parser.parse_args(argv)
+    if args.command == "select-run":
+        from dating_compat.data import DataError
+        from dating_compat.selection import freeze_selection
+        try:
+            selected = freeze_selection()
+        except (DataError, OSError) as exc:
+            print(f"SELECTION ERROR: {exc}")
+            return 1
+        print(f"SELECTION FROZEN: {selected['selected_run']}")
+        return 0
     if args.command == "validate-run":
         from dating_compat.data import DataError
         from dating_compat.validation import validate_run

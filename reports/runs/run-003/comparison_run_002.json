@@ -1,0 +1,55 @@
+{
+  "classification_deltas": {
+    "accuracy": {
+      "after": 0.8298582151793161,
+      "before": 0.8306922435362802,
+      "delta": -0.0008340283569641116
+    },
+    "auc": {
+      "after": 0.9099582637729549,
+      "before": 0.9164718976071229,
+      "delta": -0.006513633834168031
+    },
+    "cohens_d": {
+      "after": 2.147573254335542,
+      "before": 2.206405018910305,
+      "delta": -0.058831764574763135
+    },
+    "f1": {
+      "after": 0.839622641509434,
+      "before": 0.8374699759807847,
+      "delta": 0.0021526655286493446
+    },
+    "fpr": {
+      "after": 0.2303839732888147,
+      "before": 0.21035058430717862,
+      "delta": 0.020033388981636063
+    },
+    "margin": {
+      "after": 0.5797543504050713,
+      "before": 0.5767153207730538,
+      "delta": 0.0030390296320175203
+    },
+    "precision": {
+      "after": 0.7946428571428571,
+      "before": 0.8058551617873652,
+      "delta": -0.011212304644508064
+    },
+    "recall": {
+      "after": 0.89,
+      "before": 0.8716666666666667,
+      "delta": 0.018333333333333313
+    }
+  },
+  "decision": "reject_for_final_selection",
+  "purity_comparison": {
+    "after": 0.8140116763969975,
+    "before": 0.8340283569641368,
+    "delta": -0.020016680567139344
+  },
+  "reason": "All primary targets met, but lower d than runs001 and002; run-002 leads under frozen rule. Retain weights/evidence.",
+  "reference_report_sha256": "354d4405c3603b78deec1804ac6b5eceb025e8536a03bab91e2446db108e8f5f",
+  "reference_run": "run-002",
+  "run_id": "run-003",
+  "run_report_sha256": "b290445d9e41e0ccaa1655617ee8b26bb03f502362c04bc0f59fd7071149c629"
+}
