@@ -1,6 +1,9 @@
 # Human review — 20 eligible fit pairs
 
-Stage 3 is pending your ratings. All response fields are intentionally blank. The overall score and human-dependent dimensions remain null until you complete this review.
+Human review completed October 4, 2026. All 20 responses are recorded in
+docs/human_review_responses.csv, preserving the human judgments and notes.
+The verified frozen quality gate passes at 94.60/100. The pair list below retains
+the original review template; the CSV is the completed response record.
 
 ## How to enter ratings
 

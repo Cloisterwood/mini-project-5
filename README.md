@@ -8,10 +8,10 @@ Stage 2 implements acquisition, strict schema/metadata validation, data explorat
 and a seeded profile-component split. The approved quarantine excludes 9 training
 rows that overlap evaluation, leaving **5,991 eligible rows**. Original files and
 all 1,469 evaluation rows are preserved. See [the data audit](docs/DATA_AUDIT.md).
-The structural data gate passes; the S3 human quality gate is still required.
+The structural data gate and the S3 human quality gate pass.
 
-Stage 3 quality scoring and guard checks are implemented. The human review is
-pending; the overall quality score remains null and training remains blocked.
+Stage 3 is complete. All 20 human reviews are recorded and the verified quality
+gate passes at **94.60/100**. Stage 4 metrics and baseline are next; no training has started.
 
 ## Setup
 
@@ -105,12 +105,13 @@ individual components, evidence, numerators/denominators, undefined reasons,
 mapping rules, both score scales, and source/cohort/split/rubric/review hashes.
 The rubric hash is frozen in `reports/quality_rubric_manifest.json` before scoring.
 
-Until human ratings are complete, expected output is
-`QUALITY GATE PENDING_HUMAN_REVIEW` with exit **1**. This is a required gate stop.
-The current automated dimensions are data quality 19.33/20, diversity 19.48/20,
-and bias diagnostics 17.04/20. Linguistic and real-life totals plus overall score
-remain null pending review. A high heuristic score does not prove absence of bias
-or real-world relationship validity.
+The completed review currently returns `QUALITY GATE PASS` with exit **0**.
+Scores are data quality 19.33/20, diversity 19.48/20, bias diagnostics 17.04/20,
+linguistic quality 20.00/20, and real-life matching 18.75/20; overall 94.60/100.
+Human label agreement is 15 acceptable, 3 ambiguous, and 2 unacceptable; all other
+human fields are acceptable on all 20 pairs. Original judgments and notes are
+preserved. A high heuristic score does not prove absence of bias or real-world
+relationship validity. Missing human evidence returns pending with exit **1**.
 
 Run this in the VS Code terminal from this project folder for guided entry:
 
@@ -133,7 +134,7 @@ You can also read [the 20-pair human review sheet](docs/HUMAN_REVIEW.md) and edi
 `docs/human_review_responses.csv` directly. Each row requires six explicit
 acceptable/ambiguous/unacceptable ratings, a reviewer name/alias, and
 `human_reviewed=yes`. Add notes for every ambiguous or unacceptable judgment.
-Ratings are intentionally blank. The seeded sample covers all nine pair types,
+The completed ratings are saved. The seeded sample covers all nine pair types,
 uses fit IDs only, and is diagnostic rather than a population estimate.
 
 Rerun quality after entering the ratings. Passing requires every dimension >=12/20,

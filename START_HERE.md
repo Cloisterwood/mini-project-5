@@ -1,6 +1,6 @@
 # Mini-project 5: staged implementation
 
-Planning date: October 3, 2026. Status: Stage 3 implemented; human review pending.
+Planning date: October 3, 2026. Status: Stages 0–3 complete; Stage 4 awaits authorization.
 
 Build a reproducible dating compatibility experiment using `sentence-transformers/all-MiniLM-L6-v2` and `CosineSimilarityLoss`. OpenAI models assist with development; the assignment explicitly specifies the embedding model being trained.
 
@@ -26,6 +26,6 @@ The existing `docs/superpowers/plans/2026-07-04-dating-compatibility-finetuning.
 
 See [RESOURCES.md](docs/implementation/RESOURCES.md) for the private Cloisterwood GitHub repository, Linear project and ten issues, and the verified Hugging Face dataset revision and file names. No additional source links are needed.
 
-Stages 0–2 are complete. S3 scoring, frozen rubric, fit-only human sample, and gate protection are implemented. Complete docs/human_review_responses.csv using docs/HUMAN_REVIEW.md, then resume S3; do not start S4 yet. The approved quarantine remains active: 5,991 eligible rows (4,792 fit / 1,199 validation), with original sources and all evaluation rows preserved. The locked Python 3.12.13 environment passes doctor on CPU and MPS. The user confirmed Sol 6.1 is available in VS Code; use it as the default development assistant. GPU spending decisions are deferred until measured need in Stage 5.
+Stages 0–3 are complete. All 20 actual human reviews are recorded; the frozen quality gate and fresh recomputation guard pass at 94.60/100, with all five dimensions above 12/20. Say “Continue with Stage 4” to authorize metrics and baseline; no model download or training has started. The approved quarantine remains active: 5,991 eligible rows (4,792 fit / 1,199 validation), with original sources and all evaluation rows preserved. The locked Python 3.12.13 environment passes doctor on CPU and MPS. The user confirmed Sol 6.1 is available in VS Code; use it as the default development assistant. GPU spending decisions are deferred until measured need in Stage 5.
 
 The pinned original dataset is downloaded into ignored data/ and preserved unchanged. Environment setup, diagnostics, acquisition, and exploration commands work; see README.md. No model weights or training code are present. The historical July plan remains preserved.
