@@ -1,5 +1,72 @@
 # Current handoff
 
+Updated: 2026-10-04. Status: S6A COMPLETE — run-001 complete; S6 remains In Progress (1/3).
+
+## Next single action: S6B only
+
+Wait for “Continue Stage 6 with run-002.” Do not start run-003 or S7.
+Read S6 and the experiment contract/operating rules. Freshly run prepare-training
+and verify smoke receipts. Freeze one evidence-based config change and rationale
+before training run-002 from the same pinned base, never from run-001 weights.
+Proposed comparison: extend epochs from4 to6, all other defaults unchanged.
+Rationale: validation loss improved each epoch (.132871, .118419, .116256,
+.115483), with diminishing gains and no observed epoch loss reversal. Test
+whether more training helps; this does not establish underfitting or promise gains.
+Save run-002 validation comparison/iteration receipt, update tracking, STOP S6B.
+
+## S6A actual execution and result
+
+- Fresh prepare-training: pass; existing train-smoke --device cpu receipts verified.
+- Default run-001: four epochs, batch16, LR2e-5, warmup.1, seed42, float32,
+  max256, CosineSimilarityLoss, local CPU4threads; fit4792/validation1199.
+- Training completed1200 steps, train_runtime274.0303 seconds (4.57min).
+  Lowest epoch validation loss .11548302322626114 at checkpoint-1200.
+  Selected inference weights state SHA:
+  ed38a7f19c3c3d26541f4ab0571913429f94c0738acf7d3a52785a0a26aa3b2c.
+- Training execution commit481864bf32a62bb89ca1680995b22991327bf81c;
+  exact training source hashes and software in run_manifest.json. Train code
+  unchanged during execution. New validation helper has its own code hash.
+- validate-run --run-id run-001: VALIDATION RUN PASS;40.32 seconds for
+  inference/clustering/report generation. Repeat verifies nine sealed artifacts.
+- Same validation rows/order, raw text, preprocessing, normalization, threshold.5,
+  seed42 label-free symmetric pair UMAP/HDBSCAN settings as baseline.
+- Validation before -> after: margin -.0877096 -> .5792294;
+  d -.4048329 ->2.1841411; FPR .5075125 -> .2170284;
+  AUC .4016194 -> .9136700; accuracy .3753128 -> .8315263;
+  coverage-adjusted purity .4962469 -> .8315263.
+- Counts TN469/FP130/FN72/TP528. Twenty clusters;15/1199 noise rows,
+  clustered-only purity .8420608; all-row denominator1199 gives noise no credit.
+- All four primary checklist validation targets met. Earlier strict FPR<=.1
+  and accuracy/precision/recall/F1>=.9 unmet; report both target tiers honestly.
+- Keep as candidate; no final selection until all three planned runs. Validation
+  was used for checkpoint selection; these are not final holdout estimates or
+  significance claims. S7 paired uncertainty and final evaluation remain pending.
+- No evaluation examples/results opened by training/validation workers. Existing
+  evaluation baseline sealed; no evaluation inference for this selected model.
+  Original sources, quarantine/split/human-review/baseline evidence unchanged.
+- reports/runs/run-001/ contains immutable config, run/training provenance,
+  full loss history, row-aligned predictions, metrics/breakdowns/target tiers,
+  checkpoint file receipts and four PNGs. docs/ITERATION_LOG.md and
+  reports/iterations.jsonl record signed deltas and provisional keep decision.
+- Full pytest:112 passed in12.41s. Focused validation tests3 passed.
+  Independent CSV audit reproduces metrics/purity and verifies labels/IDs/order.
+  All four plots visually checked. A one-off audit initially used the wrong CSV
+  column name 'cluster'; corrected to 'cluster_id' and passed without code changes.
+  Plotting used a temporary font cache after sandbox cache warnings; plots saved.
+- Model/optimizer/RNG/checkpoints retained locally under ignored checkpoints/run-001/;
+  selected checkpoint is checkpoints/run-001/selected. GitHub stores hashes/reports,
+  not model binaries; local machine currently holds the model, no remote backup.
+- No training process or paid resource active. Dependencies/lock unchanged.
+- Sequential execution; assistant GPT-6 family, exact picker/reasoning unexposed;
+  user preference Sol6.1. Context telemetry unavailable; checkpoint at S6A stop.
+- Named source/tests/reports/docs reviewed, committed/pushed to private main;
+  final delivery SHA and live remote verification recorded on CLO-48. A commit
+  cannot include its own SHA. S6 remains In Progress, one of three runs complete.
+
+STOP: S6A complete. Next prompt: “Continue Stage 6 with run-002.”
+
+## Historical S5 checkpoint (superseded next action)
+
 Updated: 2026-10-04. Status: S5 COMPLETE — CPU SMOKE AND EXACT RESUME VERIFIED.
 
 ## Next single action

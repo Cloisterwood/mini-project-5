@@ -1,0 +1,26 @@
+{
+  "batch_size": 16,
+  "checkpoint_selection": "validation_loss",
+  "device": "cpu",
+  "epochs": 4,
+  "learning_rate": 2e-05,
+  "logging_steps": 10,
+  "loss": "CosineSimilarityLoss",
+  "max_grad_norm": 1.0,
+  "max_seq_length": 256,
+  "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+  "optimizer": "adamw_torch",
+  "precision": "float32",
+  "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "seed": 42,
+  "smoke": {
+    "fit_pairs": 256,
+    "pause_step": 8,
+    "total_steps": 16,
+    "validation_pairs": 64
+  },
+  "torch_threads": 4,
+  "version": "s5-train-v1",
+  "warmup_ratio": 0.1,
+  "weight_decay": 0.0
+}

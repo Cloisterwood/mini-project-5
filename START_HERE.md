@@ -1,6 +1,6 @@
 # Mini-project 5: staged implementation
 
-Planning date: October 3, 2026. Status: Stages 0–5 complete; Stage 6 awaits authorization.
+Planning date: October 3, 2026. Status: Stages 0–5 complete; Stage 6 run-001 complete (1/3).
 
 Build a reproducible dating compatibility experiment using `sentence-transformers/all-MiniLM-L6-v2` and `CosineSimilarityLoss`. OpenAI models assist with development; the assignment explicitly specifies the embedding model being trained.
 
@@ -26,6 +26,6 @@ The existing `docs/superpowers/plans/2026-07-04-dating-compatibility-finetuning.
 
 See [RESOURCES.md](docs/implementation/RESOURCES.md) for the private Cloisterwood GitHub repository, Linear project and ten issues, and the verified Hugging Face dataset revision and file names. No additional source links are needed.
 
-Stages 0–5 are complete. The quality gate passes at 94.60/100 and the pinned baseline is sealed. CPU training smoke passed with exact interrupted/resumed versus uninterrupted final weights and inference round-trip. Measured four-epoch estimate is 6.25 minutes, with 12.49-minute planning allowance; local CPU is selected. Say “Continue with Stage 6” to authorize only run-001, then stop after that experiment. No scored run has started. The approved quarantine remains 5,991 eligible rows (4,792 fit / 1,199 validation), with original/evaluation sources preserved. Sol 6.1 remains the user's preferred development assistant. Training workers consume certified fit/validation inputs and deny evaluation file reads.
+Stages 0–5 are complete. The quality gate passes at 94.60/100 and the pinned baseline is sealed. Stage 6 run-001 completed four epochs on local CPU in 274.03 seconds. On the frozen 1,199 validation pairs, d=2.1841, FPR=0.2170, margin=0.5792 and coverage-adjusted purity=0.8315 meet all four primary targets. These are development validation results; final evaluation awaits S7 after all three runs and frozen selection. Say “Continue Stage 6 with run-002” to authorize only the second experiment. The approved quarantine remains 5,991 eligible rows (4,792 fit / 1,199 validation), with original/evaluation sources preserved. Sol 6.1 remains the user's preferred development assistant. Training and validation workers consume certified inputs and deny evaluation file reads.
 
 Original data, isolated training inputs, model weights, embedding caches and smoke checkpoints stay ignored locally; checksums are in reports. Environment, diagnostics, acquisition, exploration, quality, guided review, baseline, training preflight, smoke and run interfaces work; see README.md. Smoke weights are not a submitted/scored model. The historical July plan remains preserved.

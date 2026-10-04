@@ -2,7 +2,7 @@
 
 Staged fine-tuning coursework for `sentence-transformers/all-MiniLM-L6-v2` with
 `CosineSimilarityLoss`. Stage 1 provides a reproducible Python environment and
-environment diagnostics. Stage 2 adds data processing; training awaits later stages.
+environment diagnostics. Stage 2 adds data processing; Stage 6 training is in progress.
 
 Stage 2 implements acquisition, strict schema/metadata validation, data exploration,
 and a seeded profile-component split. The approved quarantine excludes 9 training
@@ -13,7 +13,9 @@ The structural data gate and the S3 human quality gate pass.
 Stages 3–5 are complete. All 20 human reviews are recorded and the verified
 quality gate passes at **94.60/100**. The pinned MiniLM baseline is measured and
 sealed. CPU training, checkpoint reload, and exact resume passed a bounded smoke
-test. Stage 6 scored experiments are next; none has started.
+test. Stage 6 run-001 is complete; two more experiments remain. Validation d=2.1841,
+FPR=21.70%, AUC=0.9137, and coverage-adjusted purity=83.15%. All four primary
+validation targets pass. Final held-out comparison awaits S7 and frozen selection.
 
 ## Setup
 
@@ -250,8 +252,12 @@ explicitly **not a scored experiment** and does not count toward the three runs.
 Stage 6's implemented interface is `train --run-id run-001 --device cpu`; it uses
 full fit and validation inputs. An existing run requires explicit
 `--resume checkpoints/run-001/checkpoint-N` and cannot be overwritten by a new
-run. Do not launch it until Stage 6 is authorized. Each Stage 6 experiment still
-requires validation metrics, an iteration receipt, and its own stop/checkpoint.
+run. After training, `validate-run --run-id run-001` compares the selected checkpoint
+with the sealed validation baseline using the same IDs, preprocessing, threshold,
+UMAP and HDBSCAN configuration. Repeated validation verifies saved hashes without
+new inference. See `reports/runs/run-001/` and [the iteration log](docs/ITERATION_LOG.md).
+Only run-001 has been authorized and completed. Each subsequent experiment needs
+user continuation, validation evidence, an iteration receipt, and its own stop.
 
 The implementation uses [Sentence Transformer training arguments](https://sbert.net/docs/package_reference/sentence_transformer/training_args.html)
 and [Trainer checkpoint resume](https://sbert.net/docs/package_reference/sentence_transformer/trainer.html),

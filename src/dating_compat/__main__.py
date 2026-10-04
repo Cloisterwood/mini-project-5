@@ -37,7 +37,19 @@ def main(argv: list[str] | None = None) -> int:
     train_parser.add_argument("--config", type=Path, default=Path("configs/train-default.yaml"))
     train_parser.add_argument("--device", choices=("cpu", "mps", "cuda"), default="cpu")
     train_parser.add_argument("--resume", type=Path)
+    validation_parser = commands.add_parser("validate-run", help="Compare completed selected checkpoint on validation only")
+    validation_parser.add_argument("--run-id", required=True)
     args = parser.parse_args(argv)
+    if args.command == "validate-run":
+        from dating_compat.data import DataError
+        from dating_compat.validation import validate_run
+        try:
+            validate_run(args.run_id)
+        except (DataError, OSError) as exc:
+            print(f"VALIDATION ERROR: {exc}")
+            return 1
+        print("VALIDATION RUN PASS")
+        return 0
     if args.command in {"prepare-training", "train-smoke", "train"}:
         from dating_compat.data import DataError
         try:
