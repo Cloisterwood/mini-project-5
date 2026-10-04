@@ -1,0 +1,14 @@
+{
+  "archive_and_manifest_byte_checks_passed": true,
+  "archive_asset_id": 610727622,
+  "downloaded_archive_bytes": 83517969,
+  "downloaded_archive_sha256": "e46e73e4d41445d794b3672eafddebea42f1072473122eed532d7760992be3df",
+  "downloaded_manifest_sha256": "458b45a8f5e5539232695fc4c5dfe4ed6712d8765ec2bda2d0c2ed1f4e0f2b0d",
+  "github_archive_digest": "sha256:e46e73e4d41445d794b3672eafddebea42f1072473122eed532d7760992be3df",
+  "github_manifest_digest": "sha256:458b45a8f5e5539232695fc4c5dfe4ed6712d8765ec2bda2d0c2ed1f4e0f2b0d",
+  "manifest_asset_id": 610727623,
+  "release_tag": "v0.1.0",
+  "release_visibility": "private repository collaborators",
+  "status": "pass",
+  "verification_phase": "Draft asset verified before final commit and publication; published commit receipt on CLO-51"
+}

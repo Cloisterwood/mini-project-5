@@ -1,0 +1,24 @@
+{
+  "evaluation_inference": false,
+  "fit_probe_count": 8,
+  "fit_probe_texts_sha256": "4c7e3c07eec0a0b10360430992fbd6115927acb804f52a5dad448887b101f205",
+  "maximum_absolute_embedding_difference": 0.0,
+  "model_dir": "/private/tmp/mp5-restored/selected",
+  "regenerated_figure_hashes": {
+    "category_effect_size.png": "e4101837712f1b4f0ba6a5bf41627406ce30354c2b1394f24900a25e73d7e011",
+    "improvement_delta.png": "4f31461e934dbf17822b8731e3f35c1099fb4a466e90ef3dddfd9b8d2f0ce35c",
+    "roc_curves.png": "f583346d219864b624e2ee54dbf20c8c373379e0a97102e9658559c325056385",
+    "similarity_distribution_before_after.png": "a394c8d8d2260ce1bde1c8de98220f5674288b4b21e0d3f817384da6be643a47",
+    "training_loss_curve.png": "245b90d780cb1e79ffae970e2b8836610ab45218264754452cd69ea977188f9a",
+    "umap_before_after.png": "c170880575a0928b82f578f8f1b9f0b6b9392c07ee9d928cee6957fa006d5960"
+  },
+  "regenerated_report_hashes": {
+    "baseline_metrics.json": "deac4e61b8d4ab14a7d3e25fb0d73acf9716cddd511f607f27dc7bcac2690bb1",
+    "comparison.json": "fcbe95b22e44321fa43fbbd28ef63f7c08210b02724399176f53131ca04e0852",
+    "finetuned_metrics.json": "d515ce30f3edcf3f3f929845b299b88adf9a9cc78d60b75bea2ac4cbd25463c8"
+  },
+  "script_sha256": "50a70a5daabe275835c9891d7f46709ad1af23ffd5ac7ccefad9860c7fd58448",
+  "selected_weights_sha256": "8c79ccf853ccd4e24e64e55b637b68f2d7847c6208ca2911cc7e69ea9e2a59f4",
+  "status": "pass",
+  "uncertainty": "Saved paired bootstrap intervals reused, not recomputed"
+}

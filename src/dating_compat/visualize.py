@@ -54,7 +54,7 @@ def verified_inputs():
     return base,fine,comparison,rows,labels,scores,history,{n:file_hash(Path(n)) for n in sorted(sources)}
 
 
-def visualize(directory: Path = Path("figures")):
+def visualize(directory: Path = Path("figures/submission")):
     base,fine,comparison,rows,labels,scores,history,inputs = verified_inputs()
     manifest = directory/"manifest.json"
     if manifest.exists():
@@ -94,7 +94,7 @@ def visualize(directory: Path = Path("figures")):
         for i,category in enumerate(categories):
             d=report['breakdowns']['category'][category]['cohens_d']
             if d is not None:
-                ax.scatter(d,i+shift,color=color,s=35,label=title if i==1 else None)
+                ax.barh(i+shift,d,height=.28,color=color,alpha=.85,label=title if i==1 else None)
                 ax.annotate(f'{d:.2f}',(d,i+shift),xytext=(5,0),textcoords='offset points',fontsize=10,va='center')
     ticklabels=[]
     for category in categories:
@@ -110,6 +110,10 @@ def visualize(directory: Path = Path("figures")):
     fig,ax=plt.subplots(figsize=(9,5))
     for key,label,color in (('loss','Fit loss: 10-step windows',COLORS[0]),('eval_loss','Validation loss: full set',COLORS[1])):
         logs=[x for x in history if key in x];ax.plot([x['epoch'] for x in logs],[x[key] for x in logs],color=color,label=label,marker='o' if key=='eval_loss' else None,markersize=4)
+    fit_logs=[x for x in history if 'loss' in x]
+    epochs=sorted({int(np.ceil(x['epoch']-1e-9)) for x in fit_logs})
+    epoch_means=[float(np.mean([x['loss'] for x in fit_logs if int(np.ceil(x['epoch']-1e-9))==epoch])) for epoch in epochs]
+    ax.plot(epochs,epoch_means,color='black',marker='s',label='Fit: mean logged window loss per epoch')
     ax.set(title='Selected run-002: fit n=4792 / validation n=1199',xlabel='Epoch',ylabel='CosineSimilarityLoss (mean squared error)');ax.legend();ax.grid(alpha=.2)
     figures.append(fig)
     fig,axes=plt.subplots(3,3,figsize=(13,10))
@@ -117,7 +121,7 @@ def visualize(directory: Path = Path("figures")):
     for ax,key in zip(axes.flat,keys):
         delta=comparison['purity_comparison']['delta'] if key=='cluster_purity' else comparison['classification_deltas'][key]['delta']
         interval=comparison['uncertainty']['intervals'].get(key,{}).get('delta',{}).get('interval')
-        ax.axvline(0,color='gray',linestyle='--');ax.scatter([delta],[0],color=COLORS[1],s=40)
+        ax.axvline(0,color='gray',linestyle='--');ax.barh(0,delta,height=.3,color=COLORS[1],alpha=.7)
         if interval is not None:ax.hlines(0,*interval,color=COLORS[1],linewidth=3)
         ax.set(title=f"{key.replace('_',' ')}: {delta:+.3f}",xlabel='Final − baseline (lower is better)' if key=='fpr' else 'Final − baseline (higher is better)',yticks=[]);ax.grid(axis='x',alpha=.2);ax.margins(x=.25)
         ax.text(.5,.12,'Paired component 95% interval' if interval else 'Point estimate; no interval',transform=ax.transAxes,ha='center',fontsize=10)

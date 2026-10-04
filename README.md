@@ -1,8 +1,14 @@
 # Mini Project 5: Dating Compatibility
 
 Staged fine-tuning coursework for `sentence-transformers/all-MiniLM-L6-v2` with
-`CosineSimilarityLoss`. Stage 1 provides a reproducible Python environment and
-environment diagnostics. Stage 2 adds data processing; Stage 6 training is in progress.
+`CosineSimilarityLoss`. Stages 0–9 are complete, with the unmet criteria below disclosed. Source, reports
+and six submission figures are delivered; the selected inference model is available
+in the private [v0.1.0 release](https://github.com/Cloisterwood/mini-project-5/releases/tag/v0.1.0).
+
+Start with [retrieval and reproducibility instructions](docs/REPRODUCIBILITY.md)
+and [the assignment checklist](docs/DELIVERABLE_CHECKLIST.md). A fresh locked
+environment passed all 121 tests; restored weights, eight fit-only inference probes,
+three regenerated metric reports and six regenerated PNGs passed verification.
 
 Stage 2 implements acquisition, strict schema/metadata validation, data exploration,
 and a seeded profile-component split. The approved quarantine excludes 9 training
@@ -271,11 +277,12 @@ frozen model and the original evaluation rows, then seals final metrics, paired
 2000-draw profile-component bootstrap intervals, predictions and error analysis.
 Repeated calls verify saved final artifacts without inference or resampling.
 Stage 8 figures/self-evaluation are complete. `visualize` renders the six required
-PNGs under [figures/](figures/) from sealed saved predictions; repeat verifies their
+PNGs under [figures/submission/](figures/submission/) from sealed saved predictions; repeat verifies their
 hashes. `visualize --output <new-directory>` supports regeneration without replacing
 the original figures. See [the six self-evaluation answers](docs/SELF_EVALUATION.md).
-Stage 9 reproducibility/deliverable audit awaits continuation. No further training or
-retraining on all data is scheduled.
+Stage 9 is complete. The final submission uses grouped category bars, delta bars
+and an explicit mean of logged fit-loss windows per epoch. Original Stage 8 figures
+remain preserved in figures/. No further training is scheduled.
 
 The implementation uses [Sentence Transformer training arguments](https://sbert.net/docs/package_reference/sentence_transformer/training_args.html)
 and [Trainer checkpoint resume](https://sbert.net/docs/package_reference/sentence_transformer/trainer.html),
@@ -285,7 +292,7 @@ checked against the installed APIs and actual saved states.
 
 Python is constrained to 3.12 for this lock. The sentence-transformers 5.x and
 transformers 4.x API family is constrained in `pyproject.toml`; exact installed
-versions are pinned in `uv.lock` and reported by doctor. Training will use
+versions are pinned in `uv.lock` and reported by doctor. Training used
 `SentenceTransformerTrainer` and `CosineSimilarityLoss`, as described in the
 [official training documentation](https://sbert.net/docs/sentence_transformer/training_overview.html).
 Clustering uses the separate **hdbscan** package (`hdbscan.hdbscan_.HDBSCAN`),
@@ -295,7 +302,7 @@ Required figures use Matplotlib/Seaborn PNGs; Plotly is not required.
 Verified locally October 4, 2026: macOS 27.0, ARM64 Mac14,2, 24 GiB RAM,
 Python 3.12.13, torch 2.14.1, sentence-transformers 5.7.0, transformers 4.57.6,
 and hdbscan 0.8.44. CPU and MPS tensor/autograd checks passed; CUDA is unavailable.
-Four diagnostic tests passed. The Codex sandbox reported MPS unavailable; the
+All 121 tests passed in both the original and fresh locked environments. The Codex sandbox reported MPS unavailable; the
 approved outside-sandbox check verified MPS and saved `reports/environment.json`.
 Run doctor in the normal Terminal environment when checking actual Mac hardware.
 
@@ -313,5 +320,9 @@ Raw data, caches, credentials, and model weights are excluded from Git. Schema,
 counts, and metadata have been validated; the approved derived cohort passes the
 structural leakage gate.
 Human quality scoring passes and the measured baseline misses performance targets.
-The local CPU training smoke passed; no scored experiment has run. The measured
-local estimate supports proceeding on CPU when Stage 6 is authorized.
+Three scored CPU training runs completed in 274.03, 463.36 and 492.73 seconds.
+Run-002 was selected from validation before final evaluation. Stricter FPR<=10%
+and accuracy/precision/recall/F1>=90% remain unmet. The human review sample was
+stratified rather than uniform random; shared profiles/templates and one seed limit
+generalization. The loss curves do not prove absence of overfitting. See the
+checklist for each exception. No final outcome triggered additional tuning.

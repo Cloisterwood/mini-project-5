@@ -108,11 +108,11 @@ UMAP/HDBSCAN. Baseline/final transforms were independently fitted with identical
 settings, so axes are arbitrary and unaligned; location or distance across panels
 cannot be interpreted as movement. Attractive regions do not establish significance
 or real romance. No bootstrap purity interval is shown because transforms/clusters
-were not refitted for each sample. See figures/umap_before_after.png.
+were not refitted for each sample. See figures/submission/umap_before_after.png.
 
 ## Figure receipts
 
-All six required PNGs and their input/output SHA receipts are in figures/manifest.json.
+All six required PNGs and their input/output SHA receipts are in figures/submission/manifest.json.
 They use saved predictions and loss history only, with no new inference/clustering
 or bootstrap. The improvement figure shows intervals only for the four metrics
 bootstrapped in S7; other deltas are explicitly point estimates. Stage9 reproducibility

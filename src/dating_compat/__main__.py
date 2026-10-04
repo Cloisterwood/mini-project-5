@@ -42,7 +42,7 @@ def main(argv: list[str] | None = None) -> int:
     commands.add_parser("select-run", help="Freeze the final validation-only choice after all three experiments")
     commands.add_parser("final-evaluation", help="Evaluate the frozen selected model once and seal paired comparison")
     plot_parser = commands.add_parser("visualize", help="Render six required figures from sealed predictions only")
-    plot_parser.add_argument("--output", type=Path, default=Path("figures"))
+    plot_parser.add_argument("--output", type=Path, default=Path("figures/submission"))
     args = parser.parse_args(argv)
     if args.command == "visualize":
         from dating_compat.data import DataError
