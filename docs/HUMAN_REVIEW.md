@@ -4,6 +4,15 @@ Stage 3 is pending your ratings. All response fields are intentionally blank. Th
 
 ## How to enter ratings
 
+For guided entry, run `.venv/bin/python -m dating_compat review` in the VS Code
+terminal from the project folder. Enter your name/alias, then rate each field:
+`1` acceptable, `2` ambiguous, `3` unacceptable. Notes are required for ambiguous
+or unacceptable judgments. Type `yes` at each summary to attest that these are
+your human judgments and save the pair. `q` pauses; rerun to resume unfinished
+pairs. Unsaved answers for the current pair are discarded on quitting. Use
+`--pair NUMBER` to revisit one pair; Enter keeps existing ratings and notes.
+After entering all responses, run the quality command below.
+
 Edit docs/human_review_responses.csv in VS Code or a spreadsheet. Keep the sample IDs, profile text, labels, metadata, row order, and column names unchanged. You can also send your ratings in chat using the sample numbers; they will be transcribed exactly.
 
 For every pair, fill six fields with exactly `acceptable`, `ambiguous`, or `unacceptable`. Write a short note for any ambiguous or unacceptable judgment. Add your name or alias in `reviewer` and set `human_reviewed` to `yes` on every completed row. Blank or incomplete rows keep the gate pending. Ambiguous judgments are preserved and count zero toward the acceptable fraction.

@@ -4,12 +4,20 @@ Updated: 2026-10-04. Status: S3 IMPLEMENTED AND VERIFIED — HUMAN REVIEW PENDIN
 
 ## Next single action
 
-The user completes the 20-pair human review using docs/HUMAN_REVIEW.md and
-editable docs/human_review_responses.csv, or sends explicit numbered ratings in
+The user runs `.venv/bin/python -m dating_compat review` in the project terminal
+for guided human entry, or completes the 20-pair review using docs/HUMAN_REVIEW.md
+and editable docs/human_review_responses.csv, or sends explicit numbered ratings in
 chat for exact transcription. Do not infer ratings from this assistant's opinions.
 Each row needs six acceptable/ambiguous/unacceptable ratings, reviewer name/alias,
 and human_reviewed=yes; notes required for any ambiguous/unacceptable judgment.
 Do not change identity/text/label/metadata columns, header, or sample order.
+
+The guided program explains each rating, saves each pair only after explicit
+human confirmation, requires notes for ambiguity/unacceptable judgments, and
+resumes unfinished pairs. Enter q to pause; use `review --pair NUMBER` to revisit
+a pair. An unfinished pair is discarded on quit; confirmed pairs are retained.
+It validates frozen sample/source identity before entry and refuses to overwrite
+external CSV edits. It does not calculate or suggest human ratings.
 
 After actual ratings arrive, run `.venv/bin/python -m dating_compat quality` and
 `require_quality_gate()`. Finish ONLY S3. If any dimension <12/20 or overall <60/100,
@@ -56,7 +64,14 @@ evidence, then stop. Do not replace missing human ratings with LLM judgments.”
 
 - `.venv/bin/python -m dating_compat quality`: exit1, QUALITY GATE PENDING_HUMAN_REVIEW.
   This is the expected required stop, not a failed installation or code exception.
-- Full `.venv/bin/python -m pytest -q`: exit0, 68 passed (46 prior +22 quality/review tests).
+- Full `.venv/bin/python -m pytest -q`: latest exit0, 75 passed (68 previous +7 guided-entry cases).
+  Guided cases cover invalid rating/required notes, resume, explicit confirmation,
+  revisiting saved pairs, external-edit preservation, EOF, sample/text tampering.
+- Guided CLI smoke test against actual cohort with q at reviewer prompt: exit0,
+  REAL CSV UNCHANGED — QUIT/RESUME SMOKE PASS. All real human fields remain blank.
+  First smoke test caught passing a Path to parse_json; fixed to read UTF-8 text.
+  Its tampering test mock was narrowed to the sample path after a broad mock also
+  replaced the rubric read. Final full suite and real CLI pass.
 - Focused quality tests: final exit0,22 passed. Initial 21 passed/1 failed exposed JSON
   tuple-to-array differences in saved-report comparison. Corrected by canonical JSON
   digest comparison; scores/rubric/sample unchanged. The final guard now rejects for

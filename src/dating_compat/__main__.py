@@ -23,7 +23,19 @@ def main(argv: list[str] | None = None) -> int:
     quality.add_argument("--data-dir", type=Path, default=Path("data"))
     quality.add_argument("--output", type=Path, default=Path("reports/quality_report.json"))
     quality.add_argument("--responses", type=Path, default=Path("docs/human_review_responses.csv"))
+    review = commands.add_parser("review", help="Guided terminal entry of human ratings; saves and resumes per pair")
+    review.add_argument("--data-dir", type=Path, default=Path("data"))
+    review.add_argument("--responses", type=Path, default=Path("docs/human_review_responses.csv"))
+    review.add_argument("--pair", type=int, help="Revisit a specific sample number (1–20)")
     args = parser.parse_args(argv)
+    if args.command == "review":
+        from dating_compat.data import DataError
+        from dating_compat.review_guide import guided_review
+        try:
+            return guided_review(args.data_dir, args.responses, args.pair)
+        except (DataError, OSError) as exc:
+            print(f"REVIEW ERROR: {exc}")
+            return 1
     if args.command == "quality":
         from dating_compat.data import DataError
         from dating_compat.quality import quality_report

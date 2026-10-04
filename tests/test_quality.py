@@ -7,6 +7,92 @@ import pytest
 from dating_compat import quality
 from dating_compat.data import DataError, Pair, Record, digest
 from dating_compat.review import COLUMNS, RATING_FIELDS, prepare_review, read_review, select_review
+from dating_compat.review_guide import run_review
+
+
+def guide_inputs(values):
+    answers = iter(values)
+    return lambda prompt: next(answers)
+
+
+def test_guide_saves_real_inputs_requires_notes_and_resumes(setup_review):
+    bundle, _, _, sample, path = setup_review
+    before = read_review(bundle, sample, path)
+    output = []
+    run_review(path, before["rows"], before["sha256"],
+               input_fn=guide_inputs(["TEST HUMAN", "bad", "2", *["1"] * 5,
+                                      "", "Priority unclear", "yes", "q"]), output_fn=output.append)
+    saved = read_review(bundle, sample, path)
+    assert saved["rated_rows"] == 1
+    assert saved["rows"][0]["label_agreement"] == "ambiguous"
+    assert saved["rows"][0]["notes"] == "Priority unclear"
+    assert saved["rows"][0]["human_reviewed"] == "yes"
+    assert all(saved["rows"][i][key] == before["rows"][i][key]
+               for i in range(20) for key in COLUMNS if key not in (*RATING_FIELDS, "notes", "reviewer", "human_reviewed"))
+    assert any("Explain your" in line for line in output)
+    output.clear()
+    run_review(path, saved["rows"], saved["sha256"], input_fn=guide_inputs(["TEST HUMAN", "q"]), output_fn=output.append)
+    assert "\nPair 2 of 20" in output
+    assert "\nPair 1 of 20" not in output
+
+
+@pytest.mark.parametrize("ending", ["q", "no"])
+def test_guide_does_not_save_without_confirmation(setup_review, ending):
+    bundle, _, _, sample, path = setup_review
+    before = read_review(bundle, sample, path)
+    run_review(path, before["rows"], before["sha256"], pair_number=1,
+               input_fn=guide_inputs(["TEST HUMAN", *["1"] * 6, "", ending]), output_fn=lambda line: None)
+    assert read_review(bundle, sample, path)["sha256"] == before["sha256"]
+
+
+def test_guide_edit_preserves_existing_answers_and_other_pairs(setup_review):
+    bundle, _, _, sample, path = setup_review
+    edit_csv(path, complete_fixture)
+    before = read_review(bundle, sample, path)
+    run_review(path, before["rows"], before["sha256"], pair_number=7,
+               input_fn=guide_inputs(["SECOND TEST HUMAN", *[""] * 6, "", "yes"]), output_fn=lambda line: None)
+    after = read_review(bundle, sample, path)
+    assert after["complete"]
+    assert after["rows"][6]["reviewer"] == "SECOND TEST HUMAN"
+    assert after["rows"][:6] == before["rows"][:6]
+    assert after["rows"][7:] == before["rows"][7:]
+
+
+def test_guide_preserves_external_changes(setup_review):
+    bundle, _, _, sample, path = setup_review
+    before = read_review(bundle, sample, path)
+    edit_csv(path, lambda rows: rows[1].update(notes="External human edit"))
+    changed = path.read_bytes()
+    with pytest.raises(DataError, match="CSV changed"):
+        run_review(path, before["rows"], before["sha256"], pair_number=1,
+                   input_fn=guide_inputs(["TEST HUMAN", *["1"] * 6, "", "yes"]), output_fn=lambda line: None)
+    assert path.read_bytes() == changed
+    assert not list(path.parent.glob(".human-review-*"))
+
+
+def test_guide_eof_preserves_csv(setup_review):
+    bundle, _, _, sample, path = setup_review
+    before = read_review(bundle, sample, path)
+    def eof(prompt):
+        raise EOFError
+    run_review(path, before["rows"], before["sha256"], input_fn=eof, output_fn=lambda line: None)
+    assert read_review(bundle, sample, path)["sha256"] == before["sha256"]
+
+
+def test_guided_review_rejects_tampered_sample_and_csv(setup_review, monkeypatch):
+    from dating_compat import cohort, review_guide
+    bundle, _, _, sample, path = setup_review
+    monkeypatch.setattr(cohort, "load_eligible_bundle", lambda data_dir: bundle)
+    original_read = Path.read_text
+    monkeypatch.setattr(Path, "read_text", lambda self, **kwargs:
+                        json.dumps(sample) if self == Path("reports/human_review_sample.json")
+                        else original_read(self, **kwargs))
+    edit_csv(path, lambda rows: rows[0].update(text_1="Changed profile"))
+    with pytest.raises(DataError, match="metadata changed"):
+        review_guide.guided_review(Path("unused"), path)
+    sample["selected_ids"].reverse()
+    with pytest.raises(DataError, match="Frozen human sample"):
+        review_guide.guided_review(Path("unused"), path)
 
 
 @pytest.fixture

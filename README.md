@@ -112,8 +112,25 @@ and bias diagnostics 17.04/20. Linguistic and real-life totals plus overall scor
 remain null pending review. A high heuristic score does not prove absence of bias
 or real-world relationship validity.
 
-Read [the 20-pair human review sheet](docs/HUMAN_REVIEW.md) and fill
-`docs/human_review_responses.csv`. Each row requires six explicit
+Run this in the VS Code terminal from this project folder for guided entry:
+
+```bash
+.venv/bin/python -m dating_compat review
+```
+
+The program shows each pair and explains the six ratings. Enter `1` for acceptable,
+`2` for ambiguous, or `3` for unacceptable. It requires notes for ambiguous or
+unacceptable judgments and your name/alias. Type `yes` at the pair summary to
+confirm your human judgments and save that pair. Enter `q` at any prompt to pause;
+rerunning resumes at the first unfinished pair. Each confirmed pair is saved to
+`docs/human_review_responses.csv`. To revisit a saved pair, use
+`.venv/bin/python -m dating_compat review --pair 7` (choose its sample number).
+Existing answers are shown and Enter keeps them. Concurrent CSV edits cause a
+stop without overwriting those edits. The program does not generate ratings or
+change the selected pairs. Run `quality` afterward to update the quality report.
+
+You can also read [the 20-pair human review sheet](docs/HUMAN_REVIEW.md) and edit
+`docs/human_review_responses.csv` directly. Each row requires six explicit
 acceptable/ambiguous/unacceptable ratings, a reviewer name/alias, and
 `human_reviewed=yes`. Add notes for every ambiguous or unacceptable judgment.
 Ratings are intentionally blank. The seeded sample covers all nine pair types,
