@@ -1,0 +1,12 @@
+{
+  "run_id": "run-003",
+  "status": "planned_before_training",
+  "change": "learning_rate: 0.00002 -> 0.00001; all other run-002 config values unchanged",
+  "reason": "Extending training produced small validation gains in d/FPR/AUC/purity, with slight accuracy/recall/F1 declines. Compare smaller parameter updates as the final bounded alternative; no instability was observed and no improvement is promised.",
+  "config_path": "configs/train-run-003.yaml",
+  "start_from": "same pinned base revision, not prior fine-tuned weights",
+  "comparison": "frozen validation only; baseline and run-002",
+  "schedule_note": "Six epochs, 1800 total steps and 180 warmup steps as run-002; learning rate is halved throughout the same ratio-based linear schedule.",
+  "selection": "lowest validation loss checkpoint within run; then all three completed runs ranked by frozen primary targets, highest validation d, lower FPR tie-break, with documented fallback",
+  "stop": "S6C after run-003 validation, frozen final selection and checkpoint; no S7 evaluation"
+}
