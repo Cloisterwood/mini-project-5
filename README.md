@@ -2,7 +2,13 @@
 
 Staged fine-tuning coursework for `sentence-transformers/all-MiniLM-L6-v2` with
 `CosineSimilarityLoss`. Stage 1 provides a reproducible Python environment and
-environment diagnostics. Data processing and training are implemented in later stages.
+environment diagnostics. Stage 2 adds data processing; training awaits later stages.
+
+Stage 2 implements acquisition, strict schema/metadata validation, data exploration,
+and a seeded profile-component split. **The original dataset currently fails the
+leakage gate:** 9 normalized pairs appear in both train and evaluation. See
+[the data audit](docs/DATA_AUDIT.md) and the proposed quarantine policy. Training
+remains blocked pending a decision; the original files are preserved.
 
 ## Setup
 
@@ -45,6 +51,38 @@ run **Python: Select Interpreter**, choose **Enter interpreter path**, and selec
 `uv sync` installs `dating_compat` in editable mode from `src/`; edits take effect
 without reinstalling. Use `.venv/bin/python` for every project command.
 
+## Acquire and audit data
+
+Run from the project root with the locked environment. Acquisition uses network
+access; exploration is offline. `acquire` downloads the four required files and
+the dataset card at revision `69b750dd024d5732ca19596d86bffc253abee92e`, verifies
+the recorded original SHA-256 checksums and Apache-2.0 card declaration, and writes
+`reports/acquisition_manifest.json`. Existing source files are never overwritten.
+
+```bash
+.venv/bin/python -m dating_compat acquire
+.venv/bin/python -m dating_compat explore
+```
+
+Expected acquisition marker: `ACQUISITION PASS`. With the current original data,
+exploration writes `reports/exploration.json` and `reports/split_manifest.json`,
+then prints `DATA GATE BLOCKED: Train/eval leakage: 9 normalized unordered pairs overlap`
+and exits **1**. This is a detected source-data problem. The tests should still pass.
+
+The manifest holds all 6,000 original training IDs in a 4,799 fit / 1,201 validation
+split, seed 42. Normalized profile connected components prevent repeated people
+and reversed pairs from crossing these partitions. Stratification uses label and
+pair_type after reporting rare category strata; grouping is retained throughout.
+Raw profile text is preserved for model input; NFKC/casefold/whitespace normalization
+is only for audits and grouping. Labels are strict integers 0/1; pair_type is metadata.
+
+Reports are frozen: identical reruns are allowed, different contents fail instead
+of replacing earlier evidence. Use a new report directory for a documented protocol
+revision. The proposed 9-row quarantine has **not** been applied. Initial reports
+under `reports/s2-initial-audit/` are preserved coding-repair evidence and must not
+be used for training. Future training must call `assert_data_ready` on freshly loaded
+data, verify the saved manifest, and also pass the separate S3 human quality gate.
+
 ## Implementation choices
 
 Python is constrained to 3.12 for this lock. The sentence-transformers 5.x and
@@ -73,6 +111,7 @@ Every stage ends with a checkpoint and stop; context usage at 75% also triggers 
 - [Dataset source, revision, license declaration, acquisition paths, and issues](docs/implementation/RESOURCES.md)
 - [Linear project](https://linear.app/cloisterwood/project/mini-project-5-dating-compatibility-1a9f2484672e)
 
-Raw data, caches, credentials, and model weights are excluded from Git. No dataset
-has been validated, no training experiment has run, and no performance targets are
-claimed in Stage 1. Paid compute decisions wait for measured need in Stage 5.
+Raw data, caches, credentials, and model weights are excluded from Git. Schema,
+counts, and metadata have been validated; the source leakage gate is blocked.
+No training experiment has run and no performance targets are claimed. Paid compute
+decisions wait for measured need in Stage 5.

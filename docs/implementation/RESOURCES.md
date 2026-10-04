@@ -8,7 +8,7 @@ Verified October 3, 2026.
 - Project UUID: `49861c5f-c59f-4a9c-a0ad-8802cf03ee5d`.
 - Dataset: https://huggingface.co/datasets/dipenbhuva/dating-compatibility-pairs
 - Dataset revision verified from Hugging Face API: `69b750dd024d5732ca19596d86bffc253abee92e`.
-- Dataset card declares Apache-2.0; public and ungated. File contents and quality have not yet been validated.
+- Dataset card at the pinned revision declares Apache-2.0; public and ungated. S2 acquired and validated all 6,000/1,469 records and matching metadata. Nine cross-file pair overlaps block the data gate; quality scoring has not started.
 - Model: https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2 (pin its revision when implementing baseline).
 
 ## Dataset acquisition
@@ -26,7 +26,7 @@ All four required files are present at the repository root. In Stage 2 download 
 |---|---|---|
 | S0 | [CLO-42](https://linear.app/cloisterwood/issue/CLO-42/mp5-s0-access-destinations-and-decisions) | Done |
 | S1 | [CLO-43](https://linear.app/cloisterwood/issue/CLO-43/mp5-s1-reproducible-environment-and-package-skeleton) | Done |
-| S2 | [CLO-44](https://linear.app/cloisterwood/issue/CLO-44/mp5-s2-dataset-validation-exploration-and-split) | Todo |
+| S2 | [CLO-44](https://linear.app/cloisterwood/issue/CLO-44/mp5-s2-dataset-validation-exploration-and-split) | Needs Input: leakage remedy |
 | S3 | [CLO-45](https://linear.app/cloisterwood/issue/CLO-45/mp5-s3-quality-gate-and-human-review) | Todo |
 | S4 | [CLO-46](https://linear.app/cloisterwood/issue/CLO-46/mp5-s4-metrics-and-baseline) | Todo |
 | S5 | [CLO-47](https://linear.app/cloisterwood/issue/CLO-47/mp5-s5-training-smoke-test-and-compute-decision) | Todo |
