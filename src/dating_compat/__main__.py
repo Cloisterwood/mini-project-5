@@ -40,7 +40,18 @@ def main(argv: list[str] | None = None) -> int:
     validation_parser = commands.add_parser("validate-run", help="Compare completed selected checkpoint on validation only")
     validation_parser.add_argument("--run-id", required=True)
     commands.add_parser("select-run", help="Freeze the final validation-only choice after all three experiments")
+    commands.add_parser("final-evaluation", help="Evaluate the frozen selected model once and seal paired comparison")
     args = parser.parse_args(argv)
+    if args.command == "final-evaluation":
+        from dating_compat.data import DataError
+        from dating_compat.final_evaluation import final_evaluation
+        try:
+            final_evaluation()
+        except (DataError, OSError) as exc:
+            print(f"FINAL EVALUATION ERROR: {exc}")
+            return 1
+        print("FINAL EVALUATION PASS")
+        return 0
     if args.command == "select-run":
         from dating_compat.data import DataError
         from dating_compat.selection import freeze_selection

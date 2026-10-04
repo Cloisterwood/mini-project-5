@@ -1,0 +1,14 @@
+{
+  "version": "s7-final-v1",
+  "bootstrap_resamples": 2000,
+  "bootstrap_seed": 42,
+  "confidence_level": 0.95,
+  "component_minimum": 30,
+  "largest_component_maximum_fraction": 0.25,
+  "grouping": "Normalized profile connected components; uniformly sample components with replacement and retain all their pairs",
+  "fallback": "If too few or one dominant component, paired unstratified pair bootstrap, explicitly conditional/approximate",
+  "bootstrap_metrics": ["margin", "cohens_d", "fpr", "auc"],
+  "purity_uncertainty": "Not bootstrapped: no claim that fixed cluster labels represent refitted clustering uncertainty",
+  "error_examples_per_type_and_error": 3,
+  "policy": "Final frozen run-002 only; no tuning or retraining from evaluation results"
+}
