@@ -1,0 +1,113 @@
+{
+  "checked_at_utc": "2026-10-04T17:23:08.378272+00:00",
+  "python": "3.12.13 (main, Jun 23 2026, 11:21:07) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "executable": "/Users/jeanneduke/newline-class-projects/mini-project-5/.venv/bin/python",
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "machine": "arm64",
+  "working_directory": "/Users/jeanneduke/newline-class-projects/mini-project-5",
+  "requested_device": "cpu",
+  "disk": {
+    "total_bytes": 994662584320,
+    "free_bytes": 165068800000
+  },
+  "dependencies": {
+    "torch": {
+      "version": "2.14.1",
+      "imported": true
+    },
+    "sentence-transformers": {
+      "version": "5.7.0",
+      "imported": true
+    },
+    "transformers": {
+      "version": "4.57.6",
+      "imported": true
+    },
+    "datasets": {
+      "version": "4.8.5",
+      "imported": true
+    },
+    "accelerate": {
+      "version": "1.15.0",
+      "imported": true
+    },
+    "pydantic": {
+      "version": "2.13.5",
+      "imported": true
+    },
+    "numpy": {
+      "version": "2.5.3",
+      "imported": true
+    },
+    "pandas": {
+      "version": "2.3.3",
+      "imported": true
+    },
+    "scipy": {
+      "version": "1.18.1",
+      "imported": true
+    },
+    "scikit-learn": {
+      "version": "1.9.1",
+      "imported": true
+    },
+    "umap-learn": {
+      "version": "0.5.12",
+      "imported": true
+    },
+    "hdbscan": {
+      "version": "0.8.44",
+      "imported": true
+    },
+    "matplotlib": {
+      "version": "3.11.2",
+      "imported": true
+    },
+    "seaborn": {
+      "version": "0.13.2",
+      "imported": true
+    },
+    "PyYAML": {
+      "version": "6.0.3",
+      "imported": true
+    },
+    "pytest": {
+      "version": "9.1.1",
+      "imported": true
+    }
+  },
+  "errors": [],
+  "training_api": {
+    "SentenceTransformerTrainer": "(self, model: 'SentenceTransformer | None' = None, args: 'SentenceTransformerTrainingArguments | None' = None, train_dataset: 'Dataset | DatasetDict | IterableDataset | dict[str, Dataset] | None' = None, eval_dataset: 'Dataset | DatasetDict | IterableDataset | dict[str, Dataset] | None' = None, loss: 'nn.Module | dict[str, nn.Module] | Callable[[SentenceTransformer], torch.nn.Module] | dict[str, Callable[[SentenceTransformer], torch.nn.Module]] | None' = None, evaluator: 'BaseEvaluator | list[BaseEvaluator] | None' = None, data_collator: 'SentenceTransformerDataCollator | None' = None, processing_class: 'PreTrainedTokenizerBase | BaseImageProcessor | FeatureExtractionMixin | ProcessorMixin | None' = None, model_init: 'Callable[[], SentenceTransformer] | None' = None, compute_metrics: 'Callable[[EvalPrediction], dict] | None' = None, callbacks: 'list[TrainerCallback] | None' = None, optimizers: 'tuple[torch.optim.Optimizer, torch.optim.lr_scheduler.LambdaLR]' = (None, None), optimizer_cls_and_kwargs: 'tuple[type[torch.optim.Optimizer], dict[str, Any]] | None' = None, preprocess_logits_for_metrics: 'Callable[[torch.Tensor, torch.Tensor], torch.Tensor] | None' = None) -> 'None'",
+    "CosineSimilarityLoss": "(self, model: 'SentenceTransformer', loss_fct: 'nn.Module' = MSELoss(), cos_score_transformation: 'nn.Module' = Identity()) -> 'None'"
+  },
+  "hdbscan": {
+    "implementation": "hdbscan.hdbscan_.HDBSCAN",
+    "distribution": "hdbscan",
+    "version": "0.8.44"
+  },
+  "devices": {
+    "cpu": true,
+    "mps": false,
+    "cuda": false,
+    "mps_built": true
+  },
+  "selected_device": "cpu",
+  "tensor_check": {
+    "passed": true,
+    "dtype": "torch.float32",
+    "device": "cpu",
+    "result": [
+      [
+        5.0,
+        11.0
+      ],
+      [
+        11.0,
+        25.0
+      ]
+    ],
+    "backward_finite": true
+  },
+  "passed": true
+}

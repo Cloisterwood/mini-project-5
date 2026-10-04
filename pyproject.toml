@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dating-compat"
+version = "0.1.0"
+description = "Reproducible dating compatibility sentence-transformer coursework"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "torch>=2.6,<3",
+  "sentence-transformers>=5,<6",
+  "transformers>=4.41,<5",
+  "datasets>=3,<5",
+  "accelerate>=1,<2",
+  "pydantic>=2,<3",
+  "numpy>=1.26,<3",
+  "pandas>=2.2,<3",
+  "scipy>=1.13,<2",
+  "scikit-learn>=1.5,<2",
+  "umap-learn>=0.5.7,<0.6",
+  "hdbscan>=0.8.40,<0.9",
+  "matplotlib>=3.9,<4",
+  "seaborn>=0.13,<0.14",
+  "pyyaml>=6,<7",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+dating-compat = "dating_compat.__main__:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv]
+required-version = ">=0.10.5"

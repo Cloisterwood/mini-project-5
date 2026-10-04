@@ -6,7 +6,8 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 .cache/
-models/
+models/*
+!models/README.md
 checkpoints/
 data/
 *.npz
@@ -15,3 +16,7 @@ data/
 *.safetensors
 *.pem
 *.key
+*.egg-info/
+.ruff_cache/
+build/
+dist/
