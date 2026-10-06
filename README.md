@@ -25,7 +25,8 @@ AUC=0.9165, and coverage-adjusted purity=83.40%.
 All three runs meet all four primary validation targets.
 Stage 7 final evaluation is complete: d=2.1584, FPR=22.76%, AUC=0.9118,
 coverage-adjusted purity=83.39%. All four primary final targets pass; stricter FPR
-and accuracy/precision/recall/F1 targets remain unmet. See [the final comparison](docs/FINAL_COMPARISON.md).
+and accuracy/precision/recall/F1 targets remain unmet — the assignment's two
+target tables conflict and cannot both be satisfied. See [the final comparison](docs/FINAL_COMPARISON.md).
 
 ## Setup
 
